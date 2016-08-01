@@ -1,0 +1,9 @@
+package com.ats.abongda.nvs.fragment.DIALOG;
+
+public class _LichThiDauDoiBong {
+
+	public _LichThiDauDoiBong() {
+		// TODO Auto-generated constructor stub
+	}
+
+}

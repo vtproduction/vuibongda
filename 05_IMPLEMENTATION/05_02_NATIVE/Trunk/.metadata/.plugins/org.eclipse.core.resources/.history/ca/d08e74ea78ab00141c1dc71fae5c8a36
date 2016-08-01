@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="65dp"
+    android:background="@color/list_item_bg"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/next24Page_child_slash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="130dp"
+        android:text="@string/shortSlash"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <ImageView
+        android:id="@+id/next24Page_child_logo"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/next24page_child_matchTime"
+        android:src="@drawable/league_bundesliga"
+        android:contentDescription="@string/null_string" />
+
+    <TextView
+        android:id="@+id/next24page_child_matchTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:text="@string/matchTime"
+        android:textColor="@color/base_app_color"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/next24Page_child_guest"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/next24Page_child_slash"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:maxLines="2"
+        android:text="@string/guest"
+        android:textStyle="bold"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/next24Page_child_host"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="15dp"
+        android:layout_alignRight="@+id/next24Page_child_slash"
+        android:text="@string/host"
+        android:gravity="right"
+		android:textStyle="bold"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/next24Page_child_tvChanel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       	android:layout_alignParentRight="true"
+       	android:layout_alignParentTop="true"
+       	android:layout_marginTop="47dp"
+       	android:layout_marginRight="100dp"
+        android:text="@string/tvChanel"
+        android:gravity="center"
+        android:textSize="12sp"
+        android:textColor="@color/base_app_color"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <ImageView
+        android:id="@+id/next24Page_child_isbet"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/licon_betted" />
+
+</RelativeLayout>

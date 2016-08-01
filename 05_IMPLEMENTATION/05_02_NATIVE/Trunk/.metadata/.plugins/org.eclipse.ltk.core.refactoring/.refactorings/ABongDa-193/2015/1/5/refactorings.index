@@ -1,0 +1,99 @@
+1422155859844	Extracts string 'null' into R.string.thongtincanhan
+1422157188067	Rename field 'textView2'
+1422157195718	Rename field 'textView22'
+1422157205789	Rename field 'textView222'
+1422157220499	Rename field 'textView21'
+1422158613524	Change Layout
+1422158775883	Extracts string 'null' into R.string.xacnhan
+1422158794746	Change Layout
+1422159338543	Extracts string 'null' into R.string.capnhat
+1422159413867	Rename field 'textView1'
+1422159432339	Rename field 'textView21s'
+1422159443168	Rename field 'textView2'
+1422174133494	Delete element
+1422174411591	Rename field 'EditText03'
+1422174418526	Rename field 'EditText02'
+1422174427238	Rename field 'EditText01'
+1422174434096	Rename field 'editText1'
+1422174728270	Extracts string 'null' into R.string.huybo
+1422175546987	Rename field 'Button01'
+1422175553981	Rename field 'Button010'
+1422178345298	Rename field 'textView2'
+1422178354839	Rename field 'textView1'
+1422187080206	Extracts string 'null' into R.string.ten
+1422187101446	Extracts string 'null' into R.string.diachi
+1422187132279	Extracts string 'null' into R.string.dienthoai
+1422187147791	Extracts string 'null' into R.string.email
+1422191462628	Copy file
+1422196568328	Copy compilation unit
+1422199243413	Copy compilation unit
+1422199263869	Copy file
+1422199528848	Rename field 'popup_title'
+1422199537073	Rename field 'popup_content'
+1422199714873	Rename field 'popup_edt_content'
+1422199721460	Rename field 'popup_edt_title'
+1422325786058	Delete element
+1422333321527	Rename field 'viewStub1'
+1422333603785	Rename type '_AccountFragment'
+1422367832305	Delete element
+1422369105370	Extracts string 'null' into R.string.thongtingiaodich
+1422370874498	Change Layout
+1422370899925	Change Layout
+1422371192583	Extracts string 'null' into R.string.socuadat
+1422371218129	Extracts string 'null' into R.string.soxudat
+1422371471454	Rename field 'LinearLayout1'
+1422371497297	Rename field 'LinearLayout2'
+1422372145723	Change Layout
+1422372567676	Rename field 'TextView05'
+1422372576297	Rename field 'TextView03'
+1422372583892	Rename field 'textView3'
+1422372599904	Rename field 'TextView02'
+1422372609959	Rename field 'textView4'
+1422372662861	Change Layout
+1422372923978	Rename field 'textView3'
+1422372928537	Rename field 'textView4'
+1422459040237	Rename field 'imageView1'
+1422459057328	Rename field 'TextView01'
+1422459062723	Rename field 'textView1'
+1422459068888	Rename field 'textView2'
+1422459074533	Rename field 'textView22'
+1422459082628	Rename field 'textView3'
+1422459091546	Rename field 'TextView02'
+1422459097141	Rename field 'textView4'
+1422463110067	Rename field 'textView1'
+1422505643755	Encapsulate field 'getBetText'
+1422506201271	Rename package 'com.ats.NIEN.abongda.nvs.adapter'
+1422516743620	Delete element
+1422523664730	Copy file
+1422524086337	Rename field 'textView1'
+1422524106474	Rename field 'TextView01'
+1422524112937	Rename field 'textView2'
+1422524142187	Copy file
+1422531115230	Rename field 'imageView1'
+1422531135246	Rename field 'textView3'
+1422531167760	Rename field 'textView1'
+1422531173297	Rename field 'textView2'
+1422545036837	Rename field 'textView1'
+1422545044408	Rename field 'textView2'
+1422545051003	Rename field 'textView3'
+1422545139062	Copy compilation unit
+1422587865520	Rename field 'account_userlayout_coin'
+1422587904088	Rename field 'account_userlayout_coin2'
+1422591096102	Rename field 'account_tct_ten'
+1422591103392	Rename field 'account_tct_tien'
+1422591114344	Rename field 'account_tct_stt'
+1422591121984	Rename field 'TextView01'
+1422591133146	Rename field 'TextView02'
+1422592022726	Rename resource 'account_topdaigia_item.xml'
+1422592047087	Copy file
+1422592218318	Rename resource 'account_topdaigia_item.xml'
+1422592227833	Rename resource 'account_topcaothu_item.xml'
+1422592252915	Rename resource 'account_topdaigia_item2.xml'
+1422680329398	Rename field 'textView1'
+1422680336383	Rename field 'editText1'
+1422680463123	Rename field 'editText2'
+1422680471031	Rename field 'editText3'
+1422712753864	Move compilation units
+1422712769316	Rename type 'LIVE_Adapter'
+1422712807263	Rename type 'NEXT24H_Adapter'
+1422719555360	Change Layout

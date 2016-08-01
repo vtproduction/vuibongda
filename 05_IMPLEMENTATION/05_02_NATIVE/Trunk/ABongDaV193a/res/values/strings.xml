@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ABongDa v193a</string>
+    <string name="null_string"></string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="main_color">#ff0281e4</string>
+	<string name="app_name_header">ABongDa 1.9.2</string>
+	<string name="timeString">20:30</string>
+	<string name="shortSlash">-</string>
+	<string name="FTString">FT</string>
+	<string name="host">host</string>
+	<string name="guest">guest</string>
+	<string name="matchTime">22:00\n18/08</string>
+	<string name="tvChanel">K+, VTV3</string>
+	<string name="ttcn">Thông tin cá nhân</string>
+	<string name="slashwithnum">3 - 3</string>
+	<string name="longName">West Bromwich Albion</string>
+	<string name="matchDate">16/8</string>
+	<string name="clb">Câu lạc bộ</string>
+	<string name="match">Trận</string>
+	<string name="btbb">BT/BB</string>
+	<string name="congtru">+/-</string>
+	<string name="score">Điểm</string>
+
+</resources>

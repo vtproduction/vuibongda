@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item value="257" key="DIALOG_WIDTH"/>
+		<item value="271" key="DIALOG_Y_ORIGIN"/>
+		<item value="388" key="DIALOG_HEIGHT"/>
+		<item value="93" key="DIALOG_X_ORIGIN"/>
+		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item value="true" key="wrap"/>
+		<item value="false" key="isRegEx"/>
+		<item value="true" key="casesensitive"/>
+		<item value="false" key="incremental"/>
+		<item value="false" key="wholeword"/>
+		<item value="hide" key="selection"/>
+		<list key="findhistory">
+			<item value="hide"/>
+			<item value="v."/>
+			<item value="v"/>
+			<item value="parseLiveList"/>
+			<item value="(LinearLayout) v"/>
+			<item value="2E2E2E"/>
+			<item value="public static final int "/>
+			<item value="&#x09;&#x09;int callbackActivity = Constant.LIVESCORE_CODE;"/>
+		</list>
+		<list key="replacehistory">
+			<item value="mMainView."/>
+			<item value="mMainView"/>
+			<item value="(LinearLayout) mMainView"/>
+			<item value="case "/>
+			<item value="R.id.mainview_tab"/>
+			<item value="R.id.mainview_tab_1"/>
+			<item value="@string/null_string"/>
+			<item value="@"/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">
+		<item value="252" key="DIALOG_Y_ORIGIN"/>
+		<item value="452" key="DIALOG_X_ORIGIN"/>
+	</section>
+</section>

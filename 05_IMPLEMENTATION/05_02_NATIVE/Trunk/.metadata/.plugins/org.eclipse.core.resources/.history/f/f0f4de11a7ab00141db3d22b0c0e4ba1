@@ -1,0 +1,133 @@
+package com.ats.abongda.nvs.adapter;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.ats.NIEN.abongda.R;
+import com.ats.NIEN.abongda.model.UserModel;
+import com.google.android.gms.drive.query.internal.InFilter;
+import com.squareup.picasso.Picasso;
+
+public class _AccountTopDaiGiaAdapter extends BaseAdapter{
+	private List<UserModel> models = new ArrayList<UserModel>();
+	private LayoutInflater layoutInflater;
+	private Context mContext;
+	private UserModel user;
+
+	
+	public _AccountTopDaiGiaAdapter(List<UserModel> models, Context mContext) {
+		super();
+		this.models = models;
+		this.mContext = mContext;
+		this.layoutInflater = LayoutInflater.from(mContext);
+		this.user = models.get(models.size() - 1);
+		models.remove(models.size() - 1);
+		models.add(null);
+		models.add(user);
+	}
+
+	@Override
+	public int getCount() {
+		// TODO Auto-generated method stub
+		return models.size();
+	}
+
+	@Override
+	public Object getItem(int position) {
+		// TODO Auto-generated method stub
+		return models.get(position);
+	}
+
+	@Override
+	public long getItemId(int position) {
+		// TODO Auto-generated method stub
+		return position;
+	}
+	
+	@Override
+	public int getViewTypeCount() {
+		// TODO Auto-generated method stub
+		return 7;
+	}
+	
+	@Override
+	public int getItemViewType(int position) {
+		// TODO Auto-generated method stub
+		if (position == 0) return 0;
+		else if(position == 1) return 1;
+		else if(position == 2) return 2;
+		else if(position == 3) return 2;
+		else if (position == models.size() - 1) {
+			return -2;
+		}else if (position == models.size() - 2) {
+			return -1;
+		}
+		return 0;
+	}
+
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+		// TODO Auto-generated method stub
+		UserModel model = (UserModel) getItem(position);
+		switch (getItemViewType(position)) {
+			case 0:
+				convertView = layoutInflater.inflate(R.layout.account_topdaigia_item, null);
+				Picasso.with(mContext).load(R.drawable.sortnum1).
+				into((ImageView)convertView.findViewById(R.id.account_tdg_img));
+				((TextView)convertView.findViewById(R.id.account_tdg_stt)).setText((position+1)+"");
+				((TextView)convertView.findViewById(R.id.account_tdg_ten)).setText(model.getName());
+				((TextView)convertView.findViewById(R.id.account_tdg_tien)).setText(model.getAccount()+"");
+				break;
+			case 1:
+				convertView = layoutInflater.inflate(R.layout.account_topdaigia_item, null);
+				Picasso.with(mContext).load(R.drawable.sortnum2).
+				into((ImageView)convertView.findViewById(R.id.account_tdg_img));
+				((TextView)convertView.findViewById(R.id.account_tdg_stt)).setText((position+1)+"");
+				((TextView)convertView.findViewById(R.id.account_tdg_ten)).setText(model.getName());
+				((TextView)convertView.findViewById(R.id.account_tdg_tien)).setText(model.getAccount()+"");
+				break;
+			case 2:
+				convertView = layoutInflater.inflate(R.layout.account_topdaigia_item, null);
+				Picasso.with(mContext).load(R.drawable.sortnum2).
+				into((ImageView)convertView.findViewById(R.id.account_tdg_img));
+				((TextView)convertView.findViewById(R.id.account_tdg_stt)).setText((position+1)+"");
+				((TextView)convertView.findViewById(R.id.account_tdg_ten)).setText(model.getName());
+				((TextView)convertView.findViewById(R.id.account_tdg_tien)).setText(model.getAccount()+"");			
+				break;
+			case 3:
+				convertView = layoutInflater.inflate(R.layout.account_topdaigia_item, null);
+				Picasso.with(mContext).load(R.drawable.sortnum4).
+				into((ImageView)convertView.findViewById(R.id.account_tdg_img));
+				((TextView)convertView.findViewById(R.id.account_tdg_stt)).setText((position+1)+"");
+				((TextView)convertView.findViewById(R.id.account_tdg_ten)).setText(model.getName());
+				((TextView)convertView.findViewById(R.id.account_tdg_tien)).setText(model.getAccount()+"");			
+				break;
+			case -1:
+				convertView = layoutInflater.inflate(R.layout.account_topdaigia_bachamlayout, null);
+				break;
+			case -2:
+				convertView = layoutInflater.inflate(R.layout.account_topdaigia_layoutcuoi, null);
+				((TextView)convertView.findViewById(R.id.textView1vachi1)).setText(model.getRank()+"");
+				((TextView)convertView.findViewById(R.id.textView2vachi2)).setText(model.getName());
+				((TextView)convertView.findViewById(R.id.textView3vachi3)).setText(model.getRank()+"");
+				break;
+			default:
+				break;
+		}
+		return convertView;
+	}
+	
+
+	
+
+
+
+}

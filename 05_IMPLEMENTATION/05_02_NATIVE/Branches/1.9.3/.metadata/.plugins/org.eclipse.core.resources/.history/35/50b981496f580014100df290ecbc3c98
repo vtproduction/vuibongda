@@ -1,0 +1,131 @@
+package com.ats.abongda.nvs.fragment.FSCR;
+
+import java.util.List;
+
+import vn.ats.aBongDa.R;
+import android.app.ProgressDialog;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+
+import com.ats.abongda.nvs.activity.BaseActivity;
+import com.ats.abongda.nvs.fragment.BaseFragment;
+
+public class FSCR_SigninFragment extends BaseFragment implements OnClickListener{
+	public LinearLayout mSigninPanel, mSigninBtn, mSignupBtn;
+	public ImageView mCancelBtn;
+	public EditText mUsername;
+	public EditText mPassword;
+	public ProgressDialog pDialog;
+	public int nextActionCode;
+	public FSCR_SigninFragment(int mActionCode, List<Object> mArgs) {
+		super(mActionCode, mArgs);
+		// TODO Auto-generated constructor stub
+	}
+
+	public FSCR_SigninFragment(List<Object> mArgs) {
+		super(mArgs);
+		// TODO Auto-generated constructor stub
+	}
+	
+	@Override
+	public View onCreateView(LayoutInflater inflater,
+			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		getRealBaseActivity().hideActionBar();
+		getRealMainActivity().hideTabview();
+		int mCurrentUserId = mSharePreferences.getInt("CURRENT_USER_ID", 0);
+		if (mCurrentUserId != 0) {
+			getRealBaseActivity().onBackPressed();
+			return null;
+		}
+		((BaseActivity)getRealActivity()).hideActionBar();
+		View v = inflater.inflate(R.layout.signin_main_layout, null);
+		mCancelBtn = (ImageView) v.findViewById(R.id.SigninPanel_cancelBtn);
+		mSigninPanel = (LinearLayout) v.findViewById(R.id.SigninPanel);
+		mSigninBtn = (LinearLayout) v.findViewById(R.id.SigninPanel_signinbtn);
+		mSignupBtn = (LinearLayout) v.findViewById(R.id.SigninPanel_signupbtn);
+		mUsername = (EditText) v.findViewById(R.id.SigninPanel_username);
+		mPassword = (EditText) v.findViewById(R.id.SigninPanel_password);
+
+		changeSigninBtnState();
+		mCancelBtn.setOnClickListener(this);
+		mSigninBtn.setOnClickListener(this); 
+		mSignupBtn.setOnClickListener(this);
+		mUsername.addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				// TODO Auto-generated method stub
+				changeSigninBtnState();
+				
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO Auto-generated method stub
+				changeSigninBtnState();
+			}
+		});
+		mPassword.addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				// TODO Auto-generated method stub
+				changeSigninBtnState();
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO Auto-generated method stub
+				changeSigninBtnState();
+			}
+		});
+		
+		return v;
+	}
+	
+	@SuppressWarnings("deprecation")
+	public boolean changeSigninBtnState(){
+		int i1 = mUsername.getText().toString().length();
+		int i2 = mPassword.getText().toString().length();
+		if (i1 == 0 || i2 == 0) {
+			mSigninBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.custom_btn_item_shape2));
+			mSigninBtn.setClickable(false);
+			return false;
+		}else{
+			mSigninBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.custom_btn_item_shape));
+			mSigninBtn.setClickable(true);
+			return true;
+		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

@@ -1,0 +1,9 @@
+package com.ats.abongda.nvs.fragment;
+
+public class _BXHThongkeFragment {
+
+	public _BXHThongkeFragment() {
+		// TODO Auto-generated constructor stub
+	}
+
+}

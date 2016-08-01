@@ -1,0 +1,140 @@
+package com.ats.abongda.nvs.fragment.DIALOG;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.astuetz.PagerSlidingTabStrip;
+import com.astuetz.PagerSlidingTabStrip.IconTabProvider;
+import com.astuetz.PagerSlidingTabStrip.IconTitleProvider;
+import com.ats.NIEN.abongda.R;
+import com.ats.abongda.nvs.activity.BaseActivity;
+import com.ats.abongda.nvs.fragment._BXHLichthidauFragment;
+import com.ats.abongda.nvs.fragment._BXHThongkeFragment;
+import com.ats.abongda.nvs.fragment._BXHXephangFragment;
+
+public class _BangXepHangDialog extends BaseDialogFragment implements OnPageChangeListener{
+	private PagerSlidingTabStrip tabs;
+	private ViewPager pager;
+	protected Activity mActivity;
+	private String[] TITLES = new String[3];
+	private MyPagerAdapter adapter;
+	private List<Fragment> fragments;
+	private int leagueId;
+	public _BangXepHangDialog(int leagueId) {
+		// TODO Auto-generated constructor stub
+		this.leagueId = leagueId;
+	}
+	
+	
+	@Override
+	public void onAttach(Activity activity) {
+		// TODO Auto-generated method stub
+		super.onAttach(activity);
+		this.mActivity = activity;
+	}
+	protected Activity getRealActivity(){
+		return (getActivity()== null) ? mActivity : getActivity();
+	}
+	
+	@Override
+	public View onCreateView(LayoutInflater inflater,
+			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		View pV =  super.onCreateView(inflater, container, savedInstanceState);
+		View v = inflater.inflate(R.layout.bangxephang_main, null);
+		tabs = (PagerSlidingTabStrip) v.findViewById(R.id.bangxephang_tab);
+		tabs.setShouldExpand(true);
+		tabs.setIndicatorHeight(15);
+		pager = (ViewPager) v.findViewById(R.id.bangxephang_viewpager);
+		
+		fragments = new ArrayList<Fragment>();
+		fragments.add(_BXHLichthidauFragment.newInstance(leagueId));
+		fragments.add(_BXHXephangFragment.newInstance(leagueId));
+		fragments.add(_BXHThongkeFragment.newInstance(leagueId));
+		adapter = new MyPagerAdapter(getChildFragmentManager(), fragments);
+		pager.setAdapter(adapter);
+		TITLES[0] = getRealActivity().getResources().getString(R.string.lichthidau);
+		TITLES[1] = getRealActivity().getResources().getString(R.string.xephang);
+		TITLES[2] = getRealActivity().getResources().getString(R.string.thongke);
+		pager.setOffscreenPageLimit(20);
+		pager.setPageMargin(0);
+		tabs.setOnPageChangeListener(this);
+		tabs.setViewPager(pager);
+		mMainContent.addView(v);
+		return pV;
+	}
+	
+	public void refreshPage(int pos){
+
+	}
+	public class MyPagerAdapter extends FragmentPagerAdapter implements IconTitleProvider{
+		private List<Fragment> mFragments;
+
+		private final int[] ICONS = {R.drawable.tab_menuicon_1,R.drawable.tab_menuicon_2,
+				R.drawable.tab_menuicon_3};
+		private FragmentManager fm;
+		public MyPagerAdapter(FragmentManager fm,List<Fragment> fragments) {
+			super(fm);
+			this.fm = fm;
+			this.mFragments = fragments;
+			
+		}
+ 
+		
+		@Override
+		public CharSequence getPageTitle(int position) {
+			return TITLES[position];
+		}
+
+		@Override
+		public int getCount() {
+			return ICONS.length;
+		}
+
+		@Override
+		public Fragment getItem(int position) {
+			((BaseActivity) getRealActivity()).changeTitle(TITLES[position]);
+			
+								
+			return mFragments.get(position);
+		}
+
+		@Override
+		public int getPageIconResId(int position) {
+			// TODO Auto-generated method stub
+			return ICONS[position];
+		}
+	}
+	@Override
+	public void onPageScrollStateChanged(int arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onPageScrolled(int arg0, float arg1, int arg2) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onPageSelected(int arg0) {
+		// TODO Auto-generated method stub
+		((BaseActivity)getRealActivity()).changeTitle(TITLES[arg0]);
+	}
+
+
+}

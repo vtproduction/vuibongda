@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:gravity="center_vertical|fill_horizontal"
+    android:orientation="horizontal" 
+    android:background="@drawable/border_bottom4"
+    android:weightSum="8"
+    android:padding="5dp">
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:id="@+id/topdaigiaPage_img"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/sortnum1" />
+
+        <TextView
+            android:id="@+id/topdaigiaPage_stt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/base_app_color"
+            android:textStyle="bold"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/topdaigiaPage_name"
+        android:layout_width="0dp"
+        android:layout_weight="3"
+        android:layout_height="wrap_content"
+        android:text="Small Text"
+        android:gravity="center"
+        android:textColor="@color/black_color"
+        android:textStyle="bold"
+        android:textAppearance="?android:attr/textAppearanceSmall" 
+        android:maxLines="1"/>
+
+    <TextView
+        android:id="@+id/topdaigiaPage_sotien"
+        android:layout_width="0dp"
+        android:layout_weight="3"
+        android:layout_height="wrap_content"
+        android:text="Small Text"
+       	android:gravity="center"
+        android:textColor="@color/base_app_color"
+        android:textStyle="bold"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+</LinearLayout>

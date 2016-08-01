@@ -1,0 +1,9 @@
+package com.ats.abongda.nvs.adapter;
+
+public class _BXH_LichthidauAdapter {
+
+	public _BXH_LichthidauAdapter() {
+		// TODO Auto-generated constructor stub
+	}
+
+}

@@ -1,0 +1,167 @@
+package com.ats.abongda.nvs.fragment;
+
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
+
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.view.View;
+
+import com.actionbarsherlock.app.SherlockFragment;
+import com.ats.NIEN.abongda.UTIL.ActionCode;
+import com.ats.NIEN.abongda.UTIL.InternetChecking;
+import com.ats.NIEN.abongda.UTIL.InternetChecking.InternetCheckingCallback;
+import com.ats.NIEN.abongda.UTIL.JSONParser;
+import com.ats.abongda.nvs.activity.BaseActivity;
+import com.ats.abongda.nvs.activity.MainActivity;
+
+public class BaseFragment extends SherlockFragment implements ActionCode{
+	protected pageType mPageType;
+	protected Activity mActivity;
+	protected SharedPreferences mSharePreferences;
+	protected SharedPreferences.Editor mEditor;
+	protected int mActionCode;
+	protected JSONParser mJsonParser;
+	protected View mMainView;
+	protected List<Object> mArgs = new ArrayList<Object>();
+	
+	public BaseFragment(int mActionCode, List<Object> mArgs) {
+		// TODO Auto-generated constructor stub
+		super();
+		this.mActionCode = mActionCode;
+		setPageTye();
+		if (mArgs != null) {
+			this.mArgs.addAll(mArgs);
+		}
+	}
+	
+	public BaseFragment(List<Object> mArgs) {
+		// TODO Auto-generated constructor stub
+		super();
+		setPageTye();
+		if (mArgs != null) {
+			this.mArgs.addAll(mArgs);
+		}
+	}
+	
+	protected void initSPRS(){
+		if (this.mSharePreferences != null) {
+			return;
+		}
+		this.mSharePreferences = getRealActivity().getSharedPreferences(
+				"AUTHENTICATION_FILE_NAME", Context.MODE_PRIVATE);
+		this.mEditor = this.mSharePreferences.edit();
+	}
+	
+	protected void saveStringSPRS(String key, String val){
+		this.mEditor.putString(key, val);
+		this.mEditor.commit();
+	}
+	protected void saveIntSPRS(String key, int val){
+		this.mEditor.putInt(key, val);
+		this.mEditor.commit();
+	}
+	protected void saveBoolSPRS(String key, boolean val){
+		this.mEditor.putBoolean(key, val);
+		this.mEditor.commit();
+	}
+	
+	public boolean isSignedIn(){
+		initSPRS();
+		int mCurrentUserId = mSharePreferences.getInt("CURRENT_USER_ID", 0);
+		if (mCurrentUserId != 0) {
+			return true;
+		}
+		return false;
+	}
+	
+	
+	@Override
+	public void onAttach(Activity activity) {
+		// TODO Auto-generated method stub
+		super.onAttach(activity);
+		this.mActivity = activity;
+	}
+	
+	protected Activity getRealActivity(){
+		return (getActivity()== null) ? mActivity : getActivity();
+	}
+	
+	protected BaseActivity getRealBaseActivity(){
+		return (BaseActivity)((getActivity()== null) ? mActivity : getActivity());
+	}
+	
+	protected MainActivity getRealMainActivity(){
+		return (MainActivity)((getActivity()== null) ? mActivity : getActivity());
+	}
+	
+	protected void refreshContent(){};
+	protected void processContent(){};
+	
+	protected void netAsync(){
+		/*new InternetChecking(new WeakReference<Context>(getRealActivity()),
+				new InternetCheckingCallback() {
+
+					@Override
+					public void onCheckComplete(boolean result,
+							final Dialog progressDialog) {
+						// TODO Auto-generated method stub
+						if (!result) {
+							progressDialog.dismiss();
+						} else {
+							processContent();
+						}
+					}
+				}).execute();*/
+	};
+	
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		if (getPageType() == pageType.FULLSCR_TYPE) {
+			getRealMainActivity().hideTabview();
+		}else{
+			getRealMainActivity().showTabview();
+		}
+	}
+	
+	
+	private void setPageTye(){
+		switch (this.mActionCode){
+			case NEWS:
+			case LIVESCORE:
+			case NEXT24H:
+			case ACCOUNT:
+				this.mPageType = pageType.LIVE_TYPE;
+				break;
+			case ACCOUNTBETLOG:
+			case ACCOUNTHISTORY:
+			case ACCOUNTPROFILE:
+			case ACCOUNTSTATISTIC:
+				this.mPageType = pageType.TAIKHOAN_TYPE;
+				break;
+			case LEAGUERANKING:
+			case LEAGUESTATISTIC:
+			case LEAGUETIME:
+				this.mPageType = pageType.TTGD_TYPE;
+				break;
+			default:
+				this.mPageType = pageType.FULLSCR_TYPE;
+				break;
+				
+		}
+	}
+	
+	public int getActionCode(){
+		return this.mActionCode;
+	}
+	
+	public pageType getPageType(){
+		return this.mPageType;
+	}
+
+}

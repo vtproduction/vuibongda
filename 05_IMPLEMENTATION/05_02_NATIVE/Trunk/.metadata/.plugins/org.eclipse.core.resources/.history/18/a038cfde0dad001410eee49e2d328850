@@ -1,0 +1,100 @@
+package com.ats.abongda.nvs.fragment.DIALOG;
+
+import java.util.List;
+
+import android.app.Activity;
+import android.graphics.drawable.Drawable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+
+import com.astuetz.PagerSlidingTabStrip;
+import com.astuetz.PagerSlidingTabStrip.IconTabProvider;
+import com.astuetz.PagerSlidingTabStrip.IconTitleProvider;
+import com.ats.NIEN.abongda.R;
+import com.ats.abongda.nvs.activity.BaseActivity;
+
+public class _BangXepHangFragment extends Fragment implements OnPageChangeListener{
+	private PagerSlidingTabStrip tabs;
+	private ViewPager pager;
+	protected Activity mActivity;
+	private String[] TITLES = new String[3];
+	private List<Fragment> fragments;
+	public _BangXepHangFragment() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+	@Override
+	public void onAttach(Activity activity) {
+		// TODO Auto-generated method stub
+		super.onAttach(activity);
+		this.mActivity = activity;
+	}
+	protected Activity getRealActivity(){
+		return (getActivity()== null) ? mActivity : getActivity();
+	}
+	
+	public void refreshPage(int pos){
+
+	}
+	public class MyPagerAdapter extends FragmentPagerAdapter implements IconTitleProvider{
+		private List<Fragment> mFragments;
+
+		private final int[] ICONS = {R.drawable.tab_menuicon_1,R.drawable.tab_menuicon_2,
+				R.drawable.tab_menuicon_3,R.drawable.tab_menuicon_4,R.drawable.tab_menuicon_5};
+		private FragmentManager fm;
+		public MyPagerAdapter(FragmentManager fm,List<Fragment> fragments) {
+			super(fm);
+			this.fm = fm;
+			this.mFragments = fragments;
+			
+		}
+ 
+		
+		@Override
+		public CharSequence getPageTitle(int position) {
+			return TITLES[position];
+		}
+
+		@Override
+		public int getCount() {
+			return ICONS.length;
+		}
+
+		@Override
+		public Fragment getItem(int position) {
+			((BaseActivity) getRealActivity()).changeTitle(TITLES[position]);
+			
+								
+			return mFragments.get(position);
+		}
+
+		@Override
+		public int getPageIconResId(int position) {
+			// TODO Auto-generated method stub
+			return ICONS[position];
+		}
+	}
+	@Override
+	public void onPageScrollStateChanged(int arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onPageScrolled(int arg0, float arg1, int arg2) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onPageSelected(int arg0) {
+		// TODO Auto-generated method stub
+		((BaseActivity)getRealActivity()).changeTitle(TITLES[arg0]);
+	}
+
+
+}

@@ -1,0 +1,149 @@
+package com.ats.abongda.nvs.fragment.MAIN;
+
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
+
+import android.app.Dialog;
+import android.content.Context;
+import android.os.AsyncTask;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.LinearLayout;
+
+import com.ats.NIEN.abongda.UTIL.AnimatedExpandableListView;
+import com.ats.NIEN.abongda.UTIL.InternetChecking;
+import com.ats.NIEN.abongda.UTIL.InternetChecking.InternetCheckingCallback;
+import com.ats.NIEN.abongda.model.LiveModel;
+import com.ats.NIEN.abongda.model.MatchModel;
+import com.ats.abongda.nvs.adapter._LiveScoreAdapter;
+import com.ats.abongda.nvs.adapter._Next24hAdapter;
+import com.ats.abongda.nvs.fragment.BaseFragment;
+import com.ats.abongda.nvs.fragment.MAIN._NewsFragment.ProcessListContents;
+import com.ats.abongda.nvs.model.NewsModel;
+import com.ats.abongda.nvs.util.JSONParser;
+
+public class _LiveFragment extends BaseFragment implements OnClickListener,
+ILoadFragmentObserver{
+	private boolean isFirstLoad = false;
+	private List<LiveModel> liveModels = new ArrayList<LiveModel>();
+	private List<MatchModel> matchModels = new ArrayList<MatchModel>();
+	private AnimatedExpandableListView listView;
+	private _LiveScoreAdapter liveScoreAdapter;
+	private _Next24hAdapter next24hAdapter;
+	private LinearLayout notFoundLayout;
+	
+	public static _LiveFragment newInstance(){
+		return new _LiveFragment(0,null,true);
+		
+	}
+	
+	public _LiveFragment(int mActionCode, List<Object> mArgs, boolean isFirstLoad) {
+		super(mActionCode, mArgs);
+		this.isFirstLoad = isFirstLoad;
+	}
+
+	@Override
+	public void onLoadFragment(Object arg) {
+		// TODO Auto-generated method stub
+		int code = (Integer)arg;
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	
+	
+	protected void netAsync(final int code) {
+		// TODO Auto-generated method stub
+		super.netAsync();
+		new InternetChecking(new WeakReference<Context>(getRealActivity()),
+				new InternetCheckingCallback() {
+
+					@Override
+					public void onCheckComplete(boolean result,
+							final Dialog progressDialog) {
+						// TODO Auto-generated method stub
+						if (!result) {
+							//progressDialog.dismiss();
+						} else {
+							if (code == 1) {
+								new processLiveList().execute();
+							}else{
+								int userId = getRealBaseActivity().getUserId();
+								new processNext24hList(userId).execute();
+							}
+						}
+					}
+				}, false).execute();
+	}
+	private class processLiveList extends AsyncTask<String, String, List<LiveModel>>{
+
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+		}
+		
+		@Override
+		protected List<LiveModel> doInBackground(String... params) {
+			// TODO Auto-generated method stub
+			return new JSONParser(getRealActivity()).parseLiveList();
+		}
+		
+		@Override
+		protected void onPostExecute(List<LiveModel> result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			if (result.size() > 0) {
+				_LiveScoreAdapter adapter = new _LiveScoreAdapter(result, getRealActivity(), listView);
+				listView.setAdapter(adapter);
+				listView.bringToFront();
+				notFoundLayout.setVisibility(View.INVISIBLE);
+			}else{
+				notFoundLayout.setVisibility(View.VISIBLE);
+				notFoundLayout.bringToFront();
+			}
+		}
+	}
+	private class processNext24hList extends AsyncTask<String, String, List<MatchModel>>{
+		int userId;		
+		public processNext24hList(int userId) {
+			super();
+			this.userId = userId;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+		}
+		
+		@Override
+		protected List<MatchModel> doInBackground(String... params) {
+			// TODO Auto-generated method stub
+			
+			return new JSONParser(getRealActivity()).parseNext24List(userId);
+		}
+		
+		@Override
+		protected void onPostExecute(List<MatchModel> result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			if (result.size() > 0) {
+				_Next24hAdapter adapter = new _Next24hAdapter(result, getRealActivity(), listView);
+				listView.setAdapter(adapter);
+				listView.bringToFront();
+				notFoundLayout.setVisibility(View.INVISIBLE);
+			}else{
+				notFoundLayout.setVisibility(View.VISIBLE);
+				notFoundLayout.bringToFront();
+			}
+		}
+	}
+	
+}

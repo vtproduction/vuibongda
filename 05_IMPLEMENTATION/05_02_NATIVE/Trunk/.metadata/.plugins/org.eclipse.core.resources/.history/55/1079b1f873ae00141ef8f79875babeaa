@@ -1,0 +1,391 @@
+package com.ats.NIEN.abongda.fragment.FULLSCR;
+
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
+
+import android.R.anim;
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Rect;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+import com.ats.NIEN.abongda.UTIL.Constant;
+import com.ats.NIEN.abongda.UTIL.InternetChecking;
+import com.ats.NIEN.abongda.UTIL.JSONParser;
+import com.ats.NIEN.abongda.UTIL.ProgressHUD;
+import com.ats.NIEN.abongda.UTIL.InternetChecking.InternetCheckingCallback;
+import com.ats.NIEN.abongda.activity.BaseActivity;
+import com.ats.NIEN.abongda.activity.MainActivity;
+import com.ats.NIEN.abongda.fragment.BaseFragment;
+import com.ats.NIEN.abongda.fragment.MAINVIEW_MainFragment;
+import com.ats.NIEN.abongda.model.League;
+import com.ats.NIEN.abongda.model.LeagueSeason;
+import com.ats.NIEN.abongda.model.MatchModel;
+import vn.ats.aBongDa.R;
+
+
+public class FULLSCR_LichthidauDoibongFragment extends BaseFragment {
+	public Activity mActivity;
+	public int leagueCode;
+	public int clbCode;
+	public List<LeagueSeason> seasonList;
+	public List<MatchModel> matchList;
+	public Spinner seasonSpinner, monthSpinner;
+	public boolean parseBySeason, parseByMonth, parseByBoth;
+	public List<String> seasonNameList;
+	public List<String> monthList;
+	public static int currentMonth;
+	public static int currentSeason;
+	public LinearLayout mainPanel;
+	public LinearLayout loaderLayout;
+	public int savedLeagueCode;
+	public ScrollView mainScrollView;
+	public boolean isScrolledToRightPos = false;
+	public String clubName;
+	public View viewToScroll;
+	public FULLSCR_LichthidauDoibongFragment (int leagueCode, int clbCode, String clubName) {
+		super();
+		this.leagueCode = leagueCode;	
+		this.clbCode = clbCode;
+		this.clubName = clubName;
+		this.savedLeagueCode = 0;
+		this.parseByBoth = false;
+		this.parseBySeason = false;
+		this.parseByBoth = false;
+		
+	}
+
+	@Override
+	public void onAttach(Activity activity) {
+		// TODO Auto-generated method stub
+		super.onAttach(activity);
+		this.mActivity = activity;
+	}
+
+	public Activity getRealActivity(){
+		return (getActivity() == null) ? mActivity : getActivity();
+	}
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+	}
+	
+	
+	@Override
+	public View onCreateView(LayoutInflater inflater,
+			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		View v = inflater.inflate(R.layout.ltd_doibong_main_layout, container, false);
+		seasonSpinner = (Spinner) v.findViewById(R.id.LichthidauPageDoibong_nam_spinner);	
+		mainPanel = (LinearLayout) v.findViewById(R.id.LichthidauPageDoibong_main_panel);
+		loaderLayout = (LinearLayout) inflater.inflate(R.layout.loader_layout, container, false);
+		mainScrollView = (ScrollView) v.findViewById(R.id.LichthidauPageDoibong_Scrollview);
+		currentSeason = 0;
+		this.savedLeagueCode = mSharePreferences.getInt("CURRENT_LEAGUE_ID", 1);
+		
+		return v;
+		
+	}
+	
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		//Log.d("TAG11", "ltddb: " + mSharePreferences.getInt("CALLBACK_FRAGMENT", 0));
+		if (mSharePreferences.getInt("CALLBACK_FRAGMENT", 0) > 100 && mSharePreferences.getInt("CALLBACK_FRAGMENT", 0) != Constant.LICHTHIDAUDOIBONGFRAGMENT) {
+			return;
+		}
+		((BaseActivity) getRealActivity()).changeTitle(clubName);
+		((BaseActivity) getRealActivity()).changeRightImageToBack();
+		if (this.savedLeagueCode != 0) {
+			this.leagueCode = this.savedLeagueCode;
+		}		
+		SharedPreferences prfs = getActivity().getSharedPreferences("AUTHENTICATION_FILE_NAME", Context.MODE_PRIVATE);
+		SharedPreferences.Editor   editor = prfs.edit();
+		editor.putString("CURRENT_ACTIVE_CODE", Constant.TAB_LICHTHIDAU);
+		editor.commit();
+		
+		NetAsync(getView());
+		parseByBoth = false;
+		parseBySeason = false;
+		seasonSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub		
+				setCurrentSeason(parent.getItemAtPosition(position).toString());
+				new ProcessListContents().execute();
+				
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+				// TODO Auto-generated method stub
+				
+			}
+
+		});	
+	}
+	
+	@Override
+	public void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		SharedPreferences.Editor   editor = mSharePreferences.edit();
+		new League();
+		editor.putString("CURRENT_LEAGUE_NAME", League.getLeagueName2(leagueCode));
+		editor.commit();
+	}
+	
+	private void setSeasonList(){
+		this.seasonNameList = new ArrayList<String>();
+		for(int i=0; i< seasonList.size(); i++){
+			seasonNameList.add(seasonList.get(i).getSeasonName());
+		}
+	}
+	
+	
+	@SuppressWarnings("static-access")
+	public void setCurrentSeason(String currentSeason){
+		int i = seasonNameList.indexOf(currentSeason);
+		this.currentSeason = seasonList.get(i).getRowId();
+	}
+	
+	
+	
+
+
+	private class SeasonListContents extends AsyncTask<String, String, SeasonHolder>{
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+		}
+		
+		@Override
+		protected SeasonHolder doInBackground(String... params) {
+			// TODO Auto-generated method stub
+			SeasonHolder holder = new SeasonHolder();
+			if (leagueCode < 6) {
+				seasonList = new JSONParser(getActivity()).parseLeagueSeason("0", leagueCode);
+			}else{
+				String savedSeasonList = mSharePreferences.getString("XEPHANG_SEASONLIST", "");
+				if (savedSeasonList.equals("")) {
+					seasonList = new JSONParser(getActivity())
+					.parseLeagueSeasonWithoutMonth("0", leagueCode);
+					saveModel(seasonList, "XEPHANG_SEASONLIST");
+				}else{
+					seasonList = new JSONParser(getRealActivity())
+					.parseLeagueSeasonWithoutMonth_V2(savedSeasonList);
+				}
+			}
+			setSeasonList();
+			return holder;
+		}
+		
+		@Override
+		protected void onPostExecute(SeasonHolder result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			setSeasonList();
+			ArrayAdapter<String> seasonSpinnerAdapter = new ArrayAdapter<String>(getRealActivity(), R.layout.lichthidau_page_spinner_layout,seasonNameList);
+			seasonSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			seasonSpinner.setAdapter(seasonSpinnerAdapter);			
+			new ProcessListContents().execute();
+		}
+		
+	}
+	private class ProcessListContents extends
+			AsyncTask<String, String, List<MatchModel>> {
+		
+		public Dialog MpDialog;
+
+		@SuppressWarnings("static-access")
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			MpDialog = new ProgressHUD(getRealActivity()).show(getRealActivity(), "", true, false, null);
+			mainPanel.removeAllViews();
+			mainPanel.addView(loaderLayout);
+
+		}
+
+		@Override
+		protected List<MatchModel> doInBackground(String... args) {
+			if (getActivity() != null) {
+				mActivity = getActivity();
+			}
+			List<MatchModel> list = new ArrayList<MatchModel>();
+			//list = new JSONParser(mActivity).parseTintuc("0");
+			list = new JSONParser(mActivity).parseMatchListByClub("123456", currentSeason, clbCode);
+
+			return list;
+		}
+
+		@Override
+		protected void onPostExecute(final List<MatchModel> list) {
+			mainPanel.removeAllViews();
+			Rect scrollBounds = new Rect();
+			mainScrollView.getHitRect(scrollBounds);
+			boolean isPrShowing = true;
+			boolean scrollFlag = false;
+			LayoutInflater inflater = (LayoutInflater) getRealActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			for (int i = 0; i < list.size(); i++) {
+				final MatchModel match = list.get(i);
+				LinearLayout item = (LinearLayout) inflater.inflate(R.layout.ltd_doibong_item, null);
+				TextView hostname = (TextView) item.findViewById(R.id.lichthidauPageDB_host);
+				hostname.setText(match.getHome());
+				TextView guestname = (TextView) item.findViewById(R.id.lichthidauPageDB_guest);
+				guestname.setText(match.getGuest());
+				TextView result = (TextView) item.findViewById(R.id.lichthidauPageDB_finalScore);
+				if (match.getMatchStatus() == 0) {
+					result.setText("   -   ");
+				}else{
+					result.setText(" "+ match.getHomeGoal() + "-" + match.getGuestGoal() + " ");
+				}
+				String[] arrStD = match.getMatchShortStartDate().split("/");
+				String day = arrStD[0];
+				String month = arrStD[1];
+				if (arrStD[0].length() == 1) {
+					day = "0"+day;
+				}
+				if (arrStD[1].length() == 1) {
+					month = "0"+month;
+				}
+				ImageView leagueLogo = (ImageView) item.findViewById(R.id.lichthidauPageDBDoibong_logo);
+				leagueLogo.setImageResource(match.getLeagueLogoFromMatch());
+ 				
+				TextView matchTime = (TextView) item.findViewById(R.id.lichthidauPageDB_time);
+				matchTime.setText(day+"/"+month + "\n" + match.getMatchStartTimeWithoutPlus());
+				if (i % 2 == 0) {
+					item.setBackgroundColor(getResources().getColor(R.color.listitem));
+				}
+				hostname.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						MAINVIEW_MainFragment frag = new MAINVIEW_MainFragment(Constant.LICHTHIDAUDOIBONGFRAGMENT,
+								new ArrayList<Object>(){{
+									add(leagueCode);
+									add(match.getHomeId());
+									add(match.getHome());
+								}});
+						((MainActivity)getRealActivity()).switchContent(frag);
+					}
+					
+				});
+				guestname.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						MAINVIEW_MainFragment frag = new MAINVIEW_MainFragment(Constant.LICHTHIDAUDOIBONGFRAGMENT,
+								new ArrayList<Object>(){{
+									add(leagueCode);
+									add(match.getGuestId());
+									add(match.getGuest());
+								}});
+						((MainActivity)getRealActivity()).switchContent(frag);
+					}
+					
+				});
+				ImageView arrow = (ImageView) item.findViewById(R.id.lichthidauPageDB_indicator);
+				arrow.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						final int matchId = match.getMatchId();
+						MAINVIEW_MainFragment frag = new MAINVIEW_MainFragment(Constant.MATCHDETAILFRAGMENT,
+								new ArrayList<Object>(){{
+									add(matchId);
+								}});
+						((MainActivity)getRealActivity()).switchContent(frag);
+					}
+				});
+				mainPanel.addView(item);
+				if (!item.getLocalVisibleRect(scrollBounds)) {
+					if (match.getMatchStatus() == 0 && scrollFlag == false) {
+						viewToScroll = item;
+						scrollFlag = true;
+					}
+				} 
+				if (i== list.size()-1) {
+					MpDialog.dismiss();
+					isPrShowing = false;
+				}
+			}
+			if (isPrShowing) {
+				MpDialog.dismiss();
+			}
+			focusOnView();
+			
+			
+		}
+	}
+
+	
+	public void NetAsync(View view) {
+		new InternetChecking(new WeakReference<Context>(getRealActivity()),
+				new InternetCheckingCallback() {
+
+					@Override
+					public void onCheckComplete(boolean result,
+							final Dialog progressDialog) {
+						// TODO Auto-generated method stub
+						if (!result) {
+							progressDialog.dismiss();
+						} else {
+							new SeasonListContents() {
+								@Override
+								protected void onPostExecute(
+										SeasonHolder list) {
+									// TODO Auto-generated method stub
+									super.onPostExecute(list);
+									progressDialog.dismiss();
+								}
+							}.execute();
+						}
+					}
+				}).execute();
+	}
+
+	public static class SeasonHolder{
+		static List<String> list1;
+		static List<String>	list2;
+	}
+	
+	private final void focusOnView(){
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+               if (viewToScroll != null) {
+            	   mainScrollView.smoothScrollTo(0, viewToScroll.getTop());
+			}
+            }
+        });
+    }
+}

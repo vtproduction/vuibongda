@@ -1,0 +1,88 @@
+package com.ats.abongda.nvs.fragment.DIALOG;
+
+import android.content.DialogInterface;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.TextView;
+
+import com.ats.NIEN.abongda.R;
+
+public abstract class Dialog2Btn extends DialogFragment implements OnClickListener{
+	private String title, content, textL, textR;
+	private Button btnL, btnR;
+	private TextView txtT, txtC;
+	public Dialog2Btn(String title, String content, String textL, String textR) {
+		super();
+		this.title = title;
+		this.content = content;
+		this.textL = textL;
+		this.textR = textR;
+	}
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		//setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+		//setStyle(DialogFragment.STYLE_NORMAL, R.style.MyPopupLarge);
+	}
+	
+	@Override
+	public View onCreateView(LayoutInflater inflater,
+			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		//getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+		getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(0));
+		View v = inflater.inflate(R.layout.popupdialog_2btn, null);
+		txtT = (TextView) v.findViewById(R.id.popup_edt_title);
+		txtC = (TextView) v.findViewById(R.id.popup_edt_content);
+		btnL = (Button) v.findViewById(R.id.popup_leftbtn);
+		btnR = (Button) v.findViewById(R.id.popup_rightbtn);
+		
+		txtT.setText(title);
+		txtC.setText(content);
+		btnL.setText(textL);
+		btnR.setText(textR);
+		
+		btnL.setOnClickListener(this);
+		btnR.setOnClickListener(this);
+		return v;
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		switch (v.getId()) {
+		case R.id.popup_leftbtn:
+			onLbtnClick();
+			break;
+		case R.id.popup_rightbtn:
+			onRbtnClick();
+			break;
+
+		default:
+			break;
+		}
+	}
+	
+	public abstract void onLbtnClick();
+	public abstract void onRbtnClick();
+	public abstract void onDialogDissmiss();
+	
+	@Override
+	public void onDismiss(DialogInterface dialog) {
+		// TODO Auto-generated method stub
+		super.onDismiss(dialog);
+		onDialogDissmiss();
+	}
+
+
+}

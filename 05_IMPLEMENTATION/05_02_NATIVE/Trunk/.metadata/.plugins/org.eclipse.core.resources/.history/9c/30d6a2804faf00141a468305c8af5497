@@ -1,0 +1,302 @@
+package com.ats.NIEN.abongda.activity;
+
+import java.io.IOException;
+
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.telephony.TelephonyManager;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.Window;
+import android.widget.LinearLayout;
+
+import com.ats.NIEN.abongda.UTIL.Constant;
+import com.ats.NIEN.abongda.UTIL.GeneralConfig;
+import com.ats.NIEN.abongda.UTIL.JSONParser;
+import com.ats.NIEN.abongda.model.UpdateAppModel;
+
+import vn.ats.aBongDa.R;
+import vn.ats.aBongDa.R.anim;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+
+public class SplashScreen extends Activity {
+
+	// Splash screen timer
+	private static int SPLASH_TIME_OUT = 1000;
+	public Context context;
+	public SharedPreferences sPreferences;
+	private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+	String regid;
+	GoogleCloudMessaging gcm;
+
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	@SuppressLint("NewApi")
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		if (android.os.Build.VERSION.SDK_INT >= 11) {
+			getActionBar().hide();
+		}
+		this.context = getApplicationContext();
+		setContentView(R.layout.splash_screen);
+		
+		new BackgroundExecution().execute();
+		
+	}
+
+	@SuppressLint("NewApi")
+	private class BackgroundExecution extends AsyncTask<Void, Void, Void>{
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			// TODO Auto-generated method stub
+			TelephonyManager mngr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+			String deviceId = mngr.getDeviceId();
+			sPreferences = getSharedPreferences("AUTHENTICATION_FILE_NAME",
+					Context.MODE_PRIVATE);
+			SharedPreferences.Editor edit = sPreferences.edit();
+			String generalConf = new JSONParser(context)
+					.getGeneralConfigString("6x16");
+			edit.putString("GENERAL_CONFIG", generalConf);
+			edit.putString("DEVICE_ID", deviceId);
+			GeneralConfig mGeConfig = new GeneralConfig(generalConf);
+			edit.putInt("CL_ROUND", mGeConfig.get_currentCLRound());
+			edit.putInt("LTD_SM", 0);
+			edit.putInt("LTD_SS", 0);
+			edit.putInt("XH_SG", 0);
+			edit.putInt("XH_SS", 0);
+			edit.putInt("TK_SS", 0);
+			edit.putString("XEPHANG_SEASONLIST", "");
+			edit.commit();
+			if (sPreferences.getString("PROPERTY_REG_ID", "") == "") {
+				if (checkPlayServices()) {
+					gcm = GoogleCloudMessaging.getInstance(context);
+					regid = getRegistrationId(context);
+					if (!regid.isEmpty()) {
+						Log.d("GCMess", "regId: " + regid);
+					} else {
+						registerInBackground();
+					}
+					
+				}
+			}
+			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(Void result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			
+			/**/
+		}
+		
+	}
+	
+	private class checkForUpdate extends AsyncTask<String, String, UpdateAppModel>{
+		int versionCode;
+		public checkForUpdate(){
+			PackageManager manager =  getPackageManager();
+			try {
+				PackageInfo info = manager.getPackageInfo(getPackageName(), 0);
+				versionCode = info.versionCode;
+			} catch (NameNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				versionCode = 0;
+			}
+		}
+		@Override
+		protected UpdateAppModel doInBackground(String... params) {
+			// TODO Auto-generated method stub
+			return new JSONParser(getApplicationContext()).checkAppUpdate(versionCode);
+		}
+
+		@Override
+		protected void onPostExecute(UpdateAppModel result) {
+			// TODO Auto-generated method stub
+			if (result.getVersionNumber() == 0) {
+				new Handler().postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						Intent i = new Intent(SplashScreen.this, MainActivity.class);
+						startActivity(i);
+						finish();
+					}
+				}, SPLASH_TIME_OUT);
+			}else{
+				
+			}
+		}
+		
+	}
+	
+	private boolean checkPlayServices() {
+		int resultCode = GooglePlayServicesUtil
+				.isGooglePlayServicesAvailable(this);
+		if (resultCode != ConnectionResult.SUCCESS) {
+			if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+				GooglePlayServicesUtil.getErrorDialog(resultCode, this,
+						PLAY_SERVICES_RESOLUTION_REQUEST).show();
+
+			} else {
+				Log.d("GCMess", "This device is not supported.");
+				// finish();
+			}
+			return false;
+		} else {
+			Log.d("GCMess", "This device is supported.");
+		}
+		return true;
+	}
+
+	public static final String EXTRA_MESSAGE = "message";
+	public static final String PROPERTY_REG_ID = "registration_id";
+	private static final String PROPERTY_APP_VERSION = "appVersion";
+
+	@SuppressLint("NewApi")
+	private String getRegistrationId(Context context) {
+
+		String registrationId = sPreferences.getString(PROPERTY_REG_ID, "");
+		if (registrationId.isEmpty()) {
+			Log.i("GCMess", "Registration not found.");
+			return "";
+		}
+		int registeredVersion = sPreferences.getInt(PROPERTY_APP_VERSION,
+				Integer.MIN_VALUE);
+		int currentVersion = getAppVersion(context);
+		if (registeredVersion != currentVersion) {
+			Log.i("GCMess", "App version changed.");
+			return "";
+		}
+		return registrationId;
+	}
+
+	private static int getAppVersion(Context context) {
+		try {
+			PackageInfo packageInfo = context.getPackageManager()
+					.getPackageInfo(context.getPackageName(), 0);
+			return packageInfo.versionCode;
+		} catch (NameNotFoundException e) {
+			throw new RuntimeException("Could not get package name: " + e);
+		}
+	}
+
+	private class customConfirmDialog extends Dialog implements android.view.View.OnClickListener{
+		public LayoutInflater inflater;
+		public LinearLayout btnOk, btnCancel;
+		public String content;
+		public customConfirmDialog(Context context, String content) {
+			super(context);
+			// TODO Auto-generated constructor stub
+			inflater = (LayoutInflater) context
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			this.content = content;
+
+		}
+		 
+		
+		@Override
+		public void show() {
+			// TODO Auto-generated method stub
+			requestWindowFeature(Window.FEATURE_NO_TITLE);
+			super.show();
+			
+			View v = inflater.inflate(R.layout.verify_update_dialog, null);
+			btnOk = (LinearLayout) v.findViewById(R.id.verifyBet_ok);
+			btnCancel = (LinearLayout) v.findViewById(R.id.verifyBet_cancel);
+			btnOk.setOnClickListener(this);
+			btnCancel.setOnClickListener(this);
+			setContentView(v);
+		}
+
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			switch (v.getId()) {
+			case R.id.verifyBet_ok:
+				performOk();
+				break;
+			case R.id.verifyBet_cancel:
+				performCancel();
+				break;
+			default:
+				break;
+			}
+		}	
+		public void performOk(){
+			
+			this.dismiss();
+		}
+		
+		public void performCancel(){		
+			this.dismiss();
+		}
+		
+	}
+	
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private void registerInBackground() {
+		new AsyncTask() {
+			@Override
+			protected String doInBackground(Object... params) {
+				// TODO Auto-generated method stub
+				String msg = "";
+				try {
+					if (gcm == null) {
+						gcm = GoogleCloudMessaging.getInstance(context);
+					}
+					
+					regid = gcm.register(Constant.SERVER_APP_ID);
+					msg = "Device registered, registration ID=" + regid;
+					sendRegistrationIdToBackend();
+					storeRegistrationId(context, regid);
+				} catch (IOException ex) {
+					msg = "Error :" + ex.getMessage();
+					// If there is an error, don't just keep trying to register.
+					// Require the user to click a button again, or perform
+					// exponential back-off.
+				}
+				return msg;
+			}
+
+			@SuppressWarnings("unused")
+			protected void onPostExecute(String msg) {
+				Log.i("GCMess", "RegId: " + msg);
+				
+			};
+		}.execute(null, null, null);
+
+	}
+
+	private void sendRegistrationIdToBackend() {
+		// Your implementation here.
+	}
+
+	private void storeRegistrationId(Context context, String regId) {
+		// final SharedPreferences prefs = getGCMPreferences(context);
+		int appVersion = getAppVersion(context);
+		Log.i("GCMess", "Saving regId on app version " + appVersion);
+		SharedPreferences.Editor editor = sPreferences.edit();
+		editor.putString(PROPERTY_REG_ID, regId);
+		editor.putInt(PROPERTY_APP_VERSION, appVersion);
+		editor.commit();
+		new JSONParser(context).sendRegId();
+	}
+}

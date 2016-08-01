@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@drawable/border_bottom4"
+    android:gravity="center_vertical|fill_horizontal"
+    android:orientation="horizontal"
+    android:padding="5dp"
+    android:weightSum="6" >
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" >
+
+        <ImageView
+            android:id="@+id/topcaothuPage_img"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/sortnum1" />
+
+        <TextView
+            android:id="@+id/topcaothuPage_stt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="10"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/base_app_color"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/topcaothuPage_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="Small Text"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/black_color"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/topcaothuPage_thang"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="100"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/mygreencolor"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/topcaothuPage_thua"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="100"
+        
+        android:textColor="@color/myredcolor"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/topcaothuPage_hieuso"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="100"
+        android:textColor="@color/base_app_color"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+</LinearLayout>

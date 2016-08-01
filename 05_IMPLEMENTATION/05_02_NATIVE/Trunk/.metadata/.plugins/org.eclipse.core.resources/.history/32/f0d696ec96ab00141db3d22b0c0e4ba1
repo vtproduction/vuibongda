@@ -1,0 +1,44 @@
+package com.ats.abongda.nvs.fragment.MAIN;
+
+import java.util.List;
+
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
+
+import com.ats.NIEN.abongda.R;
+import com.ats.NIEN.abongda.UTIL.IMAGELOADER_ImageLoader;
+import com.ats.abongda.nvs.fragment.BaseFragment;
+
+public class _BangXepHangFragment extends BaseFragment implements OnClickListener, ILoadFragmentObserver{
+	public LinearLayout mainView;
+	public LayoutInflater inflater;
+	public _BangXepHangFragment(int mActionCode, List<Object> mArgs) {
+		super(mActionCode, mArgs);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public View onCreateView(LayoutInflater inflater,
+			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		View v = (ScrollView) inflater.inflate(R.layout.bangxephang_mainlayout,null);
+		mainView = (LinearLayout) v.findViewById(R.id.bangxephang_mainlayout);
+		return v;
+	}
+
+
+
+}

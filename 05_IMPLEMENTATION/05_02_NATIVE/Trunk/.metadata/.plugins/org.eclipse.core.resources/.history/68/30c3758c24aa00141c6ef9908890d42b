@@ -1,0 +1,416 @@
+package com.ats.abongda.nvs.util;
+
+import java.io.Console;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.ats.NIEN.abongda.UTIL.Constant;
+import com.ats.NIEN.abongda.model.BetModel;
+import com.ats.NIEN.abongda.model.LiveModel;
+import com.ats.NIEN.abongda.model.MatchModel;
+import com.ats.NIEN.abongda.model.TK_LichsuModel;
+import com.ats.NIEN.abongda.model.UserModel;
+import com.ats.abongda.nvs.activity.BaseActivity;
+import com.ats.abongda.nvs.model.NewsModel;
+
+import android.content.Context;
+import android.os.StrictMode;
+import android.os.StrictMode.ThreadPolicy;
+import android.telephony.TelephonyManager;
+import android.util.Log;
+
+public class JSONParser implements API, TAG{
+	private String url;
+	private Context context;
+	private String deviceImei;
+	public JSONParser(Context context) {
+		// TODO Auto-generated constructor stub
+		this.context = context;
+		TelephonyManager telephonyManager = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
+		this.deviceImei = telephonyManager.getDeviceId();
+	}
+	
+	public String doGetRequest(String url){
+		StrictMode.setThreadPolicy(ThreadPolicy.LAX);
+		HttpGet httpget = new HttpGet(url);
+	    ResponseHandler<String> responseHandler = new BasicResponseHandler();
+	    try {
+			return new DefaultHttpClient().execute(httpget, responseHandler);
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    return "";
+	}
+	
+	public void log(String extras){
+		Log.i(JSONTAG, "=== JSONPARSER: == " + this.url + " == RESULT: == " + extras);
+	}
+	
+	public List<NewsModel> parseNews(){
+		url = URL_TINTUC.replace("[1]", deviceImei);
+		JSONArray jsonArray;
+		List<NewsModel> list = new ArrayList<NewsModel>();
+		try {
+			jsonArray = new JSONArray(doGetRequest(url));
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject obj = jsonArray.getJSONObject(i);
+				NewsModel tintuc = new NewsModel
+						(obj.getString("Content"),
+						obj.getString("Description"), 
+						Integer.parseInt(obj.getString("Id")), obj.getString("ImageLink"),
+						Integer.parseInt(obj.getString("IsHot")),
+						obj.getString("Title"));
+				list.add(tintuc);
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		log("" + list.size());
+		return list;
+	}
+	
+	public int performSignin(String username,
+			String userPassword) {
+		int userId = 0;
+		String url = URL_SIGNIN.replace("[1]", this.deviceImei)
+				.replace("[2]", "" + username).replace("[3]", userPassword);
+		
+		String result = doGetRequest(url);
+		JSONObject o;
+		try {
+			o = new JSONObject(result);
+			userId = o.getInt("Id");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		log("performSignin " + url + " : " + userId + "");
+		return userId;
+	}
+	
+	public UserModel getUser(int userId) {
+		String url = URL_GETUSER.replace("[1]", "" + userId);
+		
+		String result = doGetRequest(url);
+		JSONObject o;
+		UserModel model = new UserModel();
+		try {
+			o = new JSONObject(result);
+			model = new UserModel(o.getLong("Account"), o.getString("Address"),
+					o.getString("Avatar"), o.getString("BetResult"),
+					o.getInt("ClientId"), o.getInt("DifferenceMatchScore"),
+					o.getString("Email"), o.getString("Fullname"),
+					o.getInt("Id"), o.getInt("IsEmailVerified"),
+					o.getInt("IsPhoneVerified"), o.getInt("LostMatchScore"),
+					o.getString("Name"), o.getString("Password"),
+					o.getString("Phone"), o.getInt("Rank"),
+					o.getString("RegisterDateTime"), o.getInt("Status"),
+					o.getInt("TotalCoinScore"), o.getInt("TotalMatchScore"),
+					o.getLong("WonCoinScore"), o.getInt("WonMatchScore"));
+			// model = new UserModel(o.getInt("Id"));
+			userId = o.getInt("Id");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		log("performSignin " + url + " : " + userId + "");
+		return model;
+	}
+	
+	public String getUser(int userId, boolean save){
+		String url = URL_GETUSER.replace("[1]", "" + userId);	
+		String result = doGetRequest(url);		
+		log("getUserInfo " + url);
+		if (save) {
+			((BaseActivity)context).setUserInfo(result);
+		}
+		return result;
+	}
+	
+	public boolean changeUserInfo(String userId, String fullName,
+			String Address, String Phone, String Email) {
+		String url = URL_CHANGEUSERINFO.replace("[1]", userId)
+				.replace("[2]", fullName.replace(" ", "%20"))
+				.replace("[3]", Address.replace(" ", "%20"))
+				.replace("[4]", Phone.replace(" ", "%20"))
+				.replace("[5]", Email.replace(" ", "%20"));
+		
+		String result = doGetRequest(url);
+		log(result);
+		if (result.equals("-1")) {
+			return false;
+		}
+		return true;
+	}
+	
+	public int verifyEmail(int userId,String userEmail){
+		int result = 0;
+		String url = URL_VERIFY_EMAIL
+				.replace("[1]", userId+"")
+				.replace("[2]", userEmail)
+				.replace(" ", "%20");
+		try {
+			result = Integer.parseInt(doGetRequest(url));
+		} catch (Exception e) {
+			// TODO: handle exception
+			result = -100;
+		}
+		log(result+"");
+		return result;
+	}
+	
+	public UserModel parseBetStatic(String userId) {
+		UserModel model = new UserModel();
+		
+		String url = Constant.URL_BETSTATIC.replace("[1]", userId);
+		String result = doGetRequest(url);
+		try {
+			JSONObject obj = new JSONObject(result);
+			model = new UserModel(obj.getInt("TotalCoinScore"),
+					obj.getInt("TotalMatchScore"), obj.getLong("WonCoinScore"),
+					obj.getInt("WonMatchScore"));
+
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		log(result);
+		return model;
+	}
+	
+	public List<BetModel> getBetResult(String userId, String from){
+		List<BetModel> list = new ArrayList<BetModel>();
+		String url = URL_GET_BET_RESULT
+				.replace("[1]", userId)
+				.replace("[2]", from);
+		String result = doGetRequest(url);
+		
+		try {
+			JSONArray a = new JSONArray(result);
+			for (int i = 0; i < a.length(); i++) {
+				JSONObject o = a.getJSONObject(i);
+				list.add(new BetModel(o.getInt("bet_result"),
+						o.getInt("bet_result_value"),
+						o.getString("guest_club"),
+						o.getInt("guest_club_goal"),
+						o.getInt("guest_penalty_shoot"),
+						o.getString("home_club"),
+						o.getInt("home_club_goal"),
+						o.getInt("home_penalty_shoot"),
+						o.getInt("league_row_id"),
+						o.getInt("matchId"),
+						o.getInt("matchId"),
+						o.getString("register_datetime"),
+						o.getInt("user_bet_value")));
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		log("getBetResult:  " + url + " : " + list.size());
+		return list;
+	}
+
+	public List<TK_LichsuModel> parseAccHistoryLog(String userName, int number) {
+		List<TK_LichsuModel> list = new ArrayList<TK_LichsuModel>();
+		
+		String url = Constant.URL_LICHSUTK.replace("[1]", userName).replace(
+				"[2]", "" + number);
+		String result = doGetRequest(url);
+		JSONArray jsonArray;
+		try {
+			jsonArray = new JSONArray(result);
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject obj = jsonArray.getJSONObject(i);
+				TK_LichsuModel model = new TK_LichsuModel(
+						obj.getLong("afterChange"),
+						obj.getLong("beforeChange"), obj.getLong("change"),
+						obj.getString("description"), obj.getInt("logType"),
+						obj.getString("registerDatetime"));
+				list.add(model);
+			}
+
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		log("parseAccHistoryLog " + url + " : " + list.size()
+				+ "");
+		return list;
+	}
+	
+	public List<UserModel> parseTopdaigia(String username) {
+		List<UserModel> list = new ArrayList<UserModel>();
+		String url = URL_TOPDAIGIA.replace("[1]", username);
+		
+		String result = doGetRequest(url);
+		JSONArray jsonArray;
+		try {
+			jsonArray = new JSONArray(result);
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject obj = jsonArray.getJSONObject(i);
+				list.add(new UserModel(obj.getLong("Account"), obj
+						.getString("Name"), obj.getInt("Rank")));
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		log("parseTopdaigia " + url + " : " + list.size() + "");
+		return list;
+	}
+	
+	public List<UserModel> parseTopcaothu(int userId, int type) {
+		List<UserModel> list = new ArrayList<UserModel>();
+		String url = URL_TOPCAOTHU.replace("[1]", "" + userId)
+				.replace("[2]", "" + type);
+		
+		String result = doGetRequest(url);
+		JSONArray jsonArray;
+		try {
+			jsonArray = new JSONArray(result);
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject obj = jsonArray.getJSONObject(i);
+				list.add(new UserModel(obj.getInt("DifferenceMatchScore"), obj
+						.getInt("LostMatchScore"), obj.getString("Name"), obj
+						.getInt("WonMatchScore"), obj.getInt("Rank")));
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		log("parseTopcaothu " + url + " : " + list.size() + "");
+		return list;
+	}
+	
+	public UserModel performSignUp(String userName, String password){
+		String url = Constant.URL_REG_USER
+				.replace("[1]", this.deviceImei)
+				.replace("[2]", userName)
+				.replace("[3]", password);
+		UserModel um = new UserModel();
+		String result = doGetRequest(url);
+		JSONObject o = null;
+		try {
+			o = new JSONObject(result);
+			um.setId(o.getInt("Id"));
+			um.setAccount(o.getInt("Account"));
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		log("performSignUp:  " + url + " : " + um.getId());
+		return um;
+	}
+	
+	public boolean changeUserPassword(int userId, String oldPassword,
+			String newPassword) {
+		String url = URL_CHANGEPASS.replace("[1]", userId+"")
+				.replace("[2]", oldPassword).replace("[3]", newPassword);
+		
+		String result = doGetRequest(url);
+		log("changeUserPassword " + url + " : " + result);
+		if (result.equalsIgnoreCase(userId+"")) {
+			return true;
+		}
+
+		return false;
+	}
+	
+	public List<LiveModel> parseLiveList(String deviceIds) {
+		List<LiveModel> list = new ArrayList<LiveModel>();
+		
+		String result = doGetRequest(URL_LIVE + this.deviceImei);
+		JSONArray jsonArray;
+		JSONArray matchArray;
+		try {
+			jsonArray = new JSONArray(result);
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject obj = jsonArray.getJSONObject(i);
+				matchArray = new JSONArray(obj.getString("_matches"));
+				List<MatchModel> matchList = new ArrayList<MatchModel>();
+				for (int j = 0; j < matchArray.length(); j++) {
+					JSONObject matchObj = matchArray.getJSONObject(j);
+					MatchModel mMatchModel = new MatchModel(
+							matchObj.getString("_home"),
+							matchObj.getString("_guest"),
+							matchObj.getInt("_homeGoal"),
+							matchObj.getInt("_guestGoal"),
+							matchObj.getInt("_homePenaltyShoot"),
+							matchObj.getInt("_guestPenaltyShoot"),
+							matchObj.getString("_matchMinute"),
+							matchObj.getInt("_matchStatus"),
+							matchObj.getInt("_matchID"),
+							matchObj.getString("_matchDatetime"),
+							matchObj.getInt("_home_id"),
+							matchObj.getInt("_guest_id"),
+							matchObj.getInt("_isBet"),
+							matchObj.getInt("_isHot"));
+					matchList.add(mMatchModel);
+				}
+				LiveModel mLiveModel = new LiveModel(obj.getInt("_leagueID"),
+						obj.getString("_leagueName"), matchList);
+				list.add(mLiveModel);
+			}
+
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		log("parseLiveList " + Constant.URL_LIVE + " : " + list.size() + "");
+		return list;
+	}
+	
+	public List<MatchModel> parseNext24List(int userId) {
+		List<MatchModel> list = new ArrayList<MatchModel>();
+		
+		String url = URL_NEXT24H.replace("[1]", this.deviceImei)
+				.replace("[2]", ""+userId);
+		String result = doGetRequest(url);
+		JSONArray jsonArray;
+		try {
+			jsonArray = new JSONArray(result);
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject matchObj = jsonArray.getJSONObject(i);
+				MatchModel model = new MatchModel(matchObj.getString("_home"),
+						matchObj.getString("_guest"),
+						matchObj.getInt("_homeGoal"),
+						matchObj.getInt("_guestGoal"),
+						matchObj.getInt("_homePenaltyShoot"),
+						matchObj.getInt("_guestPenaltyShoot"),
+						matchObj.getString("_matchMinute"),
+						matchObj.getInt("_matchStatus"),
+						matchObj.getInt("_matchID"),
+						matchObj.getString("_matchDatetime"),
+						matchObj.getInt("_home_id"),
+						matchObj.getInt("_guest_id"),
+						matchObj.getInt("_isBet"), matchObj.getInt("_isHot"));
+				model.setLeagueRowId(matchObj.getInt("_league_row_id"));
+				model.setTvChanel(matchObj.getString("_tvChannel"));
+				list.add(model);
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		log("parseNext24List " + url + " : "
+				+ list.size() + "");
+		return list;
+	}
+
+}

@@ -1,0 +1,27 @@
+package com.ats.abongda.nvs.fragment.MAIN;
+
+import java.util.List;
+
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+
+import com.ats.abongda.nvs.fragment.BaseFragment;
+
+public class _Based_MainFragment extends BaseFragment{
+	protected LinearLayout mRootView;
+	protected ScrollView mRootScrollView;
+	protected LinearLayout mMainView;
+	protected View mHolderLayout;
+	protected View mNoInternetLayout;
+	protected View mSavedLayout;
+	
+	
+	public _Based_MainFragment(List<Object> mArgs) {
+		super(mArgs);
+		// TODO Auto-generated constructor stub
+	}
+
+
+
+}

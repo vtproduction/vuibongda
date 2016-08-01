@@ -1,0 +1,434 @@
+package com.ats.abongda.nvs.activity;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import vn.ats.aBongDa.R;
+import vn.ats.aBongDa.R.anim;
+import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager.PageTransformer;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+
+import com.ats.NIEN.abongda.UTIL.ActionCode;
+import com.ats.abongda.nvs.fragment.BaseFragment;
+import com.ats.abongda.nvs.fragment.MAINVIEW_MenuFragment;
+import com.ats.abongda.nvs.fragment.FSCR.FSCR_BetFragment;
+import com.ats.abongda.nvs.fragment.FSCR.FSCR_ChangeProfile;
+import com.ats.abongda.nvs.fragment.FSCR.FSCR_ChangepassFragment;
+import com.ats.abongda.nvs.fragment.FSCR.FSCR_ClubDetailFragment;
+import com.ats.abongda.nvs.fragment.FSCR.FSCR_ClubTeamFragment;
+import com.ats.abongda.nvs.fragment.FSCR.FSCR_LeagueTimeClubFragment;
+import com.ats.abongda.nvs.fragment.FSCR.FSCR_MailBoxFragment;
+import com.ats.abongda.nvs.fragment.FSCR.FSCR_MailDetail;
+import com.ats.abongda.nvs.fragment.FSCR.FSCR_MatchDetailFragment;
+import com.ats.abongda.nvs.fragment.FSCR.FSCR_NewsDetailFragment;
+import com.ats.abongda.nvs.fragment.FSCR.FSCR_PlayerDetailFragment;
+import com.ats.abongda.nvs.fragment.FSCR.FSCR_SigninFragment;
+import com.ats.abongda.nvs.fragment.FSCR.FSCR_SignupFragment;
+import com.ats.abongda.nvs.fragment.FSCR.FSCR_TopUserCoinFragment;
+import com.ats.abongda.nvs.fragment.LIVE.LIVE_LiveFragment;
+import com.ats.abongda.nvs.fragment.LIVE.LIVE_NewsFragment;
+import com.ats.abongda.nvs.fragment.LIVE.LIVE_Next24Fragment;
+import com.ats.abongda.nvs.fragment.TAIKHOAN.TAIKHOAN_BetLogFragment;
+import com.ats.abongda.nvs.fragment.TAIKHOAN.TAIKHOAN_HistoryFragment;
+import com.ats.abongda.nvs.fragment.TAIKHOAN.TAIKHOAN_ProfileFragment;
+import com.ats.abongda.nvs.fragment.TAIKHOAN.TAIKHOAN_StatisticFragment;
+import com.ats.abongda.nvs.fragment.TTGD.TTGD_LeagueRankingFragment;
+import com.ats.abongda.nvs.fragment.TTGD.TTGD_LeagueTimeFragment;
+import com.ats.abongda.nvs.fragment.TTGD.TTGD_StatisticFragment;
+
+@SuppressLint("NewApi")
+public class MainActivity extends BaseActivity implements ActionCode,
+		OnClickListener {
+	SharedPreferences sharePreference;
+	private BaseFragment mContent;
+	private LinearLayout tabView;
+	private FrameLayout frameView;
+	private pageType mPageType = pageType.LIVE_TYPE;
+
+	public MainActivity() {
+		super(R.string.app_name);
+
+	}
+
+	@SuppressLint("NewApi")
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		/*
+		 * int callbackActivity = Constant.LIVESCORE_CODE; final Bundle b =
+		 * getIntent().getExtras();
+		 * 
+		 * if (b!=null) { callbackActivity = b.getInt("callback_act"); final int
+		 * matchCode = b.getInt("match_code"); } Log.d("BA Log",
+		 * "callbackActivity: " + callbackActivity); if (savedInstanceState !=
+		 * null) mContent =
+		 * getSupportFragmentManager().getFragment(savedInstanceState,
+		 * "mContent"); if (mContent == null) if (callbackActivity ==
+		 * Constant.MATCHDETAILFRAGMENT) { mContent = new
+		 * MAINVIEW_MainFragment(callbackActivity, new ArrayList<Object>(){{
+		 * add(b.getInt("match_code")); }}); }else{ mContent = new
+		 * MAINVIEW_MainFragment(callbackActivity); }
+		 */
+
+		mContent = new LIVE_LiveFragment(null);
+		this.tabView = (LinearLayout) getLayoutInflater().inflate(
+				R.layout.menu_live, null);
+		this.tabView.findViewById(R.id.tab_n0).setOnClickListener(this);
+		this.tabView.findViewById(R.id.tab_n1).setOnClickListener(this);
+		this.tabView.findViewById(R.id.tab_n2).setOnClickListener(this);
+		this.tabView.findViewById(R.id.tab_n3).setOnClickListener(this);
+
+		// set content for main view
+		setContentView(R.layout.content_frame);
+		this.frameView = (FrameLayout) findViewById(R.id.content_frame);
+		((LinearLayout) findViewById(R.id.content_tab)).removeAllViews();
+		((LinearLayout) findViewById(R.id.content_tab)).addView(tabView);
+
+		getSupportFragmentManager().beginTransaction()
+				.replace(R.id.content_frame, mContent).commit();
+
+		// set content for menu view
+		setBehindContentView(R.layout.menu_frame);
+		getSupportFragmentManager().beginTransaction()
+				.replace(R.id.menu_frame, new MAINVIEW_MenuFragment()).commit();
+
+	}
+
+	@Override
+	public void onAttachedToWindow() {
+		// TODO Auto-generated method stub
+		super.onAttachedToWindow();
+	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		Log.d("BA Log", "resume main act");
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		// getSupportFragmentManager().putFragment(outState, "mContent",
+		// mContent);
+	}
+
+	public void switchContent(int mActionCode, List<Object> mArgs) {
+		isClosingApp = false;
+		mContent = setmContent(mActionCode, mArgs);
+		FragmentManager fm = getSupportFragmentManager();
+		fm.beginTransaction()
+				.setCustomAnimations(anim.slide_in_left, anim.slide_out_right,
+						anim.slide_out_left, anim.slide_in_right)
+				.replace(R.id.content_frame, mContent,
+						mContent.getActionCode() + "")
+				.addToBackStack(mContent.getActionCode() + "").commit();
+		getSlidingMenu().showContent();
+	}
+
+	public void switchContent(BaseFragment fragment) {
+		isClosingApp = false;
+		mContent = fragment;
+		FragmentManager fm = getSupportFragmentManager();
+		fm.beginTransaction()
+				.setCustomAnimations(anim.slide_in_left, anim.slide_out_right,
+						anim.slide_out_right, anim.slide_in_left)
+				.replace(R.id.content_frame, fragment,
+						fragment.getActionCode() + "")
+				.addToBackStack(mContent.getTag()).commit();
+		getSlidingMenu().showContent();
+	}
+
+	public void switchContentWithoutBackstack(BaseFragment fragment) {
+		mContent = fragment;
+		getSupportFragmentManager()
+				.beginTransaction()
+				.setCustomAnimations(anim.slide_in_left, anim.slide_out_right,
+						anim.slide_in_right, anim.slide_out_left)
+				.replace(R.id.content_frame, fragment,
+						fragment.getActionCode() + "").commit();
+		getSlidingMenu().showContent();
+	}
+
+	public void hideTabview() {
+		if (tabView.getVisibility() == View.VISIBLE) {
+			TranslateAnimation animate = new TranslateAnimation(0, 0, 0,
+					tabView.getHeight());
+			animate.setDuration(500);
+			animate.setFillAfter(true);
+			tabView.startAnimation(animate);
+			tabView.setVisibility(View.INVISIBLE);
+		}
+	}
+
+	public void showTabview() {
+		if (tabView.getVisibility() == View.INVISIBLE) {
+			TranslateAnimation animate = new TranslateAnimation(0, 0,
+					tabView.getHeight(), 0);
+			animate.setDuration(500);
+			animate.setFillAfter(true);
+			tabView.startAnimation(animate);
+			tabView.setVisibility(View.VISIBLE);
+		}
+	}
+
+	@SuppressLint("InflateParams")
+	public void changeTabType(pageType type) {
+		if (type == pageType.FULLSCR_TYPE) {
+			hideTabview();
+			mPageType = pageType.FULLSCR_TYPE;
+			return;
+		}
+		if (type == pageType.FULLSCR_TYPE) {
+			this.tabView = (LinearLayout) getLayoutInflater().inflate(
+					R.layout.menu_live, null);
+			mPageType = pageType.LIVE_TYPE;
+		} else if (type == pageType.TAIKHOAN_TYPE) {
+			this.tabView = (LinearLayout) getLayoutInflater().inflate(
+					R.layout.menu_account, null);
+			mPageType = pageType.TAIKHOAN_TYPE;
+		} else if (type == pageType.TTGD_TYPE) {
+			this.tabView = (LinearLayout) getLayoutInflater().inflate(
+					R.layout.menu_league, null);
+			mPageType = pageType.TTGD_TYPE;
+		}
+		((LinearLayout) findViewById(R.id.content_tab)).removeAllViews();
+		((LinearLayout) findViewById(R.id.content_tab)).addView(tabView);
+		this.tabView.findViewById(R.id.tab_n0).setOnClickListener(this);
+		this.tabView.findViewById(R.id.tab_n1).setOnClickListener(this);
+		this.tabView.findViewById(R.id.tab_n2).setOnClickListener(this);
+		this.tabView.findViewById(R.id.tab_n3).setOnClickListener(this);
+		showTabview();
+	}
+
+	public void changeTab(int tabPos) {
+		View t0, t1, t2, t3;
+		t0 = tabView.findViewById(R.id.tab_n0);
+		t1 = tabView.findViewById(R.id.tab_n1);
+		t2 = tabView.findViewById(R.id.tab_n2);
+		t3 = tabView.findViewById(R.id.tab_n3);
+		t0.setBackground(getResources().getDrawable(R.drawable.border_menu_2));
+		t1.setBackground(getResources().getDrawable(R.drawable.border_menu_2));
+		t2.setBackground(getResources().getDrawable(R.drawable.border_menu_2));
+		if (t3 != null) {
+			t3.setBackground(getResources().getDrawable(
+					R.drawable.border_menu_2));
+		}
+		switch (tabPos) {
+		case 0:
+			t0.setBackground(getResources().getDrawable(
+					R.drawable.border_menu_1));
+			break;
+		case 1:
+			t1.setBackground(getResources().getDrawable(
+					R.drawable.border_menu_1));
+			break;
+		case 2:
+			t2.setBackground(getResources().getDrawable(
+					R.drawable.border_menu_1));
+			break;
+		case 3:
+			t3.setBackground(getResources().getDrawable(
+					R.drawable.border_menu_1));
+			break;
+
+		default:
+			break;
+		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		View t0, t1, t2, t3;
+		t0 = tabView.findViewById(R.id.tab_n0);
+		t1 = tabView.findViewById(R.id.tab_n1);
+		t2 = tabView.findViewById(R.id.tab_n2);
+		t3 = tabView.findViewById(R.id.tab_n3);
+		
+		if (this.mPageType == pageType.LIVE_TYPE) {
+			switch (v.getId()) {
+			case R.id.tab_n0:
+				changeTab(0);
+				switchContent(NEWS, null);
+				break;
+			case R.id.tab_n1:
+				changeTab(1);
+				switchContent(LIVESCORE, null);
+				break;
+			case R.id.tab_n2:
+				changeTab(2);
+				switchContent(NEXT24H, null);
+				break;
+			case R.id.tab_n3:
+				changeTabType(pageType.TAIKHOAN_TYPE);
+				changeTab(0);
+				switchContent(ACCOUNT, null);
+				break;
+			default:
+				break;
+			}
+		}else if (this.mPageType == pageType.TAIKHOAN_TYPE) {
+			switch (v.getId()) {
+			case R.id.tab_n0:
+				changeTab(0);
+				switchContent(ACCOUNT, null);
+				break;
+			case R.id.tab_n1:
+				changeTab(1);
+				switchContent(ACCOUNTHISTORY, null);
+				break;
+			case R.id.tab_n2:
+				changeTab(2);
+				switchContent(ACCOUNTBETLOG, null);
+				break;
+			case R.id.tab_n3:
+				changeTab(3);
+				switchContent(ACCOUNTSTATISTIC, null);
+				break;
+			default:
+				break;
+			}
+		} else if (this.mPageType == pageType.TTGD_TYPE) {
+			switch (v.getId()) {
+			case R.id.tab_n0:
+				changeTab(0);
+				switchContent(LEAGUETIME, null);
+				break;
+			case R.id.tab_n1:
+				changeTab(1);
+				switchContent(LEAGUERANKING, null);
+				break;
+			case R.id.tab_n2:
+				changeTab(2);
+				switchContent(LEAGUESTATISTIC, null);
+				break;
+			case R.id.tab_n3:
+				// changeTabType(pageType.TAIKHOAN_TYPE);
+				hideTabview();
+				break;
+			default:
+				break;
+			}
+		}
+	}
+	
+	private void signin(final int actionCode, final List<Object> mArgs){
+		int currentUserId = sharePreference.getInt("CURRENT_USER_ID", -1);
+		if (currentUserId == -1) {
+			switchContent(SIGNIN, new List<Object>(){{
+				add(actionCode);
+				add(mArgs);
+			}});
+		}
+		
+	}
+
+	public BaseFragment setmContent(int actionCode, List<Object> mArgs) {
+		BaseFragment bf = null;
+		switch (actionCode) {
+		case NEWS:
+			bf = new LIVE_NewsFragment(mArgs);
+			break;
+		case LIVESCORE:
+			bf = new LIVE_LiveFragment(mArgs);
+			break;
+		case NEXT24H:
+			bf = new LIVE_Next24Fragment(mArgs);
+			break;
+		case ACCOUNT:
+
+		case ACCOUNTPROFILE:
+			bf = new TAIKHOAN_ProfileFragment(mArgs);
+			break;
+		case ACCOUNTHISTORY:
+			bf = new TAIKHOAN_HistoryFragment(mArgs);
+			break;
+		case ACCOUNTBETLOG:
+			bf = new TAIKHOAN_BetLogFragment(mArgs);
+			break;
+		case ACCOUNTSTATISTIC:
+			bf = new TAIKHOAN_StatisticFragment(mArgs);
+			break;
+
+		case LEAGUETIME:
+			bf = new TTGD_LeagueTimeFragment(mArgs);
+			break;
+		case LEAGUERANKING:
+			bf = new TTGD_LeagueRankingFragment(mArgs);
+			break;
+		case LEAGUESTATISTIC:
+			bf = new TTGD_StatisticFragment(mArgs);
+			break;
+
+		case NEWSDETAIL:
+			bf = new FSCR_NewsDetailFragment(mArgs);
+			break;
+		case SIGNIN:
+			bf = new FSCR_SigninFragment(mArgs);
+			break;
+		case SIGNUP:
+			bf = new FSCR_SignupFragment(mArgs);
+			break;
+		case CHANGEPASS:
+			bf = new FSCR_ChangepassFragment(mArgs);
+			break;
+		case CHANGEPROFILE:
+			bf = new FSCR_ChangeProfile(mArgs);
+			break;
+		case MAILBOX:
+			bf = new FSCR_MailBoxFragment(mArgs);
+			break;
+		case MAILDETAIL:
+			bf = new FSCR_MailDetail(mArgs);
+			break;
+		case TOPUSERCOIN:
+			bf = new FSCR_TopUserCoinFragment(mArgs);
+			break;
+		case TOPUSERBET:
+			bf = new FSCR_TopUserCoinFragment(mArgs);
+			break;
+		case LEAGUETIMECLUB:
+			bf = new FSCR_LeagueTimeClubFragment(mArgs);
+			break;
+		case MATCHDETAIL:
+			bf = new FSCR_MatchDetailFragment(mArgs);
+			break;
+		case BETPAGE:
+			bf = new FSCR_BetFragment(mArgs);
+			break;
+		case CLUBDETAIL:
+			bf = new FSCR_ClubDetailFragment(mArgs);
+			break;
+		case CLUBTEAM:
+			bf = new FSCR_ClubTeamFragment(mArgs);
+			break;
+		case PLAYERDETAIL:
+			bf = new FSCR_PlayerDetailFragment(mArgs);
+			break;
+
+		default:
+			bf = new LIVE_NewsFragment(mArgs);
+			break;
+		}
+		return bf;
+	}
+
+}

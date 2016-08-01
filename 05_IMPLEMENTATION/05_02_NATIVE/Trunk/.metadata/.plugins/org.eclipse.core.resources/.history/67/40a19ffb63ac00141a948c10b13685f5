@@ -1,0 +1,26 @@
+package com.ats.abongda.nvs.fragment.DIALOG;
+
+import java.util.List;
+
+import android.app.Activity;
+import android.graphics.drawable.Drawable;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+
+import com.astuetz.PagerSlidingTabStrip;
+import com.ats.abongda.nvs.fragment.PagerFragment.MyPagerAdapter;
+
+public class _BangXepHangFragment {
+	private PagerSlidingTabStrip tabs;
+	private ViewPager pager;
+	private MyPagerAdapter adapter;
+	protected Activity mActivity;
+	private Drawable oldBackground = null;
+	private int currentColor = 0xFF666666;
+	private String[] TITLES = new String[5];
+	private List<Fragment> fragments;
+	public _BangXepHangFragment() {
+		// TODO Auto-generated constructor stub
+	}
+
+}

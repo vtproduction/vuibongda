@@ -1,0 +1,218 @@
+a:link,a:visited,a:hover,a:active{text-decoration:none}
+.ui-content{padding-top:0}
+.ui-header{padding-bottom:10px}
+.ui-header .ui-title{margin:.9em 20% .8em}
+.ui-navbar-custom .ui-btn .ui-btn-inner{font-size:11px!important;padding-top:34px!important;padding-bottom:2px!important}
+.ui-navbar-custom .ui-btn .ui-icon{width:30px;height:30px;margin-left:-15px!important;box-shadow:none!important;-moz-box-shadow:none!important;-webkit-box-shadow:none!important;-webkit-border-radius:0!important;border-radius:0!important}
+.ranking-i:after{background:url(../images/ranking-30.png) no-repeat;background-size:30px 30px;border-radius:0}
+.statistic-i:after{background:url(../images/statistic-30.png) no-repeat;background-size:30px 30px;border-radius:0}
+.result-i:after{background:url(../images/result-30.png) no-repeat;background-size:30px 30px;border-radius:0}
+.news-i:after{background:url(../images/news-30.png) no-repeat;background-size:30px 30px;border-radius:0}
+.live-i:after{background:url(../images/live-30.png) no-repeat;background-size:30px 30px;border-radius:0}
+.account-i:after{background:url(../images/account-30.png) no-repeat;background-size:30px 30px;border-radius:0}
+.support-i:after{background:url(../images/support-30.png) no-repeat;background-size:30px 30px;border-radius:0}
+.money-i:after{background:url(../images/money-30.png) no-repeat;background-size:30px 30px;border-radius:0}
+.charge-i:after{background:url(../images/chargemoney-30.png) no-repeat;background-size:30px 30px;border-radius:0}
+.email-i:after{background:url(../images/email-30.png) no-repeat;background-size:30px 30px;border-radius:0}
+.user_ranking-i:after{background:url(../images/user_ranking-30.png) no-repeat;background-size:30px 30px;border-radius:0}
+.ui-loader-default{opacity:1;margin-left:-50px;margin-top:-50px}
+.ui-loader .ui-icon{background-color:transparent;width:100px;height:100px;border-radius:0}
+.ui-icon-loading{background:url(../images/new-ajax-loader.gif) no-repeat;background-size:100px 100px}
+.ui-loader-background{width:100%;height:100%;top:0;display:none;position:fixed;z-index:100;margin:0}
+.ui-loading .ui-loader-background{display:block}
+.feed-time{color:#666;font-size:70%;vertical-align:middle}
+.feed-title{font-size:85%;vertical-align:middle;white-space:normal;margin:0 0 0 30px}
+.feed-image{max-height:80px;max-width:120px;width:120px;height:80px;display:block;margin:0}
+.carousel{background:url(images/carousel-background.jpg);height:230px;text-align:center;overflow:hidden;margin:0 -15px 15px}
+.flexslider{background-color:transparent;position:relative;-webkit-border-radius:0;-moz-border-radius:0;-o-border-radius:0;border-radius:0;box-shadow:none;-webkit-box-shadow:none;-moz-box-shadow:none;-o-box-shadow:none;zoom:1;height:240px;border:none;margin:0;padding:0}
+.slides,.flex-direction-nav{list-style:none outside none!important;margin:0!important;padding:0!important}
+.flexslider li{margin-top:0!important;margin-bottom:0!important;background-image:none!important;background-color:transparent;list-style:none!important;padding:0!important}
+.flexslider .flex-caption{position:absolute;left:0;right:0;bottom:0;background:transparent url(../images/background-title.png) 0 0 repeat;z-index:10;text-align:left;color:#FFF;font-weight:700;overflow:hidden;text-overflow:ellipsis;height:3em;text-shadow:#171518 0 -1.5px 0;margin:0;padding:10px 10px 1.7em}
+.flex-control-nav{margin:-35px 0 0;padding:0}
+.flex-control-paging li a{width:9px;height:9px}
+.flexslider ul.slides li a .flex-caption:hover{color:#FFF}
+.flexslider .slides img{height:240px;width:100%;max-height:240px;margin:0 auto}
+.content_container{text-align:justify}
+.content_container img{max-width:100%}
+#ranking_national_detail_page td a:hover,#ranking_national_detail_page td a:focus,#ranking_national_detail_page td a:active{text-decoration:underline;color:orange!important}
+table{width:100%;border-collapse:collapse;color:#FFF;font:bold 12px helvetica;border-bottom:1px solid #E4EEF2;margin:0;padding:0}
+table th,td{text-align:left;padding:7px}
+table thead{background:#396b9e;background-image:0;text-shadow:0 1px 1px #194b7e;color:#fff}
+table tr td{color:#666;background-color:#fdfdfd;background-image:none;border-bottom:1px solid #E4EEF2;padding:10px 0}
+table tr td:last-child{border-right:none}
+table tr:last-child td{border-bottom:none}
+#fixture_page .ui-league-img{max-height:32px;max-width:32px;vertical-align:middle;padding-right:10px}
+.fixture-time{width:6%;text-align:left;float:left;font-size:14px;font-weight:400;text-shadow:1px 1px #ddd;padding-top:.7em;margin-left:15px}
+.fixture-match{width:80%;text-align:left;float:left}
+.match-container{width:80%;font-weight:700;padding:0 10%}
+.match-container p{font-weight:700;font-size:.8em}
+.match-score{float:right;padding:5px 0}
+.match_team{float:left;padding:5px 0}
+.match-play{width:5%;float:left;text-align:left;font-size:14px;font-weight:400;color:#74b042;text-shadow:1px 1px #ddd;padding-top:.7em}
+.fixture-winner{font-weight:700;color:red;font-size:1.2em}
+.guest_club{margin-bottom:0}
+.tvChannel{font-size:11px;color:green;width:100%;margin-bottom:2px;min-height:14px;text-align:center;margin-top:10px}
+.betResult{font-size:11px;width:100%;margin-bottom:2px;min-height:14px;text-align:center;margin-top:10px}
+#match-pannel{margin:0;padding:15px 0}
+#match_detail_page{font-size:85%}
+#match_detail_page div[data-role=collapsible] h3 span{min-height:19px}
+#match_detail_page .club-form{color:#FFF;font-size:90%;text-shadow:none;margin:0 2px;padding:1px 4px}
+#match_detail_page .win-form{background-color:#74b042}
+#match_detail_page .lose-form{background-color:red}
+#match_detail_page .draw-form{background-color:orange}
+#match_detail_page .ui-bar-b{background:#2a5f78;background-image:linear-gradient(#2e6884/*{a-bar-background-start}*/,#25556c/*{a-bar-background-end}*/);border-color:#2a5f78}
+#match_detail_page .ui-li-count{color:#74b042;min-height:12px;min-width:18px}
+#match_detail_page .ui-li-has-count .ui-li-count{font-size:.9em;background:#FFF;border-color:orange}
+#match_detail_page .tips{font-weight:400;text-align:center;padding:.7em 15px}
+#match_detail_page .tips .ui-grid-a .ui-block-a{width:18%;text-align:center;padding-top:10px;text-shadow:none}
+#match_detail_page .tips .ui-grid-a .ui-block-b{width:81%;text-align:center;margin-left:1%}
+#match_detail_page .tips-t{color:#5f9cc5;text-align:center;font-weight:700}
+#match_detail_page .tips-t a{text-decoration:underline;color:red;font-weight:400}
+#match_detail_page .list-t,.notification{font-weight:400;text-shadow:0 1px 1px #bbb;text-align:center;background:#FFF;border-radius:1em;border:1px solid #FF7007;-webkit-border-radius:1em;padding:.3em .7em}
+#match_detail_page .list-h{font-weight:700;text-align:center}
+#match_detail_page .handicap-h{font-weight:400;color:#FF7007}
+#match_detail_page .win-coin{color:#74b042;font-weight:700}
+#match_detail_page .lose-coin{color:red;font-weight:700}
+#match_detail_page #list-confront-history a.ui-link-inherit{padding-top:.4em;padding-bottom:.4em;padding-left:5px}
+#match_detail_page #list-confront-history .ui-grid-d .ui-block-a{width:22%;font-weight:400}
+#match_detail_page #list-confront-history .ui-grid-d .ui-block-b{width:15%}
+#match_detail_page #list-confront-history .ui-grid-d .ui-block-d{width:13%;text-align:center;color:red}
+#match_detail_page #list-confront-history .ui-grid-d{color:#171518;font-size:.8em;white-space:pre-line}
+#match_detail_page #list-confront-history .ui-grid-d img{width:26px}
+#match_detail_page .bet-coin{font-weight:400;text-align:center;text-shadow:0 1px 1px #bbb;background:#FFF;border-radius:1em;border:1px solid #FF7007;-webkit-border-radius:1em;padding:.3em .7em}
+#match_detail_page #lineup-panel .ui-grid-a.lineup-grid{color:#222;text-shadow:0 1px 0 #fff}
+#match_detail_page #lineup-panel .lineup-number{width:10%;padding-bottom:10px}
+#match_detail_page #lineup-panel .lineup-name{width:85%;text-align:left;padding-bottom:10px}
+#match_detail_page #substitution-list{margin-top:15px}
+#match_detail_page .sub-time{color:#5f9cc5}
+.match-display{text-shadow:1px 1px #bbb;color:#038c65;padding-top:2px}
+.score{font-size:1.3em;color:red}
+.time{color:#78c829}
+#list-match li{padding:.4em 15px}
+#match-contain .ui-block-b{width:20%}
+#match-contain img{max-width:50px}
+.match-real-time{font-weight:400}
+.match-real-time img{height:20px}
+.match-real-time .ui-block-a{width:10%;text-align:left}
+.match-real-time .ui-block-b{width:35%;text-align:left}
+.match-real-time .ui-block-c{width:10%;text-align:center;text-shadow:0 1px 1px #bbb;color:#5f9cc5}
+.match-real-time .ui-block-d{width:35%;text-align:right}
+.match-real-time .ui-block-e{width:10%;text-align:right}
+#stadium-contain .ui-block-a{width:26%}
+#stadium-contain .ui-block-b{width:74%;text-align:right;padding:.4em}
+#stadium{color:#5f9cc5;width:74%;margin:0}
+.betButton{width:28%}
+.match-result-even-row{font-size:.7em;font-weight:700;border-top:1px #DDD solid;height:28px;background-color:#E6EEF0;padding:2%}
+.match-result-odd-row{font-size:.7em;font-weight:700;border-top:1px #DDD solid;height:28px;padding:2%}
+.match-time{font-size:12px;text-shadow:1px 1px #DDD;width:12%;font-weight:400;float:left}
+.match-time-without-league-icon{font-size:12px;text-shadow:1px 1px #DDD;width:17%;font-weight:400;float:left}
+.home-club-name{float:left;width:29%;text-align:right;margin-right:2%;height:17px}
+.guest-club-name{margin-left:2%;width:29%;height:17px;float:left}
+.split{float:left;color:#E90F46;margin:0 1%}
+.split-without-score{float:left;color:#E90F46;margin:0 3%}
+.detail-icon{display:block;float:right;height:30px;background:url(../images/detail_icon.png) no-repeat;width:22px;padding-left:5px}
+.league-icon{float:left;width:24px}
+.penalty{color:#E90F46}
+.club-info{height:200px;text-align:center;margin:0}
+#club_detail_page a:focus,#club_detail_page a:active{color:#fa9600!important}
+#club_detail_page .feed-title,#player_detail_page .feed-title{font-weight:300;color:#2489aa;margin:0}
+#club_detail_page .club-info .ui-grid-a .ui-block-a{width:30%;height:200px;text-align:center}
+#club_detail_page .club-info .ui-grid-a .ui-block-a img{width:80px;height:80px;margin:30px 0 5px}
+#club_detail_page .club-info .ui-grid-a .ui-block-b{width:70%;text-align:center}
+#club_detail_page .ui-li-aside{width:75%;font-size:14px}
+#team_player_list_page .ui-li-thumb,.ui-listview .ui-li-icon{height:80px;width:80px;-webkit-border-radius:.6em;border-radius:.6em}
+#club-title{margin-top:10px}
+#team_player_list_page .club-info{height:170px}
+.club-info img{width:80px;height:80px}
+.player-info{text-align:center;height:140px;margin:0}
+#player-news{margin-top:14px}
+#player_detail_page .player-info .ui-grid-a .ui-block-a img{width:100px;height:100px;margin:10px 0 5px}
+#player_detail_page .ui-li-aside{width:70%;font-size:14px}
+#detail_club_honours{font-size:13px;margin:20px 0;padding:10px}
+.aBongDa_logo{display:block;width:30px;height:30px;background:url(../images/aBongDa_logo.png) no-repeat}
+.main_nav_bar{z-index:1010;background:none;background-color:#2C323F}
+.main_nav_bar .ui-panel-inner{padding:15px 5px 0}
+.main_nav_bar .ui-listview{margin:-15px -5px 0}
+.main_nav_bar .ui-listview .ui-li{min-height:30px;background:none}
+.main_nav_bar .version_header{font-size:1.3em;font-weight:700;height:30px;vertical-align:middle;display:block;float:left;margin:3px 0 0 10px}
+.main_nav_bar .main_menu{margin:10px 0 0;padding:0}
+.main_nav_bar .main_menu li{list-style:none;border-bottom:solid thin #333946;margin:0;padding:10px 0 10px 10px}
+.main_nav_bar .main_menu li.li_match{padding-left:20px}
+.main_nav_bar .main_menu li.li_header{font-weight:700;text-transform:uppercase;font-size:.9em;border-bottom:solid medium #333946;color:#D8D9DB}
+.main_nav_bar .main_menu li img{vertical-align:middle;margin-right:10px;width:25px}
+.main_nav_bar .main_menu li a{color:#fff!important;font-weight:400;width:100%;display:block;font-size:1.1em}
+.main_nav_bar .main_menu li a.sidebar_facebook_button{width:25%;float:left;margin:5px}
+.ui-dialog-contain{top:20px}
+.heading{font-size:24px;font-weight:700;font-family:Segoe UI}
+.field{width:140px;vertical-align:top}
+.fieldName{color:#6B6C6F;font-size:18px;font-family:Segoe UI;font-weight:600}
+.value{color:#789;font-size:18px;font-family:Segoe UI;font-weight:600}
+.ui-body-c{background:none;background-color:#FFF}
+.infoIcon{width:2em;height:2em;padding-right:1em}
+#bet_page .ui-btn,#bet_score_page .ui-btn-inline{width:130px}
+.divClub{float:left;text-align:center;width:40%;margin:0 5px}
+div.ui-btn-text{width:98%}
+.divClub .ui-select{width:75px;padding-left:25px}
+#homeClubNameScore,#guestClubNameScore{min-height:35px}
+.hot_line_support{font-weight:700;font-style:italic;color:red}
+.popupBoxHeader{font-size:1em;text-align:center}
+.popupBoxContent{font-size:1.2em;min-height:50px;padding:15px 10px 0}
+.closePopup .ui-btn-inner{padding-right:15px;padding-left:15px}
+.ui-icon-guideinfo{background-image:url(../images/information.png)}
+.ui-icon-sms_charge{background-image:url(../images/sms.png)}
+.ui-icon-card_charge{background-image:url(../images/mobicard.png)}
+.ui-icon-sms_price{background-image:url(../images/dollar.png)}
+.icon_bars{display:block;background:url(../images/bars36.png);width:36px;height:36px}
+.icon_refresh{display:block;background:url(../images/refresh36.png);width:36px;height:36px}
+.icon_gear{display:block;background:url(./images/icons-36-white.png);width:36px;height:36px;background-position:-576px -2px}
+.icon_back{display:block;background:url(../images/back.png);width:36px;height:36px}
+.sms-vnd{color:red}
+#inbox_panel{margin:10px 0 0}
+#inbox_panel a{padding-top:.4em;padding-bottom:.4em;font-weight:400}
+#inbox_panel a span{display:block;float:left}
+#inbox_panel a span.date{margin-right:20px}
+a.verification{float:right;width:2em;height:2em}
+#account_page .img-verified{float:right;width:2em;height:2em;background-image:url(../images/badge_tick.png);background-repeat:no-repeat;background-position:center;background-size:2em 2em}
+#account_page .img-unverified{float:right;width:8.4em;height:2.5em;background-repeat:no-repeat;background-position:center;background-size:8.4em 2.5em}
+#account_page #phoneVerify .img-unverified{background-image:url(../images/icon-xac-thuc-sms.png)}
+#account_page #emailVerify .img-unverified{background-image:url(../images/icon-xac-thuc-email.png)}
+.email-i{position:relative}
+.badge{position:absolute;top:-26px;right:-10px;background-color:red;color:#FFF;border-radius:30px;box-shadow:1px 1px 1px gray;background:0;border:2px solid #FFF;font:bold 12px/9px Helvetica, Verdana, Tahoma;text-align:center;padding:1px 2px}
+#next24h_page .bet-match{background:url(../images/bet_watermark.png) no-repeat right 90%}
+#next24h_page .ui-icon-arrow-r{display:none}
+.like-button{right:3em;top:.6em;position:absolute!important;height:2em;width:2em}
+.share-button{right:.6em;top:.6em;position:absolute!important;height:2em;width:2em}
+.facebook-button{background:url(https://s-static.ak.fbcdn.net/images/connect_sprite.png) no-repeat scroll left -188px #29447e;display:inline-block;line-height:14px;outline:medium none;padding:0 0 0 1px}
+.facebook-button span{background:url(https://s-static.ak.fbcdn.net/images/connect_sprite.png) repeat scroll 0 0 #5f78ab;border-bottom:1px solid #1a356e;border-top:1px solid #879ac0;color:#fff;cursor:pointer;display:block;font-size:11px;font-weight:700;font-family:'Lucida Grande', Verdana, Arial, sans-serif;text-shadow:none;margin:1px 1px 0 21px;padding:2px 6px 3px}
+.marquee-title{background:#eee;text-shadow:0 1px 0 #fff;background-image:linear-gradient(#fff,#f1f1f1);margin:0 -15px;padding:10px 0}
+.marquee-title a marquee{color:#FF7007!important;font-weight:700}
+.bet-i .ui-icon{background:url(../images/bet.png) no-repeat;background-size:30px 30px}
+.clearer,.main_nav_bar .clearer{clear:both}
+.ui-header .ui-btn-right,.ui-header .ui-btn-left{top:9px}
+#ranking_page .ui-listview .ui-li-icon,#result_page .ui-listview .ui-li-icon{max-height:32px;max-width:32px;left:10px;top:.2em}
+#ranking_page .ui-li-has-arrow .ui-btn-inner a.ui-link-inherit,.ui-li-static.ui-li-has-arrow,#fixture_page .ui-li-has-icon .ui-btn-inner a.ui-link-inherit,#fixture_page .ui-li-static.ui-li-has-icon,#result_page .ui-li-has-arrow .ui-btn-inner a.ui-link-inherit,.ui-li-static.ui-li-has-arrow{padding-left:50px}
+#ranking_national_detail_page .ui-content,#ranking_cup_detail_page .ui-content{padding:5px}
+table caption,table thead th,#match_detail_page #lineup-panel #lineup-home .lineup-name,#match_detail_page #lineup-panel #sub-home .lineup-name{text-align:left}
+#fixture_page .ui-li-divider,#match_detail_page #lineup-panel #lineup-guest .lineup-name,#match_detail_page #lineup-panel #sub-guest .lineup-name{text-align:right}
+#fixture_page .ui-li-desc,.value div.ui-input-text{margin:0}
+#fixture_page .ui-li .ui-btn-inner a.ui-link-inherit,#next24h_page .ui-li .ui-btn-inner a.ui-link-inherit,#bet_history_page .ui-li .ui-btn-inner a.ui-link-inherit,#national_match_result_page .ui-content,#cup_match_result_page .ui-content,#club_match_result_page .ui-content,#txtUserBetValue,#message_page .ui-content{padding:0}
+.fixture-day,.main_nav_bar .aBongDa_logo{float:left}
+#next24h_page .match-result-even-row,#bet_history_page .match-result-even-row{font-size:.7em;font-weight:700;border:none;background-color:inherit;height:15px;padding:2%}
+#next24h_page .home-club-name,#bet_history_page .home-club-name{float:left;width:31%;text-align:right;height:17px;font-size:12px;white-space:normal;margin-left:5px}
+#next24h_page .guest-club-name,#bet_history_page .guest-club-name{width:31%;height:17px;float:left;font-size:12px;white-space:normal}
+#next24h_page .split,#bet_history_page .split{float:left;color:inherit;margin:0 1px}
+#next24h_page .match-time-without-league-icon,#bet_history_page .match-time-without-league-icon{width:13%}
+#match_detail_page .tips .ui-grid-a .ui-block-b .ui-grid-b .ui-block-a,#match_detail_page .tips .ui-grid-a .ui-block-b .ui-grid-b .ui-block-b,#match_detail_page .tips .ui-grid-a .ui-block-b .ui-grid-b .ui-block-c{width:33%;text-align:center;margin:0!important}
+#match_detail_page #list-confront-history .ui-grid-d .ui-block-c,#match_detail_page #list-confront-history .ui-grid-d .ui-block-e{width:25%;text-align:center}
+#match_detail_page #lineup-panel #lineup-home .lineup-number,#match_detail_page #lineup-panel #sub-home .lineup-number{margin-right:5%}
+#match_detail_page #lineup-panel #lineup-guest .lineup-number,#match_detail_page #lineup-panel #sub-guest .lineup-number{margin-left:5%;text-align:right}
+#match-contain .ui-block-a,#match-contain .ui-block-c{width:40%}
+.home-club-name a,.guest-club-name a{color:#2F3E46}
+.home-club-name a:hover,.guest-club-name a:hover{text-decoration:underline;color:orange}
+.home-club-goal,.guest-club-goal{color:#E90F46;float:left}
+.main_nav_bar .main_menu li:active,.main_nav_bar .main_menu li:focus{background-color:#1A1E26;margin-left:-5px;margin-right:-5px}
+.main_nav_bar .main_menu li.li_header:active,.main_nav_bar .main_menu li.li_header:focus{background-color:#2C323F;margin-left:0;margin-right:0}
+.main_nav_bar .main_menu li.side_bar_facebook_zone:active,.main_nav_bar .main_menu li.side_bar_facebook_zone:focus{background:none;margin-left:0;margin-right:0}
+.hot_line_header,#inbox_panel a.new{font-weight:700}
+#messageBox,#updateMessageBox,#confirmBox{min-width:300px;display:none;max-width:50%}
+#fixture_page .campaign-hot-match,#next24h_page .campaign-hot-match{background:url(../images/star.png) no-repeat right 10%}

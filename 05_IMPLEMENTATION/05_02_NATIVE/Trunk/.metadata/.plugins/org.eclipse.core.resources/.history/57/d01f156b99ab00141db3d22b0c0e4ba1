@@ -1,0 +1,71 @@
+package com.ats.abongda.nvs.fragment.MAIN;
+
+import java.util.List;
+
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
+
+import com.ats.NIEN.abongda.R;
+import com.ats.abongda.nvs.fragment.BaseFragment;
+import com.squareup.picasso.Picasso;
+
+public class _BangXepHangFragment extends BaseFragment implements OnClickListener, ILoadFragmentObserver{
+	public LinearLayout mainView;
+	public LayoutInflater inflater;
+	public _BangXepHangFragment(int mActionCode, List<Object> mArgs) {
+		super(mActionCode, mArgs);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public View onCreateView(LayoutInflater inflater,
+			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		View v = (ScrollView) inflater.inflate(R.layout.bangxephang_mainlayout,null);
+		mainView = (LinearLayout) v.findViewById(R.id.bangxephang_mainlayout);
+		return v;
+	}
+	
+	private void generateView(LayoutInflater inflater){
+		int[] codeArray = new int[] {0,1,2,3,4,5,6};
+		String[] nameArray = new String[] {"Premier League","Primera Liga"
+				,"Serie A","Bundesliga","Ligue One","Champions League","Europa League"};
+		int[] drawableArray = new int[]{
+			R.drawable.league_pl, R.drawable.league_lfp
+			,R.drawable.league_seriea, R.drawable.league_l1,
+			R.drawable.league_cl, R.drawable.league_el
+		};
+		for(int i = 0; i<7; i++){
+			LinearLayout item = (LinearLayout) inflater.inflate(R.layout.bangxephang_itemlayout, null);
+			Picasso.with(getRealActivity()).load(drawableArray[i]).into((ImageView)item.findViewById(R.id.bangxephang_itemlayout_img));
+			((TextView)item.findViewById(R.id.bangxephang_itemlayout_text)).setText(nameArray[i]);
+			item.setBackgroundDrawable(getResources().getDrawable(drawableArray[i]));
+			item.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+			
+		}
+	}
+
+
+
+}

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="menu_header_color">#FF2E2E2E</color>
+    <color name="black_color">#FF000000</color>
+    <color name="white_color">#FFFFFFFF</color>
+    <color name="white_color_f">#80FFFFFF</color>
+    <color name="base_app_color">#FF0281E4</color>
+    <color name="base_app_color_fade">#800281E4</color>
+    <color name="menu_item_color">#FF2C323F</color>
+    <color name="menu_item_border_color">#FF000000</color>
+    <color name="menu_sub_item_color">#FF414754</color>
+    <color name="tab_item_unselected_bg">#FF2E2E2E</color>
+    <color name="list_item_bg">#FFF6F2F2</color>
+    <color name="deep_blue_color">#FF0000EE</color>
+    <color name="brown_border">#FFCCCCCC</color>
+    <color name="list_item_text1">#898989</color>
+    <color name="grey_color">#FFa1a1a1</color>
+    <color name="grey_color_f">#80a1a1a1</color>
+    <color name="bgcolor4">#f6f2f2</color>
+    <color name="bgcolor2">#FDFDFD</color>
+    <color name="bgcolor3">#E4EEF2</color>
+    <color name="redcolor">#E90F46</color>
+    <color name="listitem">#E6EEF0</color>
+    <color name="myredcolor">#FF0000</color>
+    <color name="mygreencolor">#008000</color>
+    <color name="mydarktheme">#FF333333</color>
+    <color name="l0">#7BDD6C</color>
+    <color name="l1">#DEBD6D</color>
+    <color name="l2">#0281E4</color>
+    <color name="l3">#B6C4F7</color>
+    <color name="l4">#E27F7F</color>
+    <color name="l5">#43D14B</color>
+    <color name="l6">#7C40D3</color>
+    <color name="l7">#E58E2E</color>
+</resources>

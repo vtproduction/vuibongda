@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/border_bottom4"
+    android:gravity="center_horizontal"
+    android:orientation="horizontal"
+    android:padding="5dp"
+    android:weightSum="120" >
+
+    <TextView
+        android:id="@+id/tddd_ngaythang"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="22"
+        android:text="12/01/14\n00:30:00"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="12sp" 
+        android:layout_gravity="center"/>
+
+    <ImageView
+        android:id="@+id/tddd_league"
+        android:layout_width="0dp"
+        android:layout_weight="15"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:src="@drawable/league_bundesliga" />
+
+    <TextView
+        android:id="@+id/tddd_host"
+        android:layout_width="0dp"
+        android:layout_weight="29"
+        android:layout_height="wrap_content"
+        android:text="@string/longName"
+        android:layout_gravity="center_vertical"
+        android:gravity="right"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/tddd_score"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="17"
+        android:text="20-20"
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/redcolor"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:id="@+id/tddd_guest"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="29"
+        android:gravity="left"
+        android:layout_gravity="center_vertical"
+        android:text="@string/guest"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+       android:layout_width="0dp"
+        android:layout_weight="8"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_action_collapse_dark" />
+
+</LinearLayout>

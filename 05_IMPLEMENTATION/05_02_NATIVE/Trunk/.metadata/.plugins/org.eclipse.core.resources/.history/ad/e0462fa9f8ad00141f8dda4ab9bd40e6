@@ -1,0 +1,135 @@
+package com.ats.abongda.nvs.adapter;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.ats.NIEN.abongda.R;
+import com.ats.NIEN.abongda.model.MatchModel;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+public class _BXH_LichthidauAdapter extends BaseAdapter implements OnClickListener{
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private List<MatchModel> models = new ArrayList<MatchModel>();
+	private LayoutInflater layoutInflater;
+	private Context mContext;
+	
+	public _BXH_LichthidauAdapter(List<MatchModel> models, Context mContext) {
+		super();
+		this.models = models;
+		this.mContext = mContext;
+		this.layoutInflater = LayoutInflater.from(mContext);
+	}
+	
+	@Override
+	public int getCount() {
+		// TODO Auto-generated method stub
+		return models.size();
+	}
+
+	@Override
+	public Object getItem(int position) {
+		// TODO Auto-generated method stub
+		return models.get(position);
+	}
+
+	@Override
+	public long getItemId(int position) {
+		// TODO Auto-generated method stub
+		return position;
+	}
+
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+		// TODO Auto-generated method stub
+		final MatchModel model = (MatchModel)getItem(position);
+		ViewHolder holder;
+		if (convertView == null) {
+			convertView = layoutInflater.inflate(R.layout.bangxephang_lichthidau_listitem, null);
+			holder = new ViewHolder();
+			holder.mDay = (TextView) convertView.findViewById(R.id.bxh_listitem_time);
+			holder.mHost = (TextView) convertView.findViewById(R.id.bxh_listitem_host);
+			holder.mGuest = (TextView) convertView.findViewById(R.id.bxh_listitem_guest);
+			holder.mHostGoal = (TextView) convertView.findViewById(R.id.bxh_listitem_hostgoal);
+			holder.mGuestGoal = (TextView) convertView.findViewById(R.id.bxh_listitem_guestgoal);
+			holder.mArrow = (ImageView) convertView.findViewById(R.id.bxh_listitem_arrow);
+			convertView.setTag(holder);
+		}else{
+			holder = (ViewHolder) convertView.getTag();
+		}
+		String[] arrStD = model.getMatchShortStartDate().split("/");
+		String day = arrStD[0];
+		String month = arrStD[1];
+		if (arrStD[0].length() == 1) {
+			day = "0"+day;
+		}
+		if (arrStD[1].length() == 1) {
+			month = "0"+month;
+		}
+		holder.mDay.setText(day+"/"+month + "\n" + model.getMatchStartTimeWithoutPlus());
+		holder.mHost.setText(model.getHome());
+		holder.mGuest.setText(model.getGuest());
+		if (model.getMatchStatus() != 0) {
+			holder.mHostGoal.setText(model.getHomeGoal()+"");
+			holder.mGuestGoal.setText(model.getGuestGoal()+"");
+		}else{
+			holder.mHostGoal.setText("");
+			holder.mGuestGoal.setText("");
+		}
+		holder.mArrow.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		holder.mHost.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		holder.mGuest.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		return convertView;
+	}
+	
+	private int findScrollPos(){
+		for(MatchModel model : models){
+			
+		}
+		return 0;
+	}
+	
+	private class ViewHolder{
+		TextView mDay, mHost, mGuest, mHostGoal, mGuestGoal;
+		ImageView mArrow;
+	}
+	
+	
+	
+
+
+
+}

@@ -1,0 +1,33 @@
+1420087934532	Rename type 'TintucModel'
+1420087971520	Move compilation unit
+1420104109296	Change Layout
+1420104350035	Rename field 'imageView1'
+1420104457530	Rename field 'textView1'
+1420104596592	Change Layout
+1420105417858	Rename field 'ScrollView1'
+1420113903934	Change Layout
+1420113913469	Change Layout
+1420114189029	Rename field 'imageView1'
+1420114198959	Rename field 'ImageView01'
+1420114214909	Rename field 'textView1'
+1420114222399	Rename field 'TextView01'
+1420196293435	Rename field 'imageView1'
+1420196303562	Rename field 'webView1'
+1420197589398	Delete element
+1420254225714	Rename package 'com.ats.abongda.nvs.fragment._LIVE'
+1420254310948	Move compilation unit
+1420256721827	Rename field 'imageView1'
+1420256730748	Rename field 'imageView2'
+1420256743626	Rename field 'textView1'
+1420272761707	Change Layout
+1420273029544	Extracts string 'null' into R.string.dangky
+1420273056964	Extracts string 'null' into R.string.dangnhap
+1420273383438	Extracts string 'null' into R.string.matkhau
+1420273422880	Extracts string 'null' into R.string.tendangnhap
+1420274013479	Rename field 'textView1'
+1420274021840	Rename field 'textView2'
+1420274032370	Rename field 'textView3'
+1420274047721	Rename field 'editText1'
+1420274067177	Rename field 'editText2'
+1420274077048	Rename field 'button1'
+1420277174341	Extracts string 'null' into R.string.detieptuc

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    android:orientation="vertical" >
+
+    <com.ats.NIEN.abongda.UTIL.AnimatedExpandableListView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/livetab_mainxx_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/livetab_maintab"
+        android:dividerHeight="0dp"
+        android:groupIndicator="@null"
+        android:fadingEdge="none"
+        android:scrollingCache="false" />
+
+    <LinearLayout
+        android:id="@+id/livetab_maintab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:background="@color/base_app_color_fade"
+        android:weightSum="2" >
+
+        <LinearLayout
+            android:id="@+id/livetab_livescore_tab"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="5dp"
+            android:weightSum="5" >
+
+            <ImageView
+                android:id="@+id/livetab_livescore_tab_img"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/live_icon_xx" />
+
+            <TextView
+                android:id="@+id/livetab_livescore_tab_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/tablivescore"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/white_color"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/livetab_next24h_tab"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="5dp"
+            android:weightSum="5" >
+
+            <ImageView
+                android:id="@+id/livetab_next24h_tab_img"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/live_icon_zz" />
+
+            <TextView
+                android:id="@+id/livetab_next24h_tab_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/tab24htoi"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/white_color"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/livetab_nores_tab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/livetab_main_listview"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:visibility="invisible"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/khongcotrandaunao"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/grey_color" />
+
+    </LinearLayout>
+
+</RelativeLayout>

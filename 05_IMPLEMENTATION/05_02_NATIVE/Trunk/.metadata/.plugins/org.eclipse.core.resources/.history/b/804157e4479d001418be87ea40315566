@@ -1,0 +1,191 @@
+package com.ats.abongda.nvs.fragment.MAIN;
+
+import java.lang.ref.WeakReference;
+import java.util.List;
+
+import com.ats.NIEN.abongda.R;
+import com.ats.NIEN.abongda.UTIL.InternetChecking;
+import com.ats.NIEN.abongda.UTIL.InternetChecking.InternetCheckingCallback;
+import com.ats.NIEN.abongda.model.UserModel;
+
+import android.app.Dialog;
+import android.content.Context;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.ats.abongda.nvs.activity.BaseActivity;
+import com.ats.abongda.nvs.fragment.BaseFragment;
+import com.ats.abongda.nvs.fragment.DIALOG._Signin;
+import com.ats.abongda.nvs.model.NewsModel;
+import com.ats.abongda.nvs.util.JSONParser;
+import com.ats.abongda.nvs.util.TAG;
+
+public class _AccountFragment extends BaseFragment implements OnClickListener{
+	
+	private Button btnNotSignin;
+	private LinearLayout mScrollLayout;
+	private LayoutInflater inflater;
+	private int userId;
+	private boolean reloadViewFlag = true;
+	public static _AccountFragment newInstance(){
+		return new _AccountFragment(null);
+	}
+	public _AccountFragment(int mActionCode, List<Object> mArgs) {
+		super(mActionCode, mArgs);
+		// TODO Auto-generated constructor stub
+	}
+
+	public _AccountFragment(List<Object> mArgs) {
+		super( mArgs);
+		// TODO Auto-generated constructor stub
+		this.mActionCode = ACCOUNT;
+	}
+	
+	
+	@Override
+	public View onCreateView(LayoutInflater inflater,
+			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		this.inflater = inflater;
+		this.userId = getRealBaseActivity().getUserId();
+		generateView();
+		
+		
+		return mMainView;
+	}
+	
+	
+
+	private void generateView(){
+		if (userId == -1) {
+			mMainView = inflater.inflate(R.layout.account_mainlayout_notsignin, null);
+			//mMainView.setOnClickListener(this);
+			btnNotSignin = (Button) mMainView.findViewById(R.id.account_notsignin_button);
+			btnNotSignin.setOnClickListener(this);
+			this.reloadViewFlag = false;
+		}else{
+			mMainView = inflater.inflate(R.layout.account_mainlayout, null);
+			mScrollLayout = (LinearLayout) mMainView.findViewById(R.id.account_mainscroll_layout);
+			this.reloadViewFlag = true;
+			generateUserView();
+		}
+		
+	}
+	
+	private void generateUserView(){
+		netAsync();
+	}
+	
+	private void generateProfileView(){
+		
+	}
+	
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		switch (v.getId()) {
+		case R.id.account_notsignin_button:
+			new _Signin().show(getChildFragmentManager(), TAG.TAG_DANGNHAP);
+			break;
+
+		default:
+			break;
+		}
+		
+	}
+	
+	@Override
+	public void refreshContent() {
+		// TODO Auto-generated method stub
+		//super.refreshContent();
+		generateView();
+	}
+	
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		//Toast.makeText(getActivity(), "ok !", Toast.LENGTH_SHORT).show();
+		generateView();
+		/*if(reloadViewFlag){
+			//reloadViewFlag = false;
+			
+		}*/
+	}
+	
+	private class ProcessUserProfile extends AsyncTask<String, String, UserModel>{
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+		}
+		
+		@Override
+		protected UserModel doInBackground(String... params) {
+			// TODO Auto-generated method stub
+			UserModel model = new JSONParser(getRealActivity()).getUser(userId);
+			return model;
+		}
+		
+		@Override
+		protected void onPostExecute(UserModel result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			LinearLayout userPanel = (LinearLayout) inflater.inflate(R.layout.account_userlayout, null);
+			TextView userName, userCoin, userChangePass, userSignout;
+			userName = (TextView) userPanel.findViewById(R.id.account_userlayout_username);
+			userCoin = (TextView) userPanel.findViewById(R.id.account_userlayout_coin);
+			userChangePass = (TextView) userPanel.findViewById(R.id.account_userlayout_doimatkhau);
+			userSignout = (TextView) userPanel.findViewById(R.id.account_userlayout_dangxuat);
+			
+			userName.setText(getRealBaseActivity().getUserName());
+			userCoin.setText(userCoin.getText().toString() + " " + result.getAccount());
+			mScrollLayout.removeAllViews();
+			mScrollLayout.addView(userPanel);
+		}
+	}
+	
+	
+	@Override
+	protected void netAsync() {
+		// TODO Auto-generated method stub
+		super.netAsync();
+		new InternetChecking(new WeakReference<Context>(getRealActivity()),
+				new InternetCheckingCallback() {
+
+					@Override
+					public void onCheckComplete(boolean result,
+							final Dialog progressDialog) {
+						// TODO Auto-generated method stub
+						if (!result) {
+							progressDialog.dismiss();
+						} else {
+							new ProcessUserProfile() {
+								@Override
+								protected void onPostExecute(
+										final UserModel list) {
+									// TODO Auto-generated method stub
+									super.onPostExecute(list);
+									/*
+									 * if (progressDialog.isShowing()) {
+									 * progressDialog.dismiss(); }
+									 */
+									progressDialog.dismiss();
+								}
+							}.execute();
+						}
+					}
+				}).execute();
+	}
+
+}

@@ -1,0 +1,9 @@
+package com.ats.abongda.nvs.fragment.MAIN;
+
+public class _BangXepHangFragment {
+
+	public _BangXepHangFragment() {
+		// TODO Auto-generated constructor stub
+	}
+
+}

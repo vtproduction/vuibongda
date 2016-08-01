@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/list_item_bg"
+    android:minHeight="60dp" >
+
+    <RelativeLayout
+        android:id="@+id/livePage_child_header"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/list_item_text1"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/livePage_child_header_leftText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/app_name"
+            android:textColor="@color/white_color"
+            android:textStyle="bold"
+            android:layout_marginLeft="10dp"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/livePage_child_header_rightText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/app_name"
+            android:textColor="@color/white_color"
+            android:textStyle="bold"
+            android:layout_marginRight="10dp"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/livePage_child_header"
+        android:background="@color/list_item_bg" >
+
+        <TextView
+            android:id="@+id/livePage_child_matchDateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/timeString"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/base_app_color" />
+
+        <TextView
+            android:id="@+id/livePage_child_guest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/livePage_child_host"
+            android:layout_alignParentBottom="false"
+            android:layout_below="@+id/livePage_child_host"
+            android:layout_marginTop="8dp"
+            android:text="@string/guest"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/livePage_child_host"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="23dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/livePage_child_matchDateTime"
+            android:text="@string/host"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/livePage_child_hostStar"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignBottom="@+id/livePage_child_host"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/livePage_child_host"
+            android:contentDescription="@string/null_string"
+            android:src="@drawable/star" />
+
+        <ImageView
+            android:id="@+id/livePage_child_guestStar"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignBottom="@+id/livePage_child_guest"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/livePage_child_guest"
+            android:contentDescription="@string/null_string"
+            android:src="@drawable/star" />
+
+        <TextView
+            android:id="@+id/livePage_child_hostGoal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/livePage_child_host"
+            android:layout_alignBottom="@+id/livePage_child_host"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="50dp"
+            android:text="@string/shortSlash"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/base_app_color"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/livePage_child_guestGoal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/livePage_child_guest"
+            android:layout_alignBottom="@+id/livePage_child_guest"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="50dp"
+            android:text="@string/shortSlash"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/base_app_color"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/livePage_child_matchTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            android:text="@string/FTString"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/base_app_color" />
+    </RelativeLayout>
+
+</RelativeLayout>

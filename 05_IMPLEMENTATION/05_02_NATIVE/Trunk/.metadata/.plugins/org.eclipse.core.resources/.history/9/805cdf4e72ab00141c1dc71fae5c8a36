@@ -1,0 +1,225 @@
+package com.ats.abongda.nvs.fragment.LIVE;
+
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.ats.NIEN.abongda.R;
+import android.app.Dialog;
+import android.content.Context;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnChildClickListener;
+import android.widget.ExpandableListView.OnGroupClickListener;
+import android.widget.LinearLayout;
+
+import com.ats.NIEN.abongda.UTIL.AnimatedExpandableListView;
+import com.ats.NIEN.abongda.UTIL.InternetChecking;
+import com.ats.NIEN.abongda.UTIL.InternetChecking.InternetCheckingCallback;
+import com.ats.NIEN.abongda.UTIL.JSONParser;
+import com.ats.NIEN.abongda.UTIL.ProgressHUD;
+import com.ats.NIEN.abongda.model.LiveModel;
+import com.ats.abongda.nvs.activity.BaseActivity;
+import com.ats.abongda.nvs.adapter._LiveScoreAdapter;
+import com.ats.abongda.nvs.fragment.BaseFragment;
+
+public class LIVE_LiveFragment extends BaseFragment {
+	private ProgressHUD pDialog;
+	public AnimatedExpandableListView listView;
+	public View mlistView;
+	public View mNotFoundView, v;
+	public _LiveScoreAdapter adapter;
+	public static volatile boolean needToRefresh;
+	public LayoutInflater inflater;
+
+	public LIVE_LiveFragment(List<Object> mArgs) {
+		super(mArgs);
+		this.mActionCode = LIVESCORE;
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater,
+			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		initSPRS();
+		mMainView = inflater.inflate(R.layout.live_page_main_layout, container,
+				false);
+		mlistView = (View) inflater.inflate(R.layout.livepage_listview,
+				container, false);
+		mNotFoundView = (View) inflater.inflate(R.layout.nores_layout,
+				container, false);
+		needToRefresh = true;
+		this.inflater = inflater;
+		Log.d("LIVE_LiveFragment", "OnCreateView called");
+		return mMainView;
+	}
+
+	private class ProcessListContents extends
+			AsyncTask<String, String, List<LiveModel>> {
+		boolean flag;
+		public Dialog MpDialog;
+
+		public ProcessListContents() {
+			super();
+			this.flag = true;
+		}
+
+		public ProcessListContents(boolean flag) {
+			super();
+			this.flag = flag;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			if (flag) {
+				// MpDialog = new
+				// ProgressHUD(getRealActivity()).show(getRealActivity(), "",
+				// true, false, null);
+			} else {
+				MpDialog = new ProgressHUD(getRealActivity(), false).show(
+						getRealActivity(), true, false, null);
+				((BaseActivity) getRealActivity()).animateRightImage();
+			}
+		}
+
+		@Override
+		protected List<LiveModel> doInBackground(String... args) {
+			List<LiveModel> list = new ArrayList<LiveModel>();
+			list = new JSONParser(getRealActivity()).parseLiveList("0");
+			return list;
+		}
+
+		@Override
+		protected void onPostExecute(List<LiveModel> list) {
+			((LinearLayout) mMainView).removeAllViews();
+			if (list.size() > 0) {
+				((LinearLayout) mMainView).addView(mlistView);
+				listView = (AnimatedExpandableListView) mlistView
+						.findViewById(R.id.livetab_main_listview);
+				listView.setFadingEdgeLength(0);
+				adapter = new _LiveScoreAdapter(list, getRealActivity(), listView);
+				listView.setAdapter(adapter);
+				listView.setGroupIndicator(null);
+				for (int i = 0; i < adapter.getGroupCount(); i++) {
+					listView.expandGroup(i);
+				}
+				listView.setOnGroupClickListener(new OnGroupClickListener() {
+
+					@Override
+					public boolean onGroupClick(ExpandableListView parent,
+							View v, int groupPosition, long id) {
+
+						if (listView.isGroupExpanded(groupPosition)) {
+							listView.collapseGroupWithAnimation(groupPosition);
+						} else {
+							listView.expandGroupWithAnimation(groupPosition);
+						}
+						return true;
+					}
+
+				});
+
+				listView.setOnChildClickListener(new OnChildClickListener() {
+
+					@Override
+					public boolean onChildClick(ExpandableListView parent,
+							View v, int groupPosition, int childPosition,
+							long id) {
+						// TODO Auto-generated method stub
+						final int matchId = adapter.getChild(groupPosition,
+								childPosition).getMatchId();
+						
+						/*MAINVIEW_MainFragment frag = new MAINVIEW_MainFragment(
+								Constant.MATCHDETAILFRAGMENT,
+								new ArrayList<Object>() {
+									{
+										add(matchId);
+									}
+								});
+						((MainActivity) getRealActivity()).switchContent(frag);*/
+						return true;
+					}
+				});
+			} else {
+
+				((LinearLayout) mMainView).addView(mNotFoundView);
+			}
+
+			if (!flag) {
+				this.MpDialog.dismiss();
+				((BaseActivity) getRealActivity()).stopAnimateRightImage();
+			}
+			// ((BaseActivity)getRealActivity()).stopAnimateRightImage();
+		}
+	}
+
+	@Override
+	public void refreshContent() {
+		// TODO Auto-generated method stub
+		super.refreshContent();
+		new ProcessListContents(false).execute();
+	}
+
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		//getRealMainActivity().showTabview();
+		//getRealMainActivity().changeTab(1);
+		if (needToRefresh == true) {
+			netAsync();
+			needToRefresh = false;
+		}
+	}
+
+
+	@Override
+	protected void processContent() {
+		// TODO Auto-generated method stub
+		new ProcessListContents(false).execute();
+	}
+	
+	@Override
+	protected void netAsync() {
+		// TODO Auto-generated method stub
+		super.netAsync();
+		new InternetChecking(new WeakReference<Context>(getRealActivity()),
+				new InternetCheckingCallback() {
+
+					@Override
+					public void onCheckComplete(boolean result,
+							final Dialog progressDialog) {
+						// TODO Auto-generated method stub
+						if (!result) {
+							progressDialog.dismiss();							
+						} else {
+							new ProcessListContents() {
+								@Override
+								protected void onPreExecute() {
+									// TODO Auto-generated method stub
+									super.onPreExecute();
+								};
+
+								@Override
+								protected void onPostExecute(
+										List<LiveModel> list) {
+									// TODO Auto-generated method stub
+									super.onPostExecute(list);
+									progressDialog.dismiss();
+
+								}
+							}.execute();
+						}
+					}
+				}).execute();
+	}
+
+}

@@ -1,0 +1,11 @@
+package com.ats.abongda.nvs.fragment.MAIN;
+
+import android.view.View.OnClickListener;
+
+import com.ats.abongda.nvs.fragment.BaseFragment;
+
+public class _BangXepHangFragment extends BaseFragment implements OnClickListener, ILoadFragmentObserver{
+
+
+
+}

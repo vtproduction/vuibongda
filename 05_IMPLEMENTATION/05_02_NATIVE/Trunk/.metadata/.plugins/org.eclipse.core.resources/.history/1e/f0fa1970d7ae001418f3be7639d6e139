@@ -1,0 +1,9 @@
+package com.ats.NIEN.abongda.model;
+
+public class UpdateAppModel {
+
+	public UpdateAppModel() {
+		// TODO Auto-generated constructor stub
+	}
+
+}

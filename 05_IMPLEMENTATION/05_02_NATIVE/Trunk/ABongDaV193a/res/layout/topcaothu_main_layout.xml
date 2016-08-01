@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_color"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp" >
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <Spinner
+            android:id="@+id/topcaothuPage_spinner"
+            android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_height="30dp" 
+            android:background="@drawable/spinner_bg"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/base_app_color"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:weightSum="6" >
+
+            <TextView
+                android:id="@+id/topdaigiaPage_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="STT"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/white_color" />
+
+            <TextView
+                android:id="@+id/topdaigiaPage_sotien"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="Người chơi"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/white_color" />
+
+            <TextView
+                android:id="@+id/topdaigiaPage_stt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Thắng"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/white_color" />
+
+            <TextView
+                android:id="@+id/topdaigiaPage_name23"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Thua"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/white_color" />
+
+            <TextView
+                android:id="@+id/topdaigiaPage_name31"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Hiệu số"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/white_color" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/topcaothuPage_main_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

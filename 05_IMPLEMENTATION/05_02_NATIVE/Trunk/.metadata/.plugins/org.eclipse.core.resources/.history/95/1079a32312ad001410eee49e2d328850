@@ -1,0 +1,21 @@
+package com.ats.abongda.nvs.fragment;
+
+import java.util.List;
+
+public class _BXHXephangFragment extends BaseFragment{
+	private int leagueId;
+	
+	
+	public _BXHXephangFragment(int mActionCode, List<Object> mArgs) {
+		super(mActionCode, mArgs);
+		// TODO Auto-generated constructor stub
+		this.leagueId = mActionCode;
+	}
+
+	public _BXHXephangFragment(List<Object> mArgs) {
+		super(mArgs);
+		// TODO Auto-generated constructor stub
+	}
+
+
+}

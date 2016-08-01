@@ -1,0 +1,181 @@
+package com.ats.abongda.nvs.fragment;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import android.app.Activity;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.astuetz.PagerSlidingTabStrip;
+import com.astuetz.PagerSlidingTabStrip.IconTabProvider;
+import com.astuetz.PagerSlidingTabStrip.IconTitleProvider;
+import com.ats.NIEN.abongda.R;
+import com.ats.abongda.nvs.activity.BaseActivity;
+import com.ats.abongda.nvs.activity.SuperAwesomeCardFragment2;
+import com.ats.abongda.nvs.fragment.MAIN.ILoadFragmentObserver;
+import com.ats.abongda.nvs.fragment.MAIN._AccountFragment;
+import com.ats.abongda.nvs.fragment.MAIN._AccountFragment2;
+import com.ats.abongda.nvs.fragment.MAIN._BangXepHangFragment;
+import com.ats.abongda.nvs.fragment.MAIN._LiveFragment;
+import com.ats.abongda.nvs.fragment.MAIN._NewsFragment;
+
+public class PagerFragment extends Fragment implements OnPageChangeListener{
+	private final Handler handler = new Handler();
+
+	private PagerSlidingTabStrip tabs;
+	private ViewPager pager;
+	private MyPagerAdapter adapter;
+	protected Activity mActivity;
+	private Drawable oldBackground = null;
+	private int currentColor = 0xFF666666;
+	private String[] TITLES = new String[5];
+	private List<Fragment> fragments;
+	
+	
+	public PagerFragment() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	@Override
+	public View onCreateView(LayoutInflater inflater,
+			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		//setContentView(R.layout.activity_main);
+		View v = inflater.inflate(R.layout.pager_main, null);
+		tabs = (PagerSlidingTabStrip) v.findViewById(R.id.tabs);
+		tabs.setShouldExpand(true);
+		tabs.setIndicatorHeight(15);
+		pager = (ViewPager) v.findViewById(R.id.pager);
+		fragments = new ArrayList<Fragment>();
+		fragments.add(_NewsFragment.newInstance());
+		fragments.add(_LiveFragment.newInstance());
+		fragments.add(_BangXepHangFragment.newInstance());
+		fragments.add(_AccountFragment.newInstance());
+		fragments.add(SuperAwesomeCardFragment2.newInstance(2));
+		adapter = new MyPagerAdapter(getChildFragmentManager(), fragments);
+		TITLES[0] = getResources().getString(R.string.title_tintuc);
+		TITLES[1] = getResources().getString(R.string.title_live);
+		TITLES[2] = getResources().getString(R.string.title_bangxephang);
+		TITLES[3] = getResources().getString(R.string.title_taikhoan);
+		TITLES[4] = getResources().getString(R.string.title_nhieuhon);
+
+
+		pager.setAdapter(adapter);
+		pager.setOffscreenPageLimit(20);
+		final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources()
+				.getDisplayMetrics());
+		pager.setPageMargin(0);
+		tabs.setOnPageChangeListener(this);
+		tabs.setViewPager(pager);
+		((BaseActivity)getRealActivity()).hideLeftImage();
+		((BaseActivity)getRealActivity()).changeTitle(TITLES[0]);
+		return v;
+	}
+	@Override
+	public void onAttach(Activity activity) {
+		// TODO Auto-generated method stub
+		super.onAttach(activity);
+		this.mActivity = activity;
+	}
+	protected Activity getRealActivity(){
+		return (getActivity()== null) ? mActivity : getActivity();
+	}
+	
+	public void refreshPage(int pos){
+
+	}
+	public class MyPagerAdapter extends FragmentPagerAdapter implements IconTitleProvider{
+		private List<Fragment> mFragments;
+
+		private final int[] ICONS = {R.drawable.tab_menuicon_1,R.drawable.tab_menuicon_2,
+				R.drawable.tab_menuicon_3,R.drawable.tab_menuicon_4,R.drawable.tab_menuicon_5};
+		private FragmentManager fm;
+		public MyPagerAdapter(FragmentManager fm,List<Fragment> fragments) {
+			super(fm);
+			this.fm = fm;
+			this.mFragments = fragments;
+			
+		}
+ 
+		
+		@Override
+		public CharSequence getPageTitle(int position) {
+			return TITLES[position];
+		}
+
+		@Override
+		public int getCount() {
+			return ICONS.length;
+		}
+
+		@Override
+		public Fragment getItem(int position) {
+			((BaseActivity) getRealActivity()).changeTitle(TITLES[position]);
+			
+								
+			return mFragments.get(position);
+		}
+
+		@Override
+		public int getPageIconResId(int position) {
+			// TODO Auto-generated method stub
+			return ICONS[position];
+		}
+	}
+	@Override
+	public void onPageScrollStateChanged(int arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onPageScrolled(int arg0, float arg1, int arg2) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onPageSelected(int arg0) {
+		// TODO Auto-generated method stub
+		((BaseActivity)getRealActivity()).changeTitle(TITLES[arg0]);
+		switch (arg0) {
+		case 0:
+			
+			break;
+		case 1:
+			_LiveFragment lfragment = (_LiveFragment) adapter.instantiateItem(pager, arg0);
+			if (lfragment instanceof ILoadFragmentObserver) {
+				lfragment.onLoadFragment(-2);
+			}
+			break;
+		case 2:
+			_BangXepHangFragment bfragment = (_BangXepHangFragment) adapter.instantiateItem(pager, arg0);
+			if (bfragment instanceof ILoadFragmentObserver) {
+				
+			}
+			break;
+		case 3:
+			_AccountFragment fragment = (_AccountFragment) adapter.instantiateItem(pager, arg0);
+			if(fragment instanceof ILoadFragmentObserver)
+				fragment.onLoadFragment(-2);
+			break;
+		case 4:
+			break;
+		default:
+			break;
+		}
+	}
+
+}

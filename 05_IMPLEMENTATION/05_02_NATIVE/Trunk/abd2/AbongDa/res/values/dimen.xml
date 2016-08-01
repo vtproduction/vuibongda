@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<dimen name="slidingmenuWidth">15dp</dimen>
+	<dimen name="slidingmenuOffset">60dp</dimen>
+</resources>

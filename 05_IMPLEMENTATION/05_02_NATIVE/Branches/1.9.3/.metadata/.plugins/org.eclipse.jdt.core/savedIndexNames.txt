@@ -1,0 +1,16 @@
+INDEX VERSION 1.126+D:\WORK\ATS\PROJECT-complete\ABongDa-Cordova\05_IMPLEMENTATION\05_02_NATIVE\05_01_01_android\Trunk\.metadata\.plugins\org.eclipse.jdt.core
+800633809.index
+2732782027.index
+3854755560.index
+3243815157.index
+1469591176.index
+3523835476.index
+4221791847.index
+2440928141.index
+2098781141.index
+1461790654.index
+3087391296.index
+1695583724.index
+2024061786.index
+2055516165.index
+529524239.index

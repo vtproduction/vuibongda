@@ -1,0 +1,16 @@
+package com.ats.abongda.nvs.fragment.MAIN;
+
+import java.util.List;
+
+import com.ats.abongda.nvs.fragment.BaseFragment;
+
+public class _Based_MainFragment extends BaseFragment{
+
+	public _Based_MainFragment(List<Object> mArgs) {
+		super(mArgs);
+		// TODO Auto-generated constructor stub
+	}
+
+
+
+}

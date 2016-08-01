@@ -1,0 +1,11 @@
+package com.ats.abongda.nvs.fragment.MAIN;
+
+import com.ats.abongda.nvs.fragment.BaseFragment;
+
+public class _Based_MainFragment extends BaseFragment{
+
+	public _Based_MainFragment() {
+		// TODO Auto-generated constructor stub
+	}
+
+}

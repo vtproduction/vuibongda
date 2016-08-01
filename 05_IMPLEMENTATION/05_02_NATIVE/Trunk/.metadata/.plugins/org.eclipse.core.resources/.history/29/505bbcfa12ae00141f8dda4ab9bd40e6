@@ -1,0 +1,75 @@
+package com.ats.abongda.nvs.fragment.DIALOG;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+import com.ats.NIEN.abongda.R;
+import com.ats.NIEN.abongda.model.LeagueSeason;
+import com.twotoasters.jazzylistview.JazzyListView;
+
+public class _LichThiDauDoiBong extends BaseDialogFragment implements OnItemSelectedListener{
+	private List<LeagueSeason> leagues = new ArrayList<LeagueSeason>();
+	private List<String> spinnerData = new ArrayList<String>();
+	private int clubId;
+	private String clubName;
+	private TextView header;
+	private Spinner spinner;
+	private LinearLayout spinnerLayout;
+	private LinearLayout loadingLayout, noresLayout;
+	private JazzyListView mainListView;
+	
+	@Override
+	public View onCreateView(LayoutInflater inflater,
+			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		View v = super.onCreateView(inflater, container, savedInstanceState);
+		View m = inflater.inflate(R.layout.bangxephang_mainlayout_onespinner, null);
+		spinnerLayout = (LinearLayout)m.findViewById(R.id.bxh_onespinner_header);
+		header = (TextView)m.findViewById(R.id.bxh_onespinner_headertext);
+		spinner = (Spinner)m.findViewById(R.id.bxh_onespinner_headertext);
+		mainListView = (JazzyListView)m.findViewById(R.id.bxh_onespinner_listview);
+		loadingLayout = (LinearLayout)m.findViewById(R.id.bxh_onespinner_loading);
+		noresLayout = (LinearLayout)m.findViewById(R.id.bxh_onespinner_nores);
+		
+		mMainContent.addView(m);
+		return v;
+	}
+	
+	public _LichThiDauDoiBong(List<LeagueSeason> leagues, int clubId,
+			String clubName) {
+		super();
+		this.leagues = leagues;
+		this.clubId = clubId;
+		this.clubName = clubName;
+	}
+
+	@Override
+	public void onItemSelected(AdapterView<?> parent, View view, int position,
+			long id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onNothingSelected(AdapterView<?> parent) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public _LichThiDauDoiBong() {
+		// TODO Auto-generated constructor stub
+	}
+
+}

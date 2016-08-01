@@ -1,0 +1,733 @@
+package com.ats.abongda.nvs.fragment.MAIN;
+
+import java.lang.ref.WeakReference;
+import java.util.List;
+
+import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
+
+import com.ats.NIEN.abongda.R;
+import com.ats.NIEN.abongda.UTIL.InternetChecking;
+import com.ats.NIEN.abongda.UTIL.InternetChecking.InternetCheckingCallback;
+import com.ats.NIEN.abongda.model.UserModel;
+import com.ats.abongda.nvs.fragment.BaseFragment;
+import com.ats.abongda.nvs.fragment.DIALOG.Dialog1Btn;
+import com.ats.abongda.nvs.fragment.DIALOG.Dialog2Btn;
+import com.ats.abongda.nvs.fragment.DIALOG.Dialog2BtnWithEdittext;
+import com.ats.abongda.nvs.fragment.DIALOG._AccountTopCaoThu;
+import com.ats.abongda.nvs.fragment.DIALOG._AccountTopDaiGia;
+import com.ats.abongda.nvs.fragment.DIALOG._AccountTradeHistory;
+import com.ats.abongda.nvs.fragment.DIALOG._AcountBetHistory;
+import com.ats.abongda.nvs.fragment.DIALOG._ChangeProfile;
+import com.ats.abongda.nvs.fragment.DIALOG._DoiMatKhau;
+import com.ats.abongda.nvs.fragment.DIALOG._Signin;
+import com.ats.abongda.nvs.util.JSONParser;
+import com.ats.abongda.nvs.util.TAG;
+
+
+
+public class _AccountFragment extends BaseFragment implements OnClickListener,
+		ILoadFragmentObserver {
+	private ScrollView mMainView;
+	private LayoutInflater inflater;
+	private int userId;
+	private View savedLayout;
+	private UserModel model;
+	private LinearLayout loadingLayout;
+	private boolean isFirstLoad = false;
+
+	public static _AccountFragment newInstance(){
+		return new _AccountFragment(0,null,true);
+		
+	}
+	public _AccountFragment(int mActionCode, List<Object> mArgs, boolean isFirstLoad) {
+		super(mActionCode, mArgs);
+		// TODO Auto-generated constructor stub
+		this.isFirstLoad = isFirstLoad;
+	}
+	
+	public _AccountFragment(int mActionCode, List<Object> mArgs) {
+		super(mActionCode, mArgs);
+		// TODO Auto-generated constructor stub
+	}
+
+	public _AccountFragment(List<Object> mArgs) {
+		super(mArgs);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		this.savedLayout = null;
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater,
+			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+
+		this.inflater = inflater;
+		this.mMainView = (ScrollView) inflater.inflate(
+				R.layout.account_holderlayout, null);
+		loadingLayout = (LinearLayout) mMainView.findViewById(R.id.account_loadinglayout);
+		return mMainView;
+	}
+
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		//genUserOverView(true);
+	}
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+
+	}
+
+	
+	@Override
+	public void onLoadFragment(Object arg) {
+		// TODO Auto-generated method stub
+		//super.onLoadFragment(arg);
+		int flag = (Integer) arg;
+		Log.d("ACCOUNTFRAGMENT", "=======RELOAD USER PROFILE. RELOAD: "+flag+"=========");
+		switch (flag) {
+		case -3:
+			getRealBaseActivity().signOut();
+			onLoadFragment(-1);
+			new _Signin(this).show(getChildFragmentManager(), TAG.TAG_DANGNHAP);
+			//reloadAllView();
+			break;
+		case -2:
+			if (isFirstLoad) {
+				isFirstLoad = false;
+				reloadAllView();
+			}
+			break;
+		case -1:
+			reloadAllView();
+			break;
+		case 0:
+			break;
+		case 1:
+			genUserOverView(model, false);
+			break;
+		case 2:
+			genUserProfile(model, false);
+			break;
+		case 3:
+			genUserStatistic(model, false);
+			break;
+		default:
+			reloadAllView();
+			break;
+		}
+		//reloadAllView(null, true);
+	}
+	private void removeAllView(){
+		((LinearLayout)mMainView.findViewById(R.id.account_holderlayout_1)).removeAllViews();
+		((LinearLayout)mMainView.findViewById(R.id.account_holderlayout_2)).removeAllViews();
+		((LinearLayout)mMainView.findViewById(R.id.account_holderlayout_3)).removeAllViews();
+		((LinearLayout)mMainView.findViewById(R.id.account_holderlayout_4)).removeAllViews();
+		((LinearLayout)mMainView.findViewById(R.id.account_holderlayout_5)).removeAllViews();
+	}
+
+	private void reloadAllView(){
+		Log.d("ACCOUNTFRAGMENT", "=======RELOAD ALL VIEW=========");
+		userId = getRealBaseActivity().getUserId();
+		if (userId == -1) {removeAllView(); genUserNotSigninView();return;}
+		loadingLayout.setVisibility(View.VISIBLE);
+		new InternetChecking(new WeakReference<Context>(getRealActivity()),
+				new InternetCheckingCallback() {
+					
+					@Override
+					public void onCheckComplete(boolean result, final Dialog progressDialog) {
+						// TODO Auto-generated method stub
+						if (!result) {
+							//progressDialog.dismiss();
+						} else {
+							new processUserOverview(null, true){
+								protected void onPostExecute(UserModel result) {
+									super.onPostExecute(result);
+									//progressDialog.dismiss();
+									new processUserProfile(null, true){
+										protected void onPostExecute(UserModel result) {
+											super.onPostExecute(result);
+											//progressDialog.dismiss();
+											new processUserBetStatistic(null, true){
+												protected void onPostExecute(UserModel result) {
+													super.onPostExecute(result);
+													genUserHistory(true);
+													genUserRanking(true);
+													loadingLayout.setVisibility(View.INVISIBLE);
+												};
+											}.execute();
+										};
+									}.execute();
+								};
+							}.execute();
+						}
+					}
+				}, false).execute();
+	}
+	private void clearUserNotSignView(){
+		((LinearLayout)mMainView.findViewById(R.id.account_holderlayout_1)).removeAllViews();
+	}
+	private void genUserNotSigninView(){
+		View userNotSignin = inflater.inflate(R.layout.account_mainlayout_notsignin, null);
+		((LinearLayout)mMainView.findViewById(R.id.account_holderlayout_1)).removeAllViews();
+		((LinearLayout)mMainView.findViewById(R.id.account_holderlayout_1)).addView(userNotSignin);
+		loadingLayout.setVisibility(View.INVISIBLE);
+		Button btnNotSignin = (Button) userNotSignin.findViewById(R.id.account_notsignin_button);
+		btnNotSignin.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				new _Signin(_AccountFragment.this).show(getChildFragmentManager(), TAG.TAG_DANGNHAP);
+			}
+		});
+		savedLayout = null;
+	}
+	private void genUserOverView(final UserModel model,final boolean isReload) {
+		Log.d("ACCOUNTFRAGMENT", "=======RELOAD USER OVERVIEW. RELOAD: "+isReload+"=========");
+		if(!isReload) return;
+		new InternetChecking(new WeakReference<Context>(getRealActivity()),
+				new InternetCheckingCallback() {
+					
+					@Override
+					public void onCheckComplete(boolean result, final Dialog progressDialog) {
+						// TODO Auto-generated method stub
+						if (!result) {
+							//progressDialog.dismiss();
+						} else {
+							new processUserOverview(model, isReload){
+								protected void onPostExecute(UserModel result) {
+									super.onPostExecute(result);
+									//progressDialog.dismiss();
+								};
+							}.execute();
+						}
+					}
+				}, false).execute();
+	}
+	private void genUserProfile(UserModel model, boolean isReload) {
+		Log.d("ACCOUNTFRAGMENT", "=======RELOAD USER PROFILE. RELOAD: "+isReload+"=========");
+		if (!isReload)return;
+		new InternetChecking(new WeakReference<Context>(getRealActivity()),
+				new InternetCheckingCallback() {
+					
+					@Override
+					public void onCheckComplete(boolean result, final Dialog progressDialog) {
+						// TODO Auto-generated method stub
+						if (!result) {
+							//progressDialog.dismiss();
+						} else {
+							new processUserProfile(null, true){
+								protected void onPostExecute(UserModel result) {
+									super.onPostExecute(result);
+									//progressDialog.dismiss();
+								};
+							}.execute();
+						}
+					}
+				}, false).execute();
+	}
+	private void genUserStatistic(UserModel model, boolean isReload){
+		Log.d("ACCOUNTFRAGMENT", "=======RELOAD USER STATISTIC. RELOAD: "+isReload+"=========");
+		if (!isReload)return;
+		new InternetChecking(new WeakReference<Context>(getRealActivity()),
+				new InternetCheckingCallback() {
+					
+					@Override
+					public void onCheckComplete(boolean result, final Dialog progressDialog) {
+						// TODO Auto-generated method stub
+						if (!result) {
+							//progressDialog.dismiss();
+						} else {
+							new processUserBetStatistic(null, true){
+								protected void onPostExecute(UserModel result) {
+									super.onPostExecute(result);
+									//progressDialog.dismiss();
+								};
+							}.execute();
+						}
+					}
+				}, false).execute();
+	}
+	private void genUserHistory(boolean isReload){
+		Log.d("ACCOUNTFRAGMENT", "=======RELOAD USER BET HISTORY. RELOAD: "+isReload+"=========");
+		if (!isReload) {
+			return;
+		}
+		final View historyView = inflater.inflate(R.layout.account_lichsulayout, null);
+		historyView.findViewById(R.id.account_lichsu_datcuoc).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				new _AcountBetHistory(userId).show(getChildFragmentManager(), TAG.TAG_BETHISTORY);
+			}
+		});
+		historyView.findViewById(R.id.account_lichsu_giaodich).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				new _AccountTradeHistory(getRealBaseActivity().getUserName()).show(getChildFragmentManager(), TAG.TAG_TRADEHISTORY);
+			}
+		});
+		((LinearLayout)mMainView.findViewById(R.id.account_holderlayout_4)).removeAllViews();
+		((LinearLayout)mMainView.findViewById(R.id.account_holderlayout_4)).addView(historyView);
+		AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
+		anim.setDuration(700);
+		historyView.startAnimation(anim);
+		savedLayout = mMainView;
+	}
+	private void genUserRanking(boolean isReload){
+		Log.d("ACCOUNTFRAGMENT", "=======RELOAD USER RANKING. RELOAD: "+isReload+"=========");
+		if (!isReload) {
+			return;
+		}
+		final View ranking = inflater.inflate(R.layout.account_topdaigia, null);
+		ranking.findViewById(R.id.account_bangxephang_topdaigiabtn).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				new _AccountTopDaiGia(getRealBaseActivity().getUserName()).show(getChildFragmentManager(), TAG.TAG_TOPDAIGIA);
+			}
+		});
+		ranking.findViewById(R.id.account_bangxephang_topcaothubtn).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				new _AccountTopCaoThu(userId).show(getChildFragmentManager(), TAG.TAG_TOPCAOTHU);
+			}
+		});
+		((LinearLayout)mMainView.findViewById(R.id.account_holderlayout_5)).removeAllViews();
+		((LinearLayout)mMainView.findViewById(R.id.account_holderlayout_5)).addView(ranking);
+		AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
+		anim.setDuration(700);
+		ranking.startAnimation(anim);
+		savedLayout = mMainView;
+	}
+	
+	//---------------------------------METHOD------------------------------------//
+	private void openMessageApp(final String username) {
+		new Dialog2Btn(getResources().getString(R.string.thongbao)
+				,getResources().getString(R.string.thongbaomotinnhan)
+				,getResources().getString(R.string.huybo)
+				,getResources().getString(R.string.moapptinnhan)) {
+			
+			@Override
+			public void onRbtnClick() {
+				// TODO Auto-generated method stub
+				this.dismiss();
+				Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+				smsIntent.setType("vnd.android-dir/mms-sms");
+				smsIntent.putExtra("address", "7042");
+				smsIntent.putExtra(
+						"sms_body",
+						"abd phone "
+								+ username);
+				startActivity(smsIntent);
+			}
+			
+			@Override
+			public void onLbtnClick() {
+				// TODO Auto-generated method stub
+				this.dismiss();
+			}
+			
+			@Override
+			public void onDialogDissmiss() {
+				// TODO Auto-generated method stub
+				
+			}
+		}.show(getChildFragmentManager(), TAG.TAG_DIALOG2BTN);
+		
+	}
+	private void verifyUserEmail(final String email, final int userId){
+		new Dialog2BtnWithEdittext(getResources().getString(R.string.thongbao)
+				,getResources().getString(R.string.xacthucemailthongbao)
+				,getResources().getString(R.string.huybo)
+				,getResources().getString(R.string.xacnhan)
+				,email) {
+			
+			@Override
+			public void onRbtnClick() {
+				// TODO Auto-generated method stub
+				this.dismiss();
+				new InternetChecking(new WeakReference<Context>(getRealActivity()),
+						new InternetCheckingCallback() {
+
+							@Override
+							public void onCheckComplete(boolean result,
+									final Dialog progressDialog) {
+								// TODO Auto-generated method stub
+								if (!result) {
+									progressDialog.dismiss();
+								} else {
+									new processVerifyEmail(email, userId) {
+										@Override
+										protected void onPostExecute(
+												Integer result) {
+											// TODO Auto-generated method stub
+											super.onPostExecute(result);
+											progressDialog.dismiss();
+										}
+									}.execute();
+								}
+							}
+						}).execute();
+			}
+			
+			@Override
+			public void onLbtnClick() {
+				// TODO Auto-generated method stub
+				this.dismiss();
+			}
+			
+			@Override
+			public void onDialogDissmiss() {
+				// TODO Auto-generated method stub
+				
+			}
+		}.show(getChildFragmentManager(), TAG.TAG_DIALOG2BTN);
+		
+	}	
+	private void signOut(){
+		new Dialog2Btn(
+				getResources().getString(R.string.xacnhan),
+				getResources().getString(R.string.xacnhandangxuat),
+				getResources().getString(R.string.huybo),
+				getResources().getString(R.string.dangxuat)) {
+			
+			@Override
+			public void onRbtnClick() {
+				// TODO Auto-generated method stub
+				this.dismiss();
+				getRealBaseActivity().signOut();
+				onLoadFragment(-1);
+			}
+			
+			@Override
+			public void onLbtnClick() {
+				// TODO Auto-generated method stub
+				this.dismiss();
+			}
+			
+			@Override
+			public void onDialogDissmiss() {
+				// TODO Auto-generated method stub
+				
+			}
+		}.show(getChildFragmentManager(), TAG.TAG_DANGXUAT);
+	}
+	
+	
+	//---------------------------------ASYNCTASK---------------------------------//
+	private class processVerifyEmail extends
+			AsyncTask<String, Integer, Integer> {
+		String email;
+		int userId;
+
+		public processVerifyEmail(String email, int userId) {
+			super();
+			this.email = email;
+			this.userId = userId;
+		}
+
+		@Override
+		protected Integer doInBackground(String... params) {
+			// TODO Auto-generated method stub
+			return new JSONParser(getActivity()).verifyEmail(userId, email);
+		}
+
+		@Override
+		protected void onPostExecute(Integer result) {
+			// TODO Auto-generated method stub
+			if (result == -1) {
+				new Dialog1Btn(getResources().getString(R.string.thongbao),
+						getResources().getString(R.string.xacthucemailthatbai),
+						getResources().getString(R.string.huybo)) {
+
+					@Override
+					public void onDialogDissmiss() {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onBtnClick() {
+						// TODO Auto-generated method stub
+						dismiss();
+					}
+				}.show(getChildFragmentManager(), TAG.TAG_DIALOG1BTN);
+			} else {
+				new Dialog1Btn(getResources().getString(R.string.thongbao),
+						getResources()
+								.getString(R.string.xacthucemailthanhcong),
+						getResources().getString(R.string.xacnhan)) {
+
+					@Override
+					public void onDialogDissmiss() {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onBtnClick() {
+						// TODO Auto-generated method stub
+						dismiss();
+					}
+				}.show(getChildFragmentManager(), TAG.TAG_DIALOG1BTN);
+			}
+		}
+
+	}
+	private class processUserOverview extends AsyncTask<String, String, UserModel>{
+		private UserModel model;
+		private boolean reloadFlag;
+		
+
+		public processUserOverview(UserModel model, boolean reloadFlag) {
+			super();
+			this.model = model;
+			this.reloadFlag = reloadFlag;
+			
+		}
+
+		@Override
+		protected UserModel doInBackground(String... params) {
+			// TODO Auto-generated method stub
+			if (reloadFlag) {
+				userId = getRealBaseActivity().getUserId();
+				return new JSONParser(getRealActivity()).getUser(userId);
+			}
+			return model;
+		}
+		
+		@Override
+		protected void onPostExecute(UserModel result) {
+			// TODO Auto-generated method stub
+			model = result;
+			View mUserOverview = inflater.inflate(R.layout.account_userlayout, null);
+			TextView userName, userCoin, userChangePass, userSignout;
+			userName = (TextView) mUserOverview.findViewById(R.id.account_userlayout_username);
+			userCoin = (TextView) mUserOverview.findViewById(R.id.account_bangxephang_topdaigiatext);
+			userChangePass = (TextView) mUserOverview.findViewById(R.id.account_userlayout_doimatkhau);
+			userSignout = (TextView) mUserOverview.findViewById(R.id.account_userlayout_dangxuat);
+			userSignout.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					signOut();
+				}
+			});
+			userChangePass.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					new _DoiMatKhau(_AccountFragment.this, getRealBaseActivity().getUserId()).show(getChildFragmentManager(), TAG.TAG_DOIMATKHAU);
+				}
+			});
+			userName.setText(getRealBaseActivity().getUserName());
+			userCoin.setText(userCoin.getText().toString() + " " + result.getAccount());
+			((LinearLayout)mMainView.findViewById(R.id.account_holderlayout_1)).removeAllViews();
+			
+			((LinearLayout)mMainView.findViewById(R.id.account_holderlayout_1)).addView(mUserOverview);
+			AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
+			anim.setDuration(700);
+			mUserOverview.startAnimation(anim);
+			savedLayout = mMainView;
+		}
+		
+	}
+	private class processUserProfile extends AsyncTask<String, String, UserModel>{
+		private UserModel model;
+		private boolean reloadFlag;
+		
+		
+		public processUserProfile(UserModel model, boolean reloadFlag) {
+			super();
+			this.model = model;
+			this.reloadFlag = reloadFlag;
+		}
+
+
+		@Override
+		protected UserModel doInBackground(String... params) {
+			// TODO Auto-generated method stub
+			if (reloadFlag) {
+				userId = getRealBaseActivity().getUserId();
+				return new JSONParser(getRealActivity()).getUser(userId);
+			}
+			return model;
+		}
+		
+		@Override
+		protected void onPostExecute(final UserModel result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			model = result;
+			View userMainLayout = inflater.inflate(R.layout.account_profilelayout, null);
+			((TextView)userMainLayout.findViewById(R.id.account_profile_name)).setText(result.getFullname());
+			((TextView)userMainLayout.findViewById(R.id.account_profile_address)).setText(result.getAddress());
+			((TextView)userMainLayout.findViewById(R.id.account_profile_phone)).setText(result.getPhone());
+			((TextView)userMainLayout.findViewById(R.id.account_profile_email)).setText(result.getEmail());
+			if (result.getIsEmailVerified() == 1) {
+				userMainLayout.findViewById(R.id.account_profile_email_update).setVisibility(View.GONE);
+			}else{
+				userMainLayout.findViewById(R.id.account_profile_email_update).setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						verifyUserEmail(result.getEmail(), userId);
+					}
+				});
+			}
+			if (result.getIsPhoneVerified() == 1) {
+				userMainLayout.findViewById(R.id.account_profile_phone_update).setVisibility(View.GONE);
+			}else{
+				userMainLayout.findViewById(R.id.account_profile_phone_update).setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						openMessageApp(getRealBaseActivity().getUserName());
+					}
+				});
+			}
+			userMainLayout.findViewById(R.id.account_profile_update).setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					new _ChangeProfile(_AccountFragment.this, result).show(getChildFragmentManager(), TAG.TAG_USER_CHANGEPROFILE);
+				}
+			});
+			((LinearLayout)mMainView.findViewById(R.id.account_holderlayout_2)).removeAllViews();
+			((LinearLayout)mMainView.findViewById(R.id.account_holderlayout_2)).addView(userMainLayout);
+			AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
+			anim.setDuration(700);
+			userMainLayout.startAnimation(anim);
+			savedLayout = mMainView;
+		}
+		
+	}
+	private class processUserBetStatistic extends AsyncTask<String, String, UserModel>{
+		private UserModel model;
+		private boolean reloadFlag;
+		
+		
+		public processUserBetStatistic(UserModel model, boolean reloadFlag) {
+			super();
+			this.model = model;
+			this.reloadFlag = reloadFlag;
+		}
+
+
+		@Override
+		protected UserModel doInBackground(String... params) {
+			// TODO Auto-generated method stub
+			if (reloadFlag) {
+				userId = getRealBaseActivity().getUserId();
+				return new JSONParser(getRealActivity()).parseBetStatic(userId+"");
+			}
+			return model;
+		}
+		
+		@Override
+		protected void onPostExecute(final UserModel result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			View statisticView = inflater.inflate(R.layout.account_statistic, null);
+			View leftBtn = statisticView.findViewById(R.id.account_statistic_leftbtn);
+			View rightBtn = statisticView.findViewById(R.id.account_statistic_rightbtn);
+			final View leftBtnId = statisticView.findViewById(R.id.account_statistic_leftbtn_indicator);
+			final View rightBtnId = statisticView.findViewById(R.id.account_statistic_rightbtn_indicator);
+			final TextView tv1, tv11, tv2, tv22, tv33;
+			tv1 = (TextView) statisticView.findViewById(R.id.account_statistic_tv01);
+			tv11 = (TextView) statisticView.findViewById(R.id.account_statistic_tv011);
+			tv2 = (TextView) statisticView.findViewById(R.id.account_statistic_tv02);
+			tv22 = (TextView) statisticView.findViewById(R.id.account_statistic_tv022);
+			tv33 = (TextView) statisticView.findViewById(R.id.account_statistic_tv033);
+			tv11.setText(result.getWonMatchScore()+"");
+			tv22.setText(result.getTotalMatchScore()+"");
+			if (result.getTotalMatchScore() != 0) {
+				float percent = (result.getWonMatchScore() * 100.0f)
+						/ result.getTotalMatchScore();
+				tv33.setText(Math.round(percent) + " %");
+			}
+			
+			leftBtn.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					leftBtnId.setBackgroundColor(getResources().getColor(R.color.lightred));
+					rightBtnId.setBackgroundColor(getResources().getColor(R.color.transparent));			
+					tv1.setText(getResources().getString(R.string.socuathang));
+					tv2.setText(getResources().getString(R.string.socuadat));
+					tv11.setText(result.getWonMatchScore()+"");
+					tv22.setText(result.getTotalMatchScore()+"");
+					if (result.getTotalMatchScore() != 0) {
+						float percent = (result.getWonMatchScore() * 100.0f)
+								/ result.getTotalMatchScore();
+						tv33.setText(Math.round(percent) + " %");
+					}
+				}
+			});
+			
+			rightBtn.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					leftBtnId.setBackgroundColor(getResources().getColor(R.color.transparent));
+					rightBtnId.setBackgroundColor(getResources().getColor(R.color.lightred));			
+					tv1.setText(getResources().getString(R.string.soxuthang));
+					tv2.setText(getResources().getString(R.string.soxudat));
+					tv11.setText(result.getWonCoinScore()+"");
+					tv22.setText(result.getTotalCoinScore()+"");
+					if (result.getTotalCoinScore() != 0) {
+						float percent = (result.getWonCoinScore() * 100.0f)
+								/ result.getTotalCoinScore();
+						tv33.setText(Math.round(percent) + " %");
+					}
+				}
+			});
+			
+			((LinearLayout)mMainView.findViewById(R.id.account_holderlayout_3)).removeAllViews();
+			((LinearLayout)mMainView.findViewById(R.id.account_holderlayout_3)).addView(statisticView);
+			AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
+			anim.setDuration(700);
+			statisticView.startAnimation(anim);
+			savedLayout = mMainView;
+		}
+		
+	}
+}

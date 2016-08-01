@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ABongDa</title>
+
+        <meta charset="utf-8" />
+        <meta name="viewport" content="height=device-height, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+		
+        <link rel="stylesheet" href="./css/jquery-ui.min.css" />
+        <link rel="stylesheet" href="./css/jquery.mobile.min.css" /><!-- Version 1.3.0 -->
+        <link rel="stylesheet" href="./css/flexslider.css" />
+        <link rel="stylesheet" href="./css/style.css" />
+    </head>
+    
+    <body>
+        <!-- Group 1: News, Live score -->
+		
+        <div data-role="page" id="fixture_page" data-dom-cache="true" data-sidebar="true">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">
+                <h1>Live</h1>
+                <a href="#" onclick="LoadFixture()" data-role="none" class="ui-btn-right"><span class="icon_refresh"></span></a>
+            </div>
+
+            <div data-role="content">
+                <div class="marquee-title"></div>
+                <div id="fixture_content_panel" class="live-fixture-content-panel"></div>
+
+                <div data-role="popup" id="updateMessageBox" data-overlay-theme="a" data-theme="c" class="ui-corner-all" data-dismissible="true">
+                    <div data-role="header" data-theme="a" class="ui-corner-top ui-header ui-bar-b">
+                        <h1>Thông báo</h1>
+                    </div>
+					
+                    <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content ui-body-d">
+                        <div class="popupBoxContent"></div>
+                        <p style="text-align:center;">
+                            <a href="#" data-role="button" data-inline="true" data-mini="true" data-theme="b" class="closePopup updateButton">Đồng ý</a>
+                            <a href="#" data-role="button" data-inline="true" data-mini="true" data-theme="b" class="closePopup closeUpdateButton">Không</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div data-role="footer" class="ui-navbar-custom" data-position="fixed" data-tap-toggle="false">
+                <div data-role="navbar" class="ui-navbar-custom">
+                    <ul>
+                        <li><a href="#news_page" class="news-i" data-icon="custom">Tin tức</a></li>
+                        <li><a href="#" data-icon="custom" class="live-i ui-btn-active ui-state-persist">Live</a></li>
+						<li><a href="#next24h_page" class="next24h-i" data-icon="custom">24h tới</a></li>
+                        <li><a href="#" onclick="changeToSigninPage('#account_page');" data-icon="custom" class="account-i">Hồ sơ</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div data-role="page" id="next24h_page" data-sidebar="true">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">
+                <h1>24h tới</h1>
+                <a href="#" onclick="LoadNext24h()" data-role="none" class="ui-btn-right"><span class="icon_refresh"></span></a>
+            </div>
+
+            <div data-role="content">
+                <div class="marquee-title"></div>
+                <div id="24h_content_panel"></div>
+            </div>
+			
+			<div data-role="footer" class="ui-navbar-custom" data-position="fixed" data-tap-toggle="false">
+                <div data-role="navbar" class="ui-navbar-custom">
+                    <ul>
+                        <li><a href="#news_page" class="news-i" data-icon="custom">Tin tức</a></li>
+                        <li><a href="#fixture_page" data-icon="custom" class="live-i">Live</a></li>
+						<li><a href="#" data-icon="custom" class="next24h-i-active ui-btn-active ui-state-persist">24h tới</a></li>
+                        <li><a href="#" onclick="changeToSigninPage('#account_page');" data-icon="custom" class="account-i">Hồ sơ</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div data-role="page" id="match_detail_page" data-theme="c" data-content-theme="c">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">                
+                <h1>Trận đấu</h1>
+				<a href="javascript:backFromMatchDetailPage()" data-role="none" class="link_icon_back"><span class="icon_back"></span></a>
+            </div>
+
+            <div data-role="content">
+                <div data-inset="true" data-theme="b" data-content-theme="c" id="match-pannel">
+                    <ul data-role="listview" data-theme="c" id="list-match">
+                        <li class="static-li" id="stadium-li">
+                            <div class="ui-grid-a" id="stadium-contain">
+                                <div class="ui-block-a list-t">Sân</div>
+                                <div class="ui-block-b"><span id="stadium"></span></div>
+                            </div>
+						</li>
+                    </ul>
+                </div>
+
+                <div data-role="collapsible" data-inset="false" data-collapsed="false" data-theme="b" data-content-theme="c" id="tips-pannel">
+                    <h3>Tỉ lệ cược <span style="font-weight:normal; font-size:0.9em;" id="bet_guide">(nhấn vào tỉ lệ để đặt cược)</span></h3>
+                    <ul data-role="listview" id="list-tips"></ul>
+                </div>
+
+                <div data-role="collapsible" data-inset="false" data-collapsed="false" data-theme="b" data-content-theme="c">
+                    <h3>Lịch phát sóng</h3>
+                    <span id="channel-pannel"></span>
+                    <div style="margin-top:10px;" class="match-div-p"><input type="button" id="btnNotification" value="Nhận thông báo kết quả khi kết thúc" data-mini="true" data-theme="e" onclick="getNotification();" /></div>
+                </div>
+
+                <div data-role="collapsible" data-inset="false" data-collapsed="false" data-theme="b" data-content-theme="b" id="lineup-panel">
+                    <h3>Đội hình</h3>
+                    
+                    <div class="ui-grid-a lineup-grid">
+                        <div class="ui-block-a" id="lineup-home"></div>
+                        <div class="ui-block-b" id="lineup-guest"></div>
+                    </div>
+
+                    <ul data-role="listview" data-theme="d" data-divider-theme="d" style="margin-top:2px;">
+                        <li data-role="list-divider">Dự bị</li>
+                    </ul>
+
+                    <div id="substitution-list">
+                        <div class="ui-grid-a lineup-grid">
+                            <div class="ui-block-a" id="sub-home"></div>
+                            <div class="ui-block-b" id="sub-guest"></div>
+                        </div>
+                    </div>
+                </div>
+				
+				<div data-role="collapsible" data-inset="false" data-collapsed="false" data-theme="b" data-content-theme="c" id="confrontory-pannel">
+                    <h3>Lịch sử đối đầu</h3>
+                    <ul data-role="listview" id="list-confront-history"></ul>
+                </div>
+            </div>
+        </div>
+
+        <div data-role="page" id="bet_page">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">                
+                <h1>Đặt cược</h1>
+				<a href="#" data-role="none" data-rel="back" class="link_icon_back"><span class="icon_back"></span></a>
+            </div>
+
+            <div data-role="content">
+                <table>
+                    <tr>
+                        <td colspan="2">
+                            <div class="firstrow">
+                                <div class="divClub">
+                                    <div id="homeClubLogo" style="min-height:70px;"></div>
+                                    <div id="homeClubName"></div>
+                                </div>
+								
+                                <div style="float:left; height:50px; padding-top:25px;">vs</div>
+								
+                                <div class="divClub">
+                                    <div id="guestClubLogo" style="min-height:70px;"></div>
+                                    <div id="guestClubName"></div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+					
+                    <tr>
+                        <td class="field"><span class="fieldName">Cửa đặt</span></td>
+                        <td><span class="value" id="userChoice"></span></td>
+                    </tr>
+					
+                    <tr>
+                        <td class="field"><span class="fieldName">Loại tỉ lệ</span></td>
+                        <td><span class="value" id="betType"></span></td>
+                    </tr>
+					
+                    <tr>
+                        <td class="field"><span class="fieldName">Tỉ lệ đặt</span></td>
+                        <td><span class="value" id="userBet"></span></td>
+                    </tr>
+					
+                    <tr>
+                        <td class="field"><span class="fieldName">Tài khoản</span></td>
+                        <td><span class="value" id="userAccountName"></span></td>
+                    </tr>
+
+                    <tr>
+                        <td class="field"><span class="fieldName">Số xu</span></td>
+                        <td><span class="value" id="userAccount"></span></td>
+                    </tr>
+					
+                    <tr>
+                        <td class="field"><span class="fieldName">Số xu đặt</span></td>
+                        <td><span class="value"><input type="number" id="txtUserBetValue"/></span></td>
+                    </tr>
+                </table>
+				
+                <input type="button" value="Đặt cược" data-theme="b" id="btnBet" onClick="bet();" data-inline="true" />
+                <input type="button" value="Đặt tất tay" data-theme="b" id="btnBetAll" data-inline="true" onClick="ShowConfirmBox('Thông báo', 'Bạn có chắc chắn muốn đặt toàn bộ số xu?', function() {
+						$('#txtUserBetValue').val(localStorage.userAccount);
+						betAll();
+					}, function() { });"
+				/>
+            </div>
+        </div>
+
+        <div data-role="page" id="bet_score_page">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">
+                <h1>Dự đoán tỉ số</h1>
+                <a href="#" data-role="none" data-rel="back" class="link_icon_back"><span class="icon_back"></span></a>
+            </div>
+
+            <div data-role="content">
+                <table>
+                    <tr>
+                        <td colspan="2">
+                            <div class="firstrow">
+                                <div class="divClub">
+                                    <div id="homeClubLogoScore" style="min-height:70px;"></div>
+                                    <div id="homeClubNameScore"></div>
+                                    <select id="homeScoreGoal" data-mini="true" data-theme="e"></select>
+                                </div>
+								
+                                <div style="float:left; height:50px; padding-top:25px">vs</div>
+								
+                                <div class="divClub">
+                                    <div id="guestClubLogoScore" style="min-height:70px;"></div>
+                                    <div id="guestClubNameScore"></div>
+                                    <select id="guestScoreGoal" data-mini="true" data-theme="e">
+                                        <option value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                </div>
+								
+                                <div style="clear:both; text-align:center; padding-top:10px; font-size:1.3em;">Tỉ số dự đoán của bạn</div>
+                            </div>
+                        </td>
+                    </tr>
+					
+                    <tr>
+                        <td class="field"><span class="fieldName">Tỉ lệ</span></td>
+                        <td><span class="value" id="betScoreValue"></span></td>
+                    </tr>
+					
+                    <tr>
+                        <td class="field"><span class="fieldName">Tài khoản</span></td>
+                        <td><span class="value" id="userAccountNameScore"></span></td>
+                    </tr>
+					
+                    <tr>
+                        <td class="field"><span class="fieldName">Số xu</span></td>
+                        <td><span class="value" id="userAccountScore"></span></td>
+                    </tr>
+
+                    <tr>
+                        <td class="field"><span class="fieldName">Số xu đặt</span></td>
+                        <td><span class="value"><input type="number" id="txtUserBetScoreValue"/></span></td>
+                    </tr>
+
+					<tr class="hot-bet" style="display:none;">
+						<td colspan="2">
+							<div id="campain-hot-match-introduction" style="clear:both; text-align:center; padding-top:10px; font-size:0.9em; color:#f00;"></div>
+						</td>
+					</tr>
+					
+                    <tr class="hot-bet" style="display:none;">
+                        <td class="field"><span class="fieldName">Số người có cùng dự đoán</span></td>
+                        <td><span class="value"><input type="number" id="txtUserSameBet"/></span></td>
+                    </tr>
+                </table>
+				
+                <input type="button" value="Đặt cược" data-theme="b" id="btnBetScore" onClick="betByScore();" data-inline="true" />
+                <input type="button" value="Đặt tất tay" data-theme="b" id="btnBetScoreAll" data-inline="true" onClick="ShowConfirmBox('Thông báo', 'Bạn có chắc chắn muốn đặt toàn bộ số xu?', function() {
+						$('#txtUserBetScoreValue').val(localStorage.userAccount);
+						betByScoreAll();
+					}, function() { });"
+				/>
+            </div>
+        </div>
+
+        <div data-role="page" id="news_page" data-dom-cache="true" data-sidebar="true">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">
+                <h1>Tin tức</h1>
+                <a href="#" onclick="LoadNewsData()" data-role="none" class="ui-btn-right"><span class="icon_refresh"></span></a>
+            </div>
+
+            <div data-role="content" id="main_content">
+                <!-- Carousel content -->
+                <div class="carousel" id="slideshow_panel">
+                    <div class="flexslider">
+                        <ul class="slides" id="flexslider_slides"></ul>
+                    </div>
+                </div>
+
+                <!-- List view for five news -->
+                <ul data-role="listview" id="list-news"></ul>
+            </div>
+            
+            <div data-role="footer" class="ui-navbar-custom" data-position="fixed" data-tap-toggle="false">
+                <div data-role="navbar" class="ui-navbar-custom">
+                    <ul>
+                        <li><a href="#" data-icon="custom" class="news-i ui-btn-active ui-state-persist">Tin tức</a></li>
+                        <li><a href="#fixture_page" class="live-i" data-icon="custom">Live</a></li>
+						<li><a href="#next24h_page" class="next24h-i" data-icon="custom">24h tới</a></li>
+                        <li><a href="#" onclick="javascript:return changeToSigninPage('#account_page');" data-icon="custom" class="account-i">Hồ sơ</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div data-role="page" id="news_detail">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">                
+                <h1><span id="header-title"></span></h1>
+				<a href="#" data-role="none" data-rel="back" class="link_icon_back"><span class="icon_back"></span></a>
+            </div>
+
+            <div data-role="content">
+                <div class="content_container">
+					<div class="clearer">&nbsp;</div>
+                    <div id="news_content_detail"></div>
+                </div>
+            </div>
+        </div>
+		
+        <!-- End Group 1: News, Live -->
+
+
+		
+        <!-- Group 2: Standing, result, statistic -->
+		
+        <div data-role="page" id="ranking_national_detail_page" data-sidebar="true">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">
+                <h1 id="national_detail_header_title"></h1>
+                <a href="#" onclick="LoadNationalSeasonRankingTable(localStorage.seasonId)" data-role="none" class="ui-btn-right"><span class="icon_refresh"></span></a>
+            </div>
+
+            <div data-role="content">
+                <select name="select-standing-league-season" id="select-standing-league-season"></select>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width:3%;">&nbsp;</th>
+                            <th style="text-align:center;">Câu lạc bộ</th>
+                            <th style="width:10%; text-align:center;">Trận</th>
+                            <th style="width:15%; text-align:center;">BT/BB</th>
+                            <th style="width:15%; text-align:center;">+/-</th>
+                            <th style="width:10%; text-align:center;">Điểm</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="national_ranking_table_panel"></tbody>
+                </table>
+            </div>
+            
+            <div data-role="footer" class="ui-navbar-custom" data-position="fixed" data-tap-toggle="false">
+                <div data-role="navbar" class="ui-navbar-custom">
+                    <ul>
+                        <li><a href="#national_match_result_page" data-icon="custom" class="result-i">Lịch thi đấu</a></li>
+                        <li><a href="#" data-icon="custom" class="ranking-i ui-btn-active ui-state-persist">Xếp hạng</a></li>
+                        <li><a href="#player_statistics_page" class="statistic-i" data-icon="custom">Thống kê</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div data-role="page" id="national_match_result_page" data-sidebar="true">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">
+                <h1 id="national_match_result_header_title"></h1>
+                <a href="#" onclick="LoadNationalMatchResult()" data-role="none" class="ui-btn-right"><span class="icon_refresh"></span></a>
+            </div>
+
+            <div data-role="content">
+                <select id="nationalSeason"></select>
+                <select id="nationalMonth"></select>
+                <div id="national_match_result_content"></div>
+            </div>
+            
+            <div data-role="footer" class="ui-navbar-custom" data-position="fixed" data-tap-toggle="false">
+                <div data-role="navbar" class="ui-navbar-custom">
+                    <ul>
+                        <li><a href="#" data-icon="custom" class="result-i ui-btn-active ui-state-persist">Lịch thi đấu</a></li>
+                        <li><a href="#ranking_national_detail_page" class="ranking-i" data-icon="custom">Xếp hạng</a></li>
+                        <li><a href="#player_statistics_page" class="statistic-i" data-icon="custom">Thống kê</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div data-role="page" id="ranking_cup_detail_page" data-sidebar="true">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">
+                <h1 id="cup_detail_header_title"></h1>
+                <a id="ranking_table_cup_refresh_btn" href="javascript:LoadSeasonCupRankingTable(0,localStorage.seasonId);" data-role="none" class="ui-btn-right"><span class="icon_refresh"></span></a>
+            </div>
+
+            <div data-role="content" id="main_content">
+                <select name="select-season-standing-cup" id="select-season-standing-cup"></select>
+                <select name="select-choice-0" id="select-group" onchange="ShowCupTableRanking(this.options[this.selectedIndex].value)" data-theme="d"></select>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width:3%;">&nbsp;</th>
+                            <th style="text-align:center;">Câu lạc bộ</th>
+                            <th style="width:10%; text-align:center;">Trận</th>
+                            <th style="width:15%; text-align:center;">BT/BB</th>
+                            <th style="width:15%; text-align:center;">+/-</th>
+                            <th style="width:10%; text-align:center;">Điểm</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="cup_ranking_table_panel"></tbody>
+                </table>
+            </div>
+            
+            <div data-role="footer" class="ui-navbar-custom" data-position="fixed" data-tap-toggle="false">
+                <div data-role="navbar" class="ui-navbar-custom">
+                    <ul>
+                        <li><a href="#cup_match_result_page" data-icon="custom" class="result-i">Lịch thi đấu</a></li>
+                        <li><a href="#" data-icon="custom" class="ranking-i ui-btn-active ui-state-persist">Xếp hạng</a></li>
+                        <li><a href="#player_statistics_page" class="statistic-i" data-icon="custom">Thống kê</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div data-role="page" id="cup_match_result_page" data-sidebar="true">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">
+                <h1 id="cup_match_result_header_title"></h1>
+                <a href="#" onclick="LoadCupMatchResult()" data-role="none" class="ui-btn-right"><span class="icon_refresh"></span></a>
+            </div>
+
+            <div data-role="content">
+                <select id="cupSeason"></select>
+                <select id="roundType">
+                    <option value="0">Vòng sơ loại</option>
+                    <option value="1">Vòng bảng</option>
+                    <option value="2">Vòng knockout</option>
+                </select>
+
+                <div id="cup_match_result_content"></div>
+            </div>
+            
+            <div data-role="footer" class="ui-navbar-custom" data-position="fixed" data-tap-toggle="false">
+                <div data-role="navbar" class="ui-navbar-custom">
+                    <ul>
+                        <li><a href="#" data-icon="custom" class="result-i ui-btn-active ui-state-persist">Lịch thi đấu</a></li>
+                        <li><a href="#ranking_cup_detail_page" class="ranking-i" data-icon="custom">Xếp hạng</a></li>
+                        <li><a href="#player_statistics_page" class="statistic-i" data-icon="custom">Thống kê</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div data-role="page" id="club_match_result_page">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">                
+                <h1 id="club_match_result_header_title"></h1>
+				<a href="#" data-role="none" data-rel="back" class="link_icon_back"><span class="icon_back"></span></a>
+            </div>
+
+            <div data-role="content">
+                <select id="clubSeason"></select>
+                <div id="club_match_result_content"></div>
+            </div>
+        </div>
+
+        <div data-role="page" id="club_detail_page" data-theme="d">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">                
+                <h1></h1>
+				<a href="#" data-role="none" data-rel="back" class="link_icon_back"><span class="icon_back"></span></a>
+            </div>
+
+            <div data-role="content">
+                <div class="club-info">
+                    <div class="ui-grid-a">
+                        <div class="ui-block-a"><br><a href="#" data-role="button" data-inline="true" data-mini="true" id="team_player_link">Đội hình</a></div> <!-- Logo field -->
+                        <div class="ui-block-b">
+                            <p id="detail_club_name"></p>
+                            <p>Thành lập: <span id="detail_club_founded"></span></p>
+                            <p>SVĐ: <span id="detail_club_stadium"></span></p>
+                            <p>Sức chứa: <span id="detail_club_capacity"></span></p>
+                            <p>HLV: <span id="detail_club_manager"></span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="club-contact">
+                    <ul data-role="listview" data-inset="false" data-divider-theme="d">
+                        <li data-role="list-divider">Liên hệ</li>
+                        <li><div class="list-t" style="width:25%;">Địa chỉ</div><p class="ui-li-aside" id="detail_club_address"></p></li>
+                        <li><div class="list-t" style="width:25%;">Web</div><p class="ui-li-aside" id="detail_club_web"></p></li>
+                        <li><div class="list-t" style="width:25%;">Email</div><p class="ui-li-aside" id="detail_club_email"></p></li>
+                        <li><div class="list-t" style="width:25%;">Tel</div><p class="ui-li-aside" id="detail_club_phone"></p></li>
+                        <li data-role="list-divider">Danh hiệu</li>
+                    </ul>
+                    <p id="detail_club_honours"></p>
+                    <ul data-role="listview" data-inset="false" data-divider-theme="d" id="club-list-info"></ul>
+                </div>
+            </div>
+        </div>
+
+        <div data-role="page" id="team_player_list_page" data-theme="d">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">                
+                <h1></h1>
+				<a href="#" data-role="none" data-rel="back" class="link_icon_back"><span class="icon_back"></span></a>
+            </div>
+
+            <div data-role="content">
+                <ul data-role="listview" data-inset="false" data-theme="c" style="margin-top:10px;"></ul>
+            </div>
+        </div>
+
+        <div data-role="page" id="player_detail_page" data-theme="d">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">                
+                <h1></h1>
+				<a href="#" data-role="none" data-rel="back" class="link_icon_back"><span class="icon_back"></span></a>
+            </div>
+
+            <div data-role="content">
+                <div class="player-info">
+                    <div class="ui-grid-a">
+                        <div class="ui-block-a" id="player-image"></div>
+                        <div class="ui-block-b">
+                            <p id="detail_player_name"></p>
+                            <p>Vị trí: <span id="detail_player_position"></span></p>
+                            <p>Số áo: <span id="detail_player_number"></span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="player-index">
+                    <ul data-role="listview" data-inset="false" data-divider-theme="d">
+                        <li data-role="list-divider">Thông tin</li>
+                        <li><div class="list-t" style="width:30%;">Chiều cao</div><p class="ui-li-aside" id="detail_player_height"></p></li>
+                        <li><div class="list-t" style="width:30%;">Cân nặng</div><p class="ui-li-aside" id="detail_player_weight"></p></li>
+                        <li><div class="list-t" style="width:30%;">Ngày sinh</div><p class="ui-li-aside" id="detail_player_date"></p></li>
+                        <li><div class="list-t" style="width:30%;">Quốc tịch</div><p class="ui-li-aside" id="detail_player_nationality"></p></li>
+                    </ul>
+                    <ul data-role="listview" data-inset="false" data-divider-theme="d" id="player-news"></ul>
+                </div>
+            </div>
+        </div>
+
+        <div data-role="page" id="player_statistics_page" data-sidebar="true">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">
+                <h1 id="statistics_header"></h1>
+                <a href="#" onclick="LoadStatisticTable(localStorage.seasonId)" data-role="none" class="ui-btn-right"><span class="icon_refresh"></span></a>
+            </div>
+
+            <div data-role="content">
+                <select name="select-standing-player-season" id="select-standing-player-season"></select>
+                <table id="statistic_table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th style="text-align:center;">Đội</th>
+                            <th style="text-align:center;">Cầu thủ</th>
+                            <th style="text-align:center;">Bàn thắng</th>
+                        </tr>
+                    </thead>
+                    <tbody id="statistic_table_body"></tbody>
+                </table>
+            </div>
+            
+            <div data-role="footer" class="ui-navbar-custom" data-position="fixed" data-tap-toggle="false">
+                <div data-role="navbar" class="ui-navbar-custom">
+                    <ul>
+                        <li><a id="statistic-to-match-result" href="#" data-icon="custom" class="result-i">Lịch thi đấu</a></li>
+                        <li><a id="statistic-to-ranking" href="#" data-icon="custom" class="ranking-i">Xếp hạng</a></li>
+                        <li><a href="#" class="statistic-i ui-btn-active ui-state-persist" data-icon="custom">Thống kê</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+		
+        <!-- End Group 2: Standing, result, statistic -->
+
+
+		
+        <!-- Group 3: user -->
+		
+        <div data-role="dialog" id="signin_page" data-close-btn="right">
+            <div data-role="header" data-theme="b">
+                <h1>Đăng nhập</h1>
+            </div>
+
+            <div data-role="content" data-theme="b">
+                <input type="text" id="txtUsernameSignin" placeholder="Tên đăng nhập" data-theme="b" />
+                <input type="password" id="txtPasswordSignin" placeholder="Mật khẩu" data-theme="b" />
+                <input type="button" id="btnSignin" data-theme="b" data-rel="dialog" onclick="signin()" value="Đăng nhập" />
+                <a data-role="button" href="#signup_page" data-theme="b" data-rel="dialog">Đăng kí</a>
+            </div>
+        </div>
+
+        <div data-role="page" id="signup_page" data-close-btn="none">
+            <div data-role="header" data-theme="b">
+                <h1>Đăng kí</h1>
+                <a href="javascript:history.back();history.back();" data-role="button" data-icon="delete" data-iconpos="notext" class="ui-btn-right"></a>
+            </div>
+
+            <div data-role="content" data-theme="b">
+                <div id="divSignupAlert" style="color:red; text-shadow:none; font-size:15px;"></div>
+                <input type="text" id="txtUsernameSignup" placeholder="Tên đăng nhập" data-theme="b"/>
+                <input type="password" id="txtPasswordSignup" placeholder="Mật khẩu" data-theme="b"/>
+                <input type="password" id="txtConfirmPassword" placeholder="Xác nhận mật khẩu" data-theme="b"/>
+                <input type="button" id="btnSignup" onclick="signup()" value="Đăng kí" data-theme="b" />
+            </div>
+        </div>
+
+        <div data-role="page" id="account_page" data-sidebar="true">
+            <div data-role="header" data-position="fixed">
+                <h1>Tài khoản</h1>
+                <a href="#popupAccountMenu" class="ui-btn-right" data-role="none" data-rel="popup" data-transition="none"><span class="icon_gear"></span></a>
+                <div data-role="popup" id="popupAccountMenu" data-overlay-theme="a" data-theme="c">
+                    <div data-role="content">
+                        <ul data-role="listview" data-icon="false">
+                            <li style="border-radius:6px 6px 0px 0px; width:230px;" id="li_password_change"><a href="#change_password_page" data-rel="dialog">Đổi mật khẩu</a></li>
+                            <li style="width:230px;"><a href="#change_info_page">Đổi thông tin cá nhân</a></li>
+							<li style="width:230px;"><a href="#message_page">Hộp thư</a></li>
+                            <li style="border-radius:0px 0px 6px 6px; width:230px;"><a href="javascript:signout()">Đăng xuất</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div data-role="content">
+                <table>
+                    <tr>
+                        <td colspan="2"><span class="heading">Thông tin cá nhân</span></td>
+                    </tr>
+					
+                    <tr>
+                        <td><img src="./images/info_icons/man.png" class="infoIcon"><span class="value" id="username"></span></td>
+                    </tr>
+					
+                    <tr>
+                        <td><img src="./images/info_icons/name.png" class="infoIcon"><span class="value" id="fullname"></span></td>
+                    </tr>
+					
+                    <tr>
+                        <td><img src="./images/info_icons/gold.png" class="infoIcon"><span class="value" id="account"></span><!--a href="#coin_transfer_page"><img src="./images/transfer-30.png" style="float:right; height:2.5em;"></a--></td>
+                    </tr>
+					
+                    <tr>
+                        <td><img src="./images/info_icons/home.png" class="infoIcon"><span class="value" id="address"></span></td>
+                    </tr>
+					
+                    <tr>
+                        <td>
+                            <div>
+                                <img src="./images/info_icons/phone.png" class="infoIcon"><span class="value" id="phone"></span>
+                                <a href="#" data-transition="none" data-rel="popup" id="phoneVerify" class="verification"><span></span></a>
+                            </div>
+                        </td>
+                    </tr>
+					
+                    <tr>
+                        <td>
+                            <div>
+                                <img src="./images/info_icons/email.png" class="infoIcon"><span class="value" id="email"></span>
+                                <a href="#" data-transition="none" data-rel="popup" id="emailVerify" class="verification"><span></span></a>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <div data-role="popup" id="popupMobileValidate" data-position-to="window" data-overlay-theme="a" data-theme="c" style="max-width:400px; text-align:center;">
+                    <div data-role="header" data-theme="a" class="ui-corner-top">
+                        <h1>Xác thực điện thoại</h1>
+                    </div>
+					
+                    <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+                        <div class="clearer">&nbsp;</div>
+                        <p>Tài khoản xác thực sẽ được tặng xu. Bạn có đồng ý xác thực số điện thoại? </p>
+                        <a href="javascript:verifyPhone();" data-role="button" data-inline="true" data-theme="b">Có</a>
+                        <a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c">Không</a>
+                    </div>
+                </div>
+
+                <div data-role="popup" id="popupEmailValidate" data-position-to="window" data-overlay-theme="a" data-theme="c" style="max-width:400px; text-align:center;">
+                    <div data-role="header" data-theme="a" class="ui-corner-top">
+                        <h1>Xác thực Email</h1>
+                    </div>
+					
+                    <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+                        <div class="clearer">&nbsp;</div>
+                        <p>Tài khoản xác thực Email sẽ được tặng 200 xu</p>
+                        <input type="email" id="txtValidateEmail" value="" placeholder="Email" data-theme="b" />
+                        <a href="javascript:VerifyEmail();" data-role="button" data-inline="true" data-theme="b">Xác thực</a>
+                        <a href="" data-role="button" data-inline="true" data-rel="back" data-theme="c">Không</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div data-role="footer" class="ui-navbar-custom" data-position="fixed" data-tap-toggle="false">
+                <div data-role="navbar" class="ui-navbar-custom">
+                    <ul>
+                        <li><a href="#" data-icon="custom" class="account-i ui-btn-active ui-state-persist">Hồ sơ</a></li>
+                        <li><a href="#account_history_page" data-icon="custom" class="account-history-i">Lịch sử</a></li>
+                        <li><a href="#bet_history_page" data-icon="custom" class="bet-i">Đặt cược</a></li>
+                        <li><a href="#statistic_page" data-icon="custom" class="user_ranking-i">Thống kê</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+		
+		<div data-role="page" id="bet_history_page" data-sidebar="true">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">
+                <h1>Lịch sử đặt cược</h1>
+            </div>
+
+            <div data-role="content">
+				<select id="fromDateTime">
+					<option value="0">Trong hôm nay</option>
+					<option value="-1">Trong 2 ngày gần đây</option>
+					<option value="-2">Trong 3 ngày gần đây</option>
+					<option value="-6">Trong tuần này</option>
+				</select>
+				
+				<div id="bet_history_panel" style="margin-top:25px;"></div>
+				<div style="margin-top:40px;" id="bet_result_table"></div>
+            </div>
+            
+            <div data-role="footer" class="ui-navbar-custom" data-position="fixed" data-tap-toggle="false">
+                <div data-role="navbar" class="ui-navbar-custom">
+                    <ul>
+                        <li><a href="#" onclick="javascript:return changeToSigninPage('#account_page');" data-icon="custom" class="account-i">Hồ sơ</a></li>
+                        <li><a href="#account_history_page" data-icon="custom" class="account-history-i">Lịch sử</a></li>
+                        <li><a href="#" data-icon="custom" class="bet-i ui-btn-active ui-state-persist">Đặt cược</a></li>
+                        <li><a href="#statistic_page" data-icon="custom" class="user_ranking-i">Thống kê</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div data-role="page" id="top_account_page" data-sidebar="true">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">
+                <h1>Top đại gia</h1>
+            </div>
+
+            <div data-role="content" style="padding-top:15px;">
+                <table class="top-table">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center; width:20px;">STT</th>
+                            <th style="text-align:center;">Người chơi</th>
+                            <th style="text-align:center;">Số xu</th>
+                        </tr>
+                    </thead>
+                    <tbody id="top_account_panel"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div data-role="page" id="statistic_page" data-sidebar="true">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">
+                <h1>Thống kê</h1>
+            </div>
+
+            <div data-role="content" style="padding-top:5px;">
+				<div style="text-align:center;">
+					<form>
+						<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+							<input name="radio-choice-h-2" id="radio-choice-h-2a" value="on" checked="checked" type="radio" />
+							<label for="radio-choice-h-2a">Cửa đặt</label>
+							<input name="radio-choice-h-2" id="radio-choice-h-2b" value="off" type="radio" />
+							<label for="radio-choice-h-2b">Số xu đặt</label>
+						</fieldset>
+					</form>
+				</div>
+				
+				<div id="bet_statistic" style="margin-top:15px;"></div>
+            </div>
+            
+            <div data-role="footer" class="ui-navbar-custom" data-position="fixed" data-tap-toggle="false">
+                <div data-role="navbar" class="ui-navbar-custom">
+                    <ul>
+                        <li><a href="#" onclick="javascript:return changeToSigninPage('#account_page');" data-icon="custom" class="account-i">Hồ sơ</a></li>
+                        <li><a href="#account_history_page" data-icon="custom" class="account-history-i">Lịch sử</a></li>
+                        <li><a href="#bet_history_page" data-icon="custom" class="bet-i">Đặt cược</a></li>
+                        <li><a href="#" data-icon="custom" class="user_ranking-i ui-btn-active ui-state-persist">Thống kê</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+		
+		<div data-role="page" id="top_bet_result_page" data-sidebar="true">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">
+                <h1>Top cao thủ</h1>
+            </div>
+
+            <div data-role="content" style="padding-top:5px;">
+				<select id="top_bet_result_filter">
+					<option value="0">Theo thời gian</option>
+					<option value="1">Theo giải thưởng</option>
+				</select>
+				
+                <table style="margin-top:15px;" class="top-table">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center; width:20px;">STT</th>
+                            <th style="text-align:center;">Người chơi</th>
+                            <th style="text-align:center;">Thắng</th>
+							<th style="text-align:center;">Thua</th>
+							<th style="text-align:center;">Hiệu số</th>
+                        </tr>
+                    </thead>
+                    <tbody id="top_bet_result_panel"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div data-role="page" id="change_password_page" data-close-btn="right">
+            <div data-role="header" data-theme="b" data-position="fixed" data-tap-toggle="false">
+                <h1>Đổi mật khẩu</h1>
+            </div>
+
+            <div data-role="content" data-theme="b">
+                <input type="password" id="txtOldPassword" placeholder="Mật khẩu cũ" data-theme="b" />
+                <input type="password" id="txtNewPassword" placeholder="Mật khẩu mới" data-theme="b" />
+                <input type="password" id="txtConfirmNewPassword" placeholder="Xác nhận mật khẩu" data-theme="b" />
+                <div id="divChangePasswordError" class="accountError"></div>
+                <input type="button" id="btnChangePassword" value="Đổi mật khẩu" onclick="changePassword()" data-theme="b" />
+            </div>
+        </div>
+
+        <div data-role="page" id="change_info_page">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false" >                
+                <h1>Đổi thông tin</h1>
+				<a href="#" data-role="none" data-rel="back" class="link_icon_back"><span class="icon_back"></span></a>
+            </div>
+
+            <div data-role="content">
+                <div style="padding-top:30px">
+                    <label for="txtNewFullname">Tên đầy đủ</label>
+                    <input type="text" id="txtNewFullname" />
+
+                    <label for="txtNewAddress">Địa chỉ</label>
+                    <input type="text" id="txtNewAddress" />
+
+                    <label for="txtNewPhone">Điện thoại</label>
+                    <input type="text" id="txtNewPhone" />
+
+                    <label for="txtNewEmail">Email</label>
+                    <input type="text" id="txtNewEmail" />
+
+                    <input type="button" value="Lưu thay đổi" onclick="changeInfo()" data-theme="b" />
+                </div>
+            </div>
+        </div>
+
+        <div data-role="page" id="account_history_page" data-sidebar="true">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">
+                <h1>Lịch sử tài khoản</h1>
+				<a href="#" data-role="none" data-rel="back" class="link_icon_back"><span class="icon_back"></span></a>
+            </div>
+
+            <div data-role="content">
+                <select id="cbHistoryOption">
+                    <option value="10">&nbsp;10 giao dịch gần nhất</option>
+                    <option value="20">&nbsp;20 giao dịch gần nhất</option>
+                    <option value="50">&nbsp;50 giao dịch gần nhất</option>
+                    <option value="100">100 giao dịch gần nhất</option>
+                </select>
+
+                <table class="top-table">
+                    <thead>
+                        <tr style="font-size:12px;">
+                            <th>&nbsp;</th>
+                            <th style="text-align:center;">Thời gian</th>
+                            <th style="text-align:right; min-width:50px;">Thay đổi</th>
+                            <th style="text-align:right; min-width:70px;">Sau thay đổi</th>
+                            <th style="text-align:center;">Nội dung</th>
+                        </tr>
+                    </thead>
+                    <tbody id="account_history_panel"></tbody>
+                </table>
+            </div>
+            
+            <div data-role="footer" class="ui-navbar-custom" data-position="fixed" data-tap-toggle="false" >
+                <div data-role="navbar" class="ui-navbar-custom">
+                    <ul>
+                        <li><a href="#" onclick="javascript:return changeToSigninPage('#account_page');" data-icon="custom" class="account-i">Hồ sơ</a></li>
+                        <li><a href="#" data-icon="custom" class="account-history-i ui-btn-active ui-state-persist">Lịch sử</a></li>
+                        <li><a href="#bet_history_page" data-icon="custom" class="bet-i">Đặt cược</a></li>
+                        <li><a href="#statistic_page" data-icon="custom" class="user_ranking-i">Thống kê</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+	
+        <div data-role="page" id="message_page" data-sidebar="false">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">				
+                <h1>Hộp thư</h1>
+				<a href="#" data-role="none" data-rel="back" class="link_icon_back"><span class="icon_back"></span></a>
+            </div>
+
+            <div data-role="content">
+                <ul data-role="listview" id="inbox_panel"></ul>
+            </div>
+        </div>
+
+        <div data-role="page" id="message_detail_page">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">                
+                <h1 id="message_detail_title"></h1>
+				<a href="#" data-role="none" data-rel="back" class="link_icon_back"><span class="icon_back"></span></a>
+            </div>
+
+            <div data-role="content">
+                <input type="hidden" id="hdInboxItem" />
+                <div id="message_detail_panel"></div>
+            </div>
+        </div>
+	
+        <div data-role="page" id="coin_transfer_page">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">                
+                <h1>Tặng xu</h1>
+				<a href="#" data-role="none" data-rel="back" class="link_icon_back"><span class="icon_back"></span></a>
+            </div>
+
+            <div data-role="content">
+                <div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
+                    <label class="ui-input-text"><img src="./images/fee-30.png" /><b>Phí tặng xu</b> <span><span id="lblTransferXuFee"></span> %</span></label>
+                    <div class="clearer"></div>
+                </div>
+
+                <div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
+                    <label for="txtReceiver" class="ui-input-text" id="label_receiver"><img src="./images/info_icons/name.png" style="width:30px; height:30px;" /><b> Người nhận</b></label>
+                    <input type="text" name="text" id="txtReceiver" value="" placeholder="Người nhận" />
+                    <div class="clearer"></div>
+                </div>
+				
+                <div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
+                    <label for="txtAmount" class="ui-input-text" id="label_amount"><img src="./images/chargemoney-30.png" /><b> Số xu tặng</b> <span id="lblMinimumXuRequiredPanel">(Tối thiểu <span id="lblMinimumXuRequired"></span> xu)</span></label>
+                    <input type="number" name="number" id="txtAmount" value="" placeholder="Số xu tặng" />
+                    <div class="clearer"></div>
+                </div>
+				
+                <p style="text-align:center;">
+                    <input type="button" value="Tặng xu" data-inline="true" data-theme="b" id="btnTransferCoin" onClick="SubmitCoinTransfer();" />
+                </p>
+            </div>
+        </div>
+
+        <!-- End Group 3: user -->
+        
+		
+		
+        <div data-role="popup" id="messageBox"  data-overlay-theme="a" data-theme="c" class="ui-corner-all">
+            <div data-role="header" data-theme="a" class="ui-corner-top ui-header ui-bar-b">
+                <h1 class="popupBoxHeader"></h1>
+            </div>
+			
+            <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content ui-body-d">
+                <div class="popupBoxContent"></div>
+                <p style="text-align:center;">
+                    <a href="#" data-role="button" data-inline="true" data-mini="true" data-rel="back" data-theme="b" class="closePopup">OK</a>
+                </p>
+            </div>
+        </div>
+
+        <div data-role="popup" id="confirmBox"  data-overlay-theme="a" data-theme="c" class="ui-corner-all">
+            <div data-role="header" data-theme="a" class="ui-corner-top ui-header ui-bar-b">
+                <h1 class="popupBoxHeader"></h1>
+            </div>
+			
+            <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content ui-body-d">
+                <div class="popupBoxContent"></div>
+                <p style="text-align:center;">
+                    <a href="#" data-role="button" data-inline="true" data-mini="true" data-theme="b" class="closePopup yesButton">Đồng ý</a>
+                    <a href="#" data-role="button" data-inline="true" data-mini="true" data-theme="b" class="closePopup noButton">Không</a>
+                </p>
+            </div>
+        </div>
+
+		<script type="text/javascript" src="./js/jquery.min.js"></script><!-- Version 1.9.1 -->
+        <script type="text/javascript" src="./js/jquery-ui-min.js"></script><!-- Version 1.9.2 -->
+        <script type="text/javascript" src="./js/cordova.js"></script> <!-- Version 2.6.0 -->
+        <script type="text/javascript" src="./js/objects.js"></script>
+		<script type="text/javascript" src="./js/utilities.js"></script>
+		<script type="text/javascript" src="./js/configuration.js"></script>
+        <script type="text/javascript" src="./js/index.js"></script>
+        <script type="text/javascript" src="./js/match_detail_page.js"></script>
+        <script type="text/javascript" src="./js/match_result_page.js"></script>
+        <script type="text/javascript" src="./js/jquery.mobile.min.js"></script><!-- Version 1.3.0 -->
+		<script type="text/javascript" src="./js/fastclick.js"></script>
+        <script type="text/javascript" src="./js/jquery.flexslider-min.js"></script>
+        <script type="text/javascript" src="./js/PushNotification.js"></script>
+		<script type="text/javascript" src="./js/notify.min.js"></script>
+	
+        <script type="text/javascript" charset="utf-8">
+			// Get Imei for android
+			if (ABongDaAppType == 1) {
+				GetImei();
+			}
+            InitialStorage();				
+        </script>
+    </body>
+</html>

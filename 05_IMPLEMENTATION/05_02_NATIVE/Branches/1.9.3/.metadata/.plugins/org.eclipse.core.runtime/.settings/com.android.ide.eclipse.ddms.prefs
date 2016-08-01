@@ -1,0 +1,10 @@
+ddms.logcat.automonitor.userprompt=true
+eclipse.preferences.version=1
+logcat.view.colsize.Application=143
+logcat.view.colsize.Level=29
+logcat.view.colsize.PID=50
+logcat.view.colsize.TID=50
+logcat.view.colsize.Tag=136
+logcat.view.colsize.Text=543
+logcat.view.colsize.Time=130
+logcat.view.filters.list=name\: 'webservice', tag\: 'webservice', text\: '', pid\: '', app\: '', level\: 'verbose', name\: 'MAINVIEW_MainFragment Log', tag\: 'MAINVIEW_MainFragment Log', text\: '', pid\: '', app\: '', level\: 'verbose', name\: 'BACKSTACK', tag\: 'BACKSTACK', text\: '', pid\: '', app\: '', level\: 'verbose', name\: 'mainview', tag\: 'mainview', text\: '', pid\: '', app\: '', level\: 'verbose', name\: 'SPRS\:', tag\: 'SPRS\:', text\: '', pid\: '', app\: '', level\: 'verbose', name\: 'com.ats.abongda (Session Filter)', tag\: '', text\: '', pid\: '', app\: 'com.ats.abongda', level\: 'verbose', name\: 'HUD', tag\: 'HUD', text\: '', pid\: '', app\: '', level\: 'verbose', name\: 'DU', tag\: 'DU', text\: '', pid\: '', app\: '', level\: 'verbose', name\: 'TAG11', tag\: 'TAG11', text\: '', pid\: '', app\: '', level\: 'verbose', name\: 'BA', tag\: 'BA', text\: '', pid\: '', app\: '', level\: 'verbose', name\: 'fragmentStack', tag\: 'fragmentStack', text\: '', pid\: '', app\: '', level\: 'verbose', name\: 'LIVE_LiveFragment', tag\: 'LIVE_LiveFragment', text\: '', pid\: '', app\: '', level\: 'verbose', name\: 'TAG12', tag\: 'TAG12', text\: '', pid\: '', app\: '', level\: 'verbose', name\: 'meomeo', tag\: 'meomeo', text\: '', pid\: '', app\: '', level\: 'verbose', name\: 'TAG11', tag\: 'TAG11', text\: '', pid\: '', app\: '', level\: 'verbose', name\: 'MACTIVITY', tag\: 'MACTIVITY', text\: '', pid\: '', app\: '', level\: 'verbose', name\: 'BaseFragment', tag\: 'BaseFragment', text\: '', pid\: '', app\: '', level\: 'verbose', 

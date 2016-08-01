@@ -1,0 +1,261 @@
+package com.ats.NIEN.abongda.activity;
+
+
+import java.lang.ref.WeakReference;
+
+import android.app.Activity;
+
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+
+
+import com.ats.NIEN.abongda.UTIL.Constant;
+import com.ats.NIEN.abongda.UTIL.CustomAlertDialog;
+import com.ats.NIEN.abongda.UTIL.InternetChecking;
+import com.ats.NIEN.abongda.UTIL.JSONParser;
+import com.ats.NIEN.abongda.UTIL.InternetChecking.InternetCheckingCallback;
+import com.ats.abongda.R;
+
+public class DangnhapActivity extends Activity implements OnClickListener{
+	public LinearLayout mSigninPanel, mSigninBtn, mSignupBtn;
+	public ImageView mCancelBtn;
+	public EditText mUsername;
+	public EditText mPassword;
+	public SharedPreferences mSharePrf;
+	public Context mContext;
+	public ProgressDialog pDialog;
+	public int matchCode;
+	
+	
+	
+	public DangnhapActivity() {
+		super();
+		// TODO Auto-generated constructor stub
+		this.matchCode = 0;
+	}
+	
+
+	public DangnhapActivity(int matchCode) {
+		super();
+		this.matchCode = matchCode;
+	}
+
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		Intent i = getIntent();
+		matchCode = i.getIntExtra("CURRENT_MATCH_ID", 0);
+		requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		
+		setContentView(R.layout.signin_main_layout);
+		mCancelBtn = (ImageView) findViewById(R.id.SigninPanel_cancelBtn);
+		mSigninPanel = (LinearLayout) findViewById(R.id.SigninPanel);
+		mSigninBtn = (LinearLayout) findViewById(R.id.SigninPanel_signinbtn);
+		mSignupBtn = (LinearLayout) findViewById(R.id.SigninPanel_signupbtn);
+		mUsername = (EditText) findViewById(R.id.SigninPanel_username);
+		mPassword = (EditText) findViewById(R.id.SigninPanel_password);
+		mSharePrf = getSharedPreferences("AUTHENTICATION_FILE_NAME", Context.MODE_PRIVATE);
+		mContext = this;
+		changeSigninBtnState();
+		mCancelBtn.setOnClickListener(this);
+		mSigninBtn.setOnClickListener(this);
+		mSignupBtn.setOnClickListener(this);
+		mUsername.addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				// TODO Auto-generated method stub
+				changeSigninBtnState();
+				
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO Auto-generated method stub
+				changeSigninBtnState();
+			}
+		});
+		mPassword.addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				// TODO Auto-generated method stub
+				changeSigninBtnState();
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO Auto-generated method stub
+				changeSigninBtnState();
+			}
+		});
+	}
+	
+	@SuppressWarnings("deprecation")
+	public boolean changeSigninBtnState(){
+		int i1 = mUsername.getText().toString().length();
+		int i2 = mPassword.getText().toString().length();
+		if (i1 == 0 || i2 == 0) {
+			mSigninBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.custom_btn_item_shape2));
+			mSigninBtn.setClickable(false);
+			return false;
+		}else{
+			mSigninBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.custom_btn_item_shape));
+			mSigninBtn.setClickable(true);
+			return true;
+		}
+	}
+	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+		Intent i = new Intent(this,MainActivity.class);
+		startActivity(i);
+		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+	}
+
+
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		switch (v.getId()) {
+		case R.id.SigninPanel_cancelBtn:
+			onBackPressed();
+			Log.d("signin", "on back press");
+			break;
+		case R.id.SigninPanel_signinbtn:
+			if (changeSigninBtnState() == true) {
+				NetAsync();
+				Log.d("signin", "signin press");
+			}
+			break;
+		case R.id.SigninPanel_signupbtn:
+			Intent i = new Intent(this,DangkyActivity.class);
+			startActivity(i);
+			overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+			break;
+		default:
+			break;
+		}
+		
+	}
+	
+	
+
+	private class ProcessListContents extends
+			AsyncTask<String, String, String> {
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			
+		}
+
+		@Override
+		protected String doInBackground(String... args) {
+			String username = (mUsername.getText().toString().trim().length() == 0)? "[foo]":mUsername.getText().toString().trim();
+			int userId = (new JSONParser(mContext)).performSignin("123456", username, mPassword.getText().toString().trim());
+			return userId+"";
+		}
+
+		@Override
+		protected void onPostExecute(String userId) {
+
+			Log.d("signin", userId);
+			if(Integer.parseInt(userId)==0){
+				final CustomAlertDialog aDialog = new CustomAlertDialog(mContext, "Đăng nhập",
+						"Đăng nhập thất bại !", "Ok");
+				aDialog.setCanceledOnTouchOutside(true);
+				aDialog.show();
+				aDialog.btn.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						aDialog.hide();
+						
+					}
+				});
+			}else{
+				SharedPreferences.Editor editor = mSharePrf.edit();
+				editor.putInt("CURRENT_USER_ID", Integer.parseInt(userId));
+				editor.putString("CURRENT_USER_NAME", mUsername.getText().toString().trim());
+				editor.commit();
+				Intent i = new Intent(mContext,MainActivity.class);
+				Bundle b = new Bundle();
+				if (matchCode != 0) {
+					b.putInt("callback_act", Constant.MATCHDETAIL_CODE); 
+				}else{
+					b.putInt("callback_act", Constant.TK_HOSO_CODE); 
+				}
+				
+				i.putExtras(b);
+				startActivity(i);
+				overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+				finish();
+			}
+		}
+	}
+
+	public void NetAsync() {
+		new InternetChecking(new WeakReference<Context>(this),
+				new InternetCheckingCallback() {
+
+					@Override
+					public void onCheckComplete(boolean result,
+							final Dialog progressDialog) {
+						// TODO Auto-generated method stub
+						if (!result) {
+							progressDialog.dismiss();
+						} else {
+							new ProcessListContents() {
+								@Override
+								protected void onPostExecute(
+										String list) {
+									// TODO Auto-generated method stub
+									super.onPostExecute(list);
+									progressDialog.dismiss();
+								}
+							}.execute();
+						}
+					}
+				}).execute();
+	}
+	
+	
+	
+}

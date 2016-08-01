@@ -1,0 +1,336 @@
+package com.ats.abongda.nvs.fragment;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
+import android.widget.RelativeLayout;
+import android.widget.SimpleAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+import com.ats.NIEN.abongda.R;
+import com.ats.NIEN.abongda.model.LeagueSeason;
+import com.ats.NIEN.abongda.model.MatchModel;
+import com.ats.NIEN.abongda.model.MonthData;
+import com.ats.abongda.nvs.adapter._BXH_LichthidauAdapter;
+import com.ats.abongda.nvs.fragment.MAIN.ILoadFragmentObserver;
+import com.ats.abongda.nvs.util.JSONParser;
+import com.twotoasters.jazzylistview.JazzyListView;
+
+public class _BXHLichthidauFragment extends BaseFragment implements ILoadFragmentObserver{
+
+	private int leagueId;
+	private LinearLayout SpinnerLayoutLeft, SpinnerLayoutRight, loadingLayout, noResLayout;
+	private TextView headerTextLeft, headerTextRight;
+	private Spinner spinnerLeft, spinnerRight;
+	private JazzyListView mainListView;
+	private boolean leagueType; //PL: true, CL: false;
+	private RelativeLayout mainView;
+	private LayoutInflater inflater;
+	public List<LeagueSeason> seasonList;
+	public List<MatchModel> matchList;
+	public List<String> seasonNameList;
+	public List<String> monthList;
+	public int currentSeason, currentMonth;
+	public boolean isFirstLoad;
+	public _BXHLichthidauFragment(int mActionCode, List<Object> mArgs) {
+		super(mActionCode, mArgs);
+		// TODO Auto-generated constructor stub
+		this.leagueId = mActionCode;
+		if (leagueId <= 5) {
+			this.leagueType = true;
+		}else{
+			this.leagueType = false;
+		}
+		this.currentSeason = 0;
+		this.isFirstLoad = true;
+	}
+	
+	public _BXHLichthidauFragment(List<Object> mArgs) {
+		super(mArgs);
+		// TODO Auto-generated constructor stub
+	}
+
+	
+	public static _BXHLichthidauFragment newInstance(int leagueId){
+		return new _BXHLichthidauFragment(leagueId, null);
+	}
+	
+	@Override
+	public View onCreateView(LayoutInflater inflater,
+			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		this.mainView = (RelativeLayout) inflater.inflate(R.layout.bangxephang_mainlayout_twospinner, null);
+		SpinnerLayoutLeft = (LinearLayout) mainView.findViewById(R.id.bxh_twospinner_header1);
+		SpinnerLayoutRight = (LinearLayout) mainView.findViewById(R.id.bxh_twospinner_header2);
+		headerTextLeft = (TextView) mainView.findViewById(R.id.bxh_twospinner_headertext1);
+		headerTextRight = (TextView) mainView.findViewById(R.id.bxh_twospinner_headertext2);
+		spinnerLeft = (Spinner) mainView.findViewById(R.id.bxh_twospinner_spinner1);
+		spinnerRight = (Spinner) mainView.findViewById(R.id.bxh_twospinner_spinner2);
+		mainListView = (JazzyListView) mainView.findViewById(R.id.bxh_twospinner_listview);
+		loadingLayout = (LinearLayout) mainView.findViewById(R.id.bxh_twospinner_loading);
+		noResLayout = (LinearLayout) mainView.findViewById(R.id.bxh_twospinner_nores);
+		changeViewOrder(false, true, false);
+		//set current month, if league is nation league, advoid, if not, return CL_ROUND
+		if (leagueType) {
+			this.currentMonth = 0;
+		}else{
+			this.currentMonth = this.mSharePreferences.getInt("CL_ROUND", 0);
+		}
+		SpinnerLayoutLeft.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if (loadingLayout.getVisibility() != View.VISIBLE) {
+					spinnerLeft.performClick();
+				}
+				
+			}
+		});
+		SpinnerLayoutRight.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if (loadingLayout.getVisibility() != View.VISIBLE) {
+					spinnerRight.performClick();
+				}
+			}
+		});
+		return mainView;
+	}
+	
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		if (isFirstLoad) {
+			isFirstLoad = false;
+			onLoadFragment(0);
+		}
+	}
+	
+	
+	//-------------------FUNCTIONS----------------------//
+	private void hideShowSpinnerTwo(boolean flag){ //true: show, false: hide
+		LinearLayout.LayoutParams param1 = new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT);
+		LinearLayout.LayoutParams param2 = new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT);
+		if (flag) {
+			param1.weight = 1;
+			param2.weight = 1;
+		}else{
+			param1.weight = 2;
+			param2.weight = 0;
+		}
+		SpinnerLayoutLeft.setLayoutParams(param1);
+		SpinnerLayoutRight.setLayoutParams(param2);
+	}
+	private void changeViewOrder(boolean listView,boolean loading, boolean nores){
+		mainListView.setVisibility((listView)? View.VISIBLE:View.INVISIBLE);
+		loadingLayout.setVisibility((loading)? View.VISIBLE:View.INVISIBLE);
+		noResLayout.setVisibility((nores)? View.VISIBLE:View.INVISIBLE);
+	}
+	private void setSpinnerOneData(int position, boolean flag, boolean flag2){
+		if (!flag) {
+			return;
+		}
+		ArrayAdapter<String> mSpinnerAdapter = new ArrayAdapter<String>(
+				getActivity(), android.R.layout.simple_spinner_dropdown_item,
+				seasonNameList);
+		mSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinnerLeft.setAdapter(mSpinnerAdapter);
+		spinnerLeft.setSelection(position);
+		headerTextLeft.setText(seasonNameList.get(position));
+		if (flag2) {
+			spinnerLeft.setOnItemSelectedListener(null);
+			spinnerLeft.setOnItemSelectedListener(new OnItemSelectedListener() {
+				@Override
+				public void onItemSelected(AdapterView<?> parent, View view,
+						int position, long id) {
+					// TODO Auto-generated method stub
+					currentSeason = position;
+					headerTextLeft.setText(seasonList.get(currentSeason).getSeasonName());
+					new getMatchData(seasonList.get(currentSeason).getRowId(), leagueId, currentMonth).execute();
+				}
+
+				@Override
+				public void onNothingSelected(AdapterView<?> parent) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+		}
+	}
+	private void setSpinnerTwoData(int position, boolean flag, boolean flag2){
+		if (!flag) {
+			return;
+		}
+		ArrayAdapter<String> mSpinnerAdapter = new ArrayAdapter<String>(
+				getActivity(), android.R.layout.simple_spinner_dropdown_item,
+				monthList);
+		mSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinnerRight.setAdapter(mSpinnerAdapter);
+		spinnerRight.setSelection(position);
+		headerTextRight.setText(seasonList.get(currentSeason).getMonthData().get(currentMonth).monthAsString());
+		if (flag2) {
+			spinnerRight.setOnItemSelectedListener(null);
+			spinnerRight.setOnItemSelectedListener(new OnItemSelectedListener() {
+				@Override
+				public void onItemSelected(AdapterView<?> parent, View view,
+						int position, long id) {
+					// TODO Auto-generated method stub
+					if (leagueType) {
+						currentMonth = seasonList.get(currentSeason).getMonthData().get(position).getMonth();
+						
+					}else
+						currentMonth = position;
+					headerTextRight.setText(seasonList.get(currentSeason).getMonthData().get(currentMonth).monthAsString());
+					new getMatchData(seasonList.get(currentSeason).getRowId(), leagueId, currentMonth).execute();
+				}
+				@Override
+				public void onNothingSelected(AdapterView<?> parent) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+		}
+		
+	}
+	@Override
+	public void onLoadFragment(Object arg) {
+		// TODO Auto-generated method stub
+		int i = (Integer) arg;
+		switch (i) {
+		case 0:
+			new getSeasonData(leagueId).execute();
+			break;
+		default:
+			break;
+		}
+	}
+	
+	//-------------------ASYNCTASK----------------------//
+	
+	
+	/**
+	 * GET SEASON DATA
+	 */
+	private class getSeasonData extends AsyncTask<String, String, List<LeagueSeason>>{
+		int leagueId;
+		public getSeasonData(int leagueId) {
+			super();
+			this.leagueId = leagueId;
+		}
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			changeViewOrder(false, true, false);
+		}
+		
+		@Override
+		protected List<LeagueSeason> doInBackground(String... params) {
+			// TODO Auto-generated method stub
+			return new JSONParser(getRealActivity()).parseLeagueSeason(this.leagueId);
+		}	
+		
+		@Override
+		protected void onPostExecute(List<LeagueSeason> result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			seasonList = new ArrayList<LeagueSeason>();
+			seasonList.addAll(result);
+			seasonNameList = new ArrayList<String>();
+			monthList = new ArrayList<String>();
+			if (leagueType) {
+				LeagueSeason currentLeague = result.get(0);
+				List<MonthData> monthDataList = currentLeague.getMonthData();
+				for(int i=0; i< monthDataList.size(); i++){
+					if (monthDataList.get(i).getIsCurrent() == 1) {
+						currentMonth = i; break;
+					}
+				}
+				for (MonthData monthData : monthDataList) {
+					monthList.add(monthData.getName());
+				}		
+			}else{
+				monthList.add(getResources().getString(R.string.vongbang));
+				monthList.add(getResources().getString(R.string.vongsoloai));
+				monthList.add(getResources().getString(R.string.vongknockout));
+			}			
+			for (LeagueSeason leagueSeason : result) {
+				seasonNameList.add(leagueSeason.getSeasonName());
+			}
+			setSpinnerOneData(currentSeason, true, false);
+			setSpinnerTwoData(currentMonth, true, false);
+			if (leagueType) {
+				new getMatchData(result.get(0).getRowId(), leagueId, result.get(0).
+						getMonthData().get(currentMonth).getMonth()).execute();
+			}else{
+				new getMatchData(result.get(0).getRowId(), leagueId, currentMonth).execute();
+			}		
+		}
+	}
+	
+	/**
+	 * GET MATCH DATA
+	 */
+	private class getMatchData extends AsyncTask<String, String, List<MatchModel>>{
+		int seasonRowId;
+		int leagueRowId;
+		int month;
+		int userId;
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			changeViewOrder(false, true, false);
+		}
+		
+		public getMatchData(int seasonRowId, int leagueRowId, int month) {
+			super();
+			this.seasonRowId = seasonRowId;
+			this.leagueRowId = leagueRowId;
+			this.month = month;
+			this.userId = getRealBaseActivity().getUserId();
+		}
+
+		@Override
+		protected List<MatchModel> doInBackground(String... params) {
+			// TODO Auto-generated method stub
+			if (leagueType) {
+				return new JSONParser(getRealActivity()).parseNationLeague(seasonRowId, leagueRowId, userId, month);
+			}else{
+				return new JSONParser(getRealActivity()).parseCupLeague(seasonRowId, leagueRowId, userId, month);
+			}
+		}
+		@Override
+		protected void onPostExecute(List<MatchModel> result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			if (result != null && result.size() > 0) {
+				_BXH_LichthidauAdapter adapter = new _BXH_LichthidauAdapter(result, getRealActivity());
+				mainListView.setAdapter(adapter);
+				mainListView.setTransitionEffect(1);
+				changeViewOrder(true, false, false);
+			}else{
+				changeViewOrder(false, false, true);
+			}
+		}
+		
+	}
+	
+}

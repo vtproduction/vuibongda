@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <Spinner
+            android:id="@+id/xephangPage_main_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/spinner_bg" />
+		<Spinner
+            android:id="@+id/xephangPage_groupSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/spinner_bg" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/base_app_color"
+            android:orientation="horizontal"
+            android:weightSum="9" >
+
+            <TextView
+                android:id="@+id/xephangPage2Item_tran"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:gravity="center"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="@string/clb"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/white_color" />
+
+            <TextView
+                android:id="@+id/xephangPage2Item_btbb"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/match"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/white_color" />
+
+            <TextView
+                android:id="@+id/xephangPage2Item_hs"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="@string/btbb"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/white_color" />
+
+            <TextView
+                android:id="@+id/xephangPage2Item_pos"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/congtru"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/white_color" />
+
+            <TextView
+                android:id="@+id/xephangPage2Item_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/score"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/white_color" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/xephangPage_main_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" 
+            android:background="@color/white_color">
+			
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

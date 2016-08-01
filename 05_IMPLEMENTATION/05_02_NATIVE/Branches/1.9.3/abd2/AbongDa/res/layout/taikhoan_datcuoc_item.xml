@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:minHeight="80dp"
+    android:layout_height="80dp"
+    android:background="@drawable/border_bottom4"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tkdc_child_slash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="120dp"
+        android:text="@string/shortSlash"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <ImageView
+        android:id="@+id/tkdc_child_logo"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="0dp"
+        android:scaleType="fitXY"
+        android:layout_toRightOf="@+id/tkdc_child_matchTime"
+        android:src="@drawable/league_bundesliga"
+        android:contentDescription="@string/null_string" />
+
+    <TextView
+        android:id="@+id/tkdc_child_matchTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:text="@string/matchTime"
+        android:textColor="@color/base_app_color"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/tkdc_child_guest_goal"
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tkdc_child_slash"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:maxLines="2"
+        android:text="99"
+        android:textStyle="bold"
+        android:textColor="@color/redcolor"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+    <TextView
+        android:id="@+id/tkdc_child_guest"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tkdc_child_guest_goal"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:maxLines="2"
+        android:text="@string/guest"
+        android:textStyle="bold"
+        android:textSize="12sp"/>
+
+    <TextView
+        android:id="@+id/tkdc_child_host"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        android:layout_alignRight="@+id/tkdc_child_host_goal"
+        android:text="@string/longName"
+        android:gravity="right"
+		android:textStyle="bold"
+        android:textSize="12sp" />
+    <TextView
+        android:id="@+id/tkdc_child_host_goal"
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:layout_alignRight="@+id/tkdc_child_slash"
+        android:text="99"
+        android:gravity="right"
+		android:textStyle="bold"
+		android:textColor="@color/redcolor"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/tkdc_child_tvChanel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_vertical"
+        android:layout_centerHorizontal="true"
+        android:text="@string/tvChanel"
+        android:layout_marginBottom="10dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/base_app_color"
+        android:textStyle="bold"
+        android:textSize="12sp" />
+
+</RelativeLayout>

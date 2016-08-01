@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@drawable/border_bottom4"
+    android:gravity="center_vertical|fill_horizontal"
+    android:orientation="horizontal"
+    android:padding="15dp" 
+    android:weightSum="8">
+
+    <TextView
+        android:id="@+id/topdaigiaPage_stt_2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="123456"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/myredcolor"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/topdaigiaPage_name_2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="vtproduction2"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/myredcolor"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/topdaigiaPage_xu_2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="1923546"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/myredcolor"
+        android:textStyle="bold" />
+
+</LinearLayout>
