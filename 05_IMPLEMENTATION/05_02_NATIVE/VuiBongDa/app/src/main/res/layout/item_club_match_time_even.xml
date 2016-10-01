@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="100"
+    android:gravity="center_vertical"
+    android:background="@color/white_color">
+
+    <TextView
+        android:id="@+id/lichthidauPageDB_time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="14"
+        android:paddingLeft="5dp"
+        android:text="@string/matchTime"
+        android:textColor="@color/base_app_color"
+        android:textSize="12sp" />
+
+    <ImageView
+        android:id="@+id/lichthidauPageDBDoibong_logo"
+        android:layout_width="0dp"
+        android:layout_weight="10"
+        android:layout_height="30dp"
+        android:src="@drawable/league_pl" />
+
+    <TextView
+        android:id="@+id/lichthidauPageDB_host"
+        android:layout_width="0dp"
+        android:layout_weight="28"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:gravity="right"
+        android:text="@string/longName"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/lichthidauPageDB_finalScore"
+        android:layout_width="0dp"
+        android:layout_weight="10"
+        android:layout_height="wrap_content"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp"
+        android:text="@string/slashwithnum"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/redcolor" />
+
+    <TextView
+        android:id="@+id/lichthidauPageDB_guest"
+        android:layout_width="0dp"
+        android:layout_weight="28"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="@string/longName"
+        android:textSize="12sp" />
+
+    <ImageView
+        android:id="@+id/lichthidauPageDB_indicator"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_weight="10"
+        android:contentDescription="@string/null_string"
+        android:src="@drawable/ic_action_collapse_dark" />
+
+</LinearLayout>

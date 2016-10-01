@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swiper"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+        android:id="@+id/ScrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bgcolor2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/RelativeLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="60dp"
+                android:layout_weight="1"
+                android:background="@drawable/border_bottom2"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/lichthidauPage_finalScore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:text="@string/ttcn"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/RelativeLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:minHeight="60dp"
+                android:background="@drawable/border_bottom2"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="21dp"
+                    android:src="@drawable/man" />
+
+                <TextView
+                    android:id="@+id/TKHS_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/imageView3"
+                    android:text=""
+                    android:layout_marginLeft="10dp"
+                    android:maxLines="1"
+                    android:textColor="@color/base_app_color"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/RelativeLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:minHeight="60dp"
+                android:background="@drawable/border_bottom2"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="21dp"
+                    android:src="@drawable/name" />
+
+                <TextView
+                    android:id="@+id/TKHS_fullname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/imageView4"
+                    android:text=""
+                    android:layout_marginLeft="10dp"
+                    android:maxLines="1"
+                    android:textColor="@color/base_app_color"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/RelativeLayout4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:minHeight="60dp"
+                android:background="@drawable/border_bottom2"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="21dp"
+                    android:src="@drawable/gold" />
+
+                <TextView
+                    android:id="@+id/TKHS_coin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/imageView5"
+                    android:text=""
+                    android:layout_marginLeft="10dp"
+                    android:maxLines="1"
+                    android:textColor="@color/base_app_color"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                <ImageView
+                    android:id="@+id/TKHS_coin_refill_btn"
+                    android:layout_width="110dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/nx_btn"
+                    android:layout_marginRight="@dimen/padding_10"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/RelativeLayout5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:minHeight="60dp"
+                android:background="@drawable/border_bottom2"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="21dp"
+                    android:src="@drawable/home" />
+
+                <TextView
+                    android:id="@+id/TKHS_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/imageView6"
+                    android:text=""
+                    android:layout_marginLeft="10dp"
+                    android:maxLines="1"
+                    android:textColor="@color/base_app_color"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/RelativeLayout6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:minHeight="60dp"
+                android:background="@drawable/border_bottom2"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/imageView7"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="21dp"
+                    android:src="@drawable/phone" />
+
+                <ImageView
+                    android:id="@+id/TKHS_phone_cf"
+                    android:layout_width="110dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/padding_5"
+                    android:src="@drawable/iconxacthucsms" />
+
+                <TextView
+                    android:id="@+id/TKHS_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toLeftOf="@+id/TKHS_phone_cf"
+                    android:layout_toRightOf="@+id/imageView7"
+                    android:maxLines="1"
+                    android:text=""
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/base_app_color" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/RelativeLayout7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:minHeight="60dp"
+                android:background="@drawable/border_bottom2"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/imageView8"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="21dp"
+                    android:src="@drawable/email" />
+
+                <ImageView
+                    android:id="@+id/TKHS_email_cf"
+                    android:layout_width="110dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:paddingRight="@dimen/padding_10"
+                    android:src="@drawable/iconxacthucemail" />
+
+                <TextView
+                    android:id="@+id/TKHS_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toLeftOf="@+id/TKHS_email_cf"
+                    android:layout_toRightOf="@+id/imageView8"
+                    android:maxLines="1"
+                    android:text=""
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/base_app_color" />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+    </ScrollView>
+</android.support.v4.widget.SwipeRefreshLayout>

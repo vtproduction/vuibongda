@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ats.abongda">
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <application
+        android:name=".MainApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:largeHeap="true"
+
+        android:configChanges="orientation|keyboardHidden|screenLayout|screenSize"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".activity.SplashActivity"
+            android:label="@string/app_name"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.FullScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.HomeActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.LeagueActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:noHistory="true"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.ChangePasswordActivity"
+            android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.ChangeUserInformationActivity"
+            android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.UserInboxActivity"
+            android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.ClubInforActivity"
+            android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.LeagueClubMatchTimeActivity"
+            android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.LineupActivity"
+            android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.PlayerDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.UserActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.MatchDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.BetActivity"
+            android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.BetWinnerActivity"
+            android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.NewsDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.TopRichmanActivity"
+            android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.TopPlayerActivity"
+            android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.VideoPlayerActivity"
+            android:configChanges="orientation|keyboardHidden|screenLayout|screenSize"
+            android:theme="@style/AppTheme.FullScreen" />
+        <receiver
+            android:name=".service.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.example.gcm" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>

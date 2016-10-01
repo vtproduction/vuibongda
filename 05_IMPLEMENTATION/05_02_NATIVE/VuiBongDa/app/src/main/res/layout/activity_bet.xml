@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+        <include
+            layout="@layout/custom_actionbar"/>
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white_color">
+        <include
+            layout="@layout/notfound_layout"/>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/list_item_bg"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:fadingEdge="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:weightSum="22" >
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="10"
+                        android:gravity="center"
+                        android:orientation="vertical" >
+
+                        <ImageView
+                            android:id="@+id/datcuocpage2_hostimg"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/logochelsea" />
+
+                        <TextView
+                            android:id="@+id/datcuocpage2_hostname"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center"
+                            android:text="Small Text"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:id="@+id/textView2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="VS"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="10"
+                        android:gravity="center"
+                        android:orientation="vertical" >
+
+                        <ImageView
+                            android:id="@+id/datcuocpage2_guestimg"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/logochelsea" />
+
+                        <TextView
+                            android:id="@+id/datcuocpage2_guestname"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center"
+                            android:text="Small Text"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal" >
+                        <LinearLayout
+                            android:id="@+id/datcuocpage2_spinner1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingTop="@dimen/padding_10"
+                            android:paddingBottom="@dimen/padding_10"
+                            android:paddingLeft="@dimen/padding_20"
+                            android:paddingRight="@dimen/padding_20"
+                            android:gravity="center"
+                            android:background="@color/spinner_color">
+                            <TextView
+                                android:id="@+id/datcuocpage2_spinner1text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textStyle="bold"
+                                android:textColor="@color/white_color"
+                                android:textSize="20sp"/>
+                            <ImageView
+                                android:layout_marginLeft="@dimen/padding_20"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/ic_action_expand"/>
+                        </LinearLayout>
+                        <!--<Spinner
+                            android:id="@+id/datcuocpage2_spinner1"
+                            android:layout_width="90dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/spinner_bg2"/>-->
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal" >
+                        <LinearLayout
+                            android:id="@+id/datcuocpage2_spinner2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingTop="@dimen/padding_10"
+                            android:paddingBottom="@dimen/padding_10"
+                            android:paddingLeft="@dimen/padding_20"
+                            android:paddingRight="@dimen/padding_20"
+                            android:gravity="center"
+                            android:background="@color/spinner_color">
+                            <TextView
+                                android:id="@+id/datcuocpage2_spinner2text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textStyle="bold"
+                                android:textColor="@color/white_color"
+                                android:textSize="20sp"/>
+                            <ImageView
+                                android:layout_marginLeft="@dimen/padding_20"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/ic_action_expand"/>
+                        </LinearLayout>
+                        <!--<Spinner
+                            android:id="@+id/datcuocpage2_spinner2"
+                            android:layout_width="90dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/spinner_bg2" />-->
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_bottom4"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="5dp"
+                    android:weightSum="10" >
+
+                    <TextView
+                        android:id="@+id/TextView07"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:text="Tỉ lệ đặt"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <TextView
+                        android:id="@+id/datcuocpage2_tiledat"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="6"
+                        android:text="@string/longName"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/base_app_color" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_bottom4"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="5dp"
+                    android:weightSum="10" >
+
+                    <TextView
+                        android:id="@+id/TextView05"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:text="Tài khoản"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <TextView
+                        android:id="@+id/datcuocpage2_taikhoan"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="6"
+                        android:text="@string/longName"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/base_app_color" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_bottom4"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="5dp"
+                    android:weightSum="10" >
+
+                    <TextView
+                        android:id="@+id/TextView03"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:text="Số xu"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <TextView
+                        android:id="@+id/datcuocpage2_soxu"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="6"
+                        android:text="@string/longName"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/base_app_color" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_bottom4"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="5dp"
+                    android:weightSum="10" >
+
+                    <TextView
+                        android:id="@+id/TextView11"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:text="Số xu đặt"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <EditText
+                        android:id="@+id/datcuocpage2_soxudat"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_weight="6"
+                        android:ems="10"
+                        android:inputType="number"
+                        android:maxLength="10"
+                        android:background="@drawable/custom_edittext_item_shape">
+                    </EditText>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="5dp"
+                    android:weightSum="31" >
+
+                    <Button
+                        android:id="@+id/datcuocpage2_datcuocbtn"
+                        android:layout_width="0dp"
+                        android:layout_weight="15"
+                        android:layout_height="50dp"
+                        android:background="@drawable/custom_btn_item_shape"
+                        android:text="Đặt cược"
+                        android:textColor="@color/white_color" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" >
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/datcuocpage2_dattattaybtn"
+                        android:layout_width="0dp"
+                        android:layout_weight="15"
+                        android:layout_height="50dp"
+                        android:background="@drawable/custom_btn_item_shape"
+                        android:text="Đặt tất tay"
+                        android:textColor="@color/white_color" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+    </RelativeLayout>
+</LinearLayout>

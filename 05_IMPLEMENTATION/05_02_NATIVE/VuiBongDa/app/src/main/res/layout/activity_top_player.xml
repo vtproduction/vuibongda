@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+        <include
+            layout="@layout/custom_actionbar"/>
+    </LinearLayout>
+    <ats.abongda.customClass.view.NonInterceptedViewPagerSwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/swiper">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white_color">
+            <include
+                layout="@layout/notfound_layout"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:id="@+id/header"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_5"
+                    android:background="@drawable/border_bottom2">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/padding_5"
+                        android:id="@+id/choose_year_btn"
+                        android:background="@color/spinner_color">
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_action_expand"
+                            android:scaleType="centerInside"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerHorizontal="true"/>
+                        <TextView
+                            android:id="@+id/choose_year_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:text="Theo thời gian"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/white_color"
+                            android:textStyle="bold"/>
+                    </RelativeLayout>
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/white_color"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/base_app_color"
+                    android:gravity="center_vertical"
+                    android:padding="5dp"
+                    android:weightSum="6" >
+
+                    <TextView
+                        android:id="@+id/topdaigiaPage_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="STT"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/white_color" />
+
+                    <TextView
+                        android:id="@+id/topdaigiaPage_sotien"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="Người chơi"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/white_color" />
+
+                    <TextView
+                        android:id="@+id/topdaigiaPage_stt"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Thắng"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/white_color" />
+
+                    <TextView
+                        android:id="@+id/topdaigiaPage_name23"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Thua"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/white_color" />
+
+                    <TextView
+                        android:id="@+id/topdaigiaPage_name31"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Hiệu số"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/white_color" />
+                </LinearLayout>
+
+
+                <ScrollView
+                    android:id="@+id/scrollview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                    <LinearLayout
+                        android:id="@+id/topcaothuPage_main_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+                    </LinearLayout>
+                </ScrollView>
+            </LinearLayout>
+
+        </RelativeLayout>
+    </ats.abongda.customClass.view.NonInterceptedViewPagerSwipeRefreshLayout>
+</LinearLayout>

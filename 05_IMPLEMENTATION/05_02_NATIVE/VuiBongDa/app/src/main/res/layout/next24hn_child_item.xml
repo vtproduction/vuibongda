@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="75dp"
+    android:background="@color/list_item_bg"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:weightSum="13" >
+
+    <TextView
+        android:id="@+id/next24page_child_matchTime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+     	android:gravity="center_vertical"
+     	android:layout_gravity="center_vertical"
+        android:text="@string/matchTime"
+        android:textColor="@color/base_app_color"
+        android:paddingLeft="10dp"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+    <ImageView
+        android:id="@+id/next24Page_child_logo"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_weight="2"
+        android:src="@drawable/league_bundesliga"
+        android:contentDescription="@string/null_string" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="9"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="25dp">
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

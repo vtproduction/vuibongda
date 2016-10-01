@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+        <include
+            layout="@layout/custom_actionbar"/>
+    </LinearLayout>
+    <ats.abongda.customClass.view.NonInterceptedViewPagerSwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/swiper">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white_color">
+            <include
+                layout="@layout/notfound_layout"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/white_color"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/base_app_color"
+                    android:padding="5dp"
+                    android:weightSum="8"
+
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/topdaigiaPage_name"
+                        android:layout_width="0dp"
+                        android:layout_weight="2"
+                        android:textColor="@color/white_color"
+                        android:layout_height="wrap_content"
+                        android:text="STT"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                    <TextView
+                        android:id="@+id/topdaigiaPage_sotien"
+                        android:layout_width="0dp"
+                        android:layout_weight="3"
+                        android:textColor="@color/white_color"
+                        android:layout_height="wrap_content"
+                        android:text="Người chơi"
+                        android:gravity="center"
+                        android:layout_gravity="center_vertical"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                    <TextView
+                        android:id="@+id/topdaigiaPage_stt"
+                        android:layout_width="0dp"
+                        android:layout_weight="3"
+                        android:textColor="@color/white_color"
+                        android:layout_height="wrap_content"
+                        android:text="Số xu"
+                        android:gravity="center"
+                        android:layout_gravity="center_vertical"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                </LinearLayout>
+                <ScrollView
+                    android:id="@+id/scrollview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                    <LinearLayout
+                        android:id="@+id/topdaigiaPage_main_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" ></LinearLayout>
+                </ScrollView>
+            </LinearLayout>
+
+        </RelativeLayout>
+    </ats.abongda.customClass.view.NonInterceptedViewPagerSwipeRefreshLayout>
+</LinearLayout>

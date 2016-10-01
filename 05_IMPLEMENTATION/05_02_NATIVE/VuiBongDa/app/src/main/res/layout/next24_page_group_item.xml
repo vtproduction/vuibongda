@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:background="@color/list_item_bg"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/next24Page_group_leftlayout"
+        android:layout_width="10dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="0dp"
+        android:background="@color/l1"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/next24Page_group_dayname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="24dp"
+        android:layout_toRightOf="@+id/next24Page_group_leftlayout"
+        android:text="@string/app_name"
+        android:textStyle="bold"
+        android:textColor="@color/list_item_text1"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <ImageView
+        android:id="@+id/next24Page_group_indicator"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="18dp"
+        android:contentDescription="@string/null_string"
+        android:src="@drawable/ic_action_expand_dark" />
+    
+</RelativeLayout>

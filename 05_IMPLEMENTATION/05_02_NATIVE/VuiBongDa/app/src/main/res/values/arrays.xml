@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="user_purchase_history">
+        <item>"10 Giao dịch gần nhất"</item>
+        <item>"20 Giao dịch gần nhất"</item>
+        <item>"50 Giao dịch gần nhất"</item>
+        <item>"100 Giao dịch gần nhất"</item>
+    </string-array>
+    <string-array name="user_bet_history">
+        <item>"Trong hôm nay"</item>
+        <item>"Trong 2 ngày gần đây"</item>
+        <item>"Trong 3 ngày gần đây"</item>
+        <item>"Trong tuần này"</item>
+        <item>"Trong tháng này"</item>
+    </string-array>
+    <string-array name="user_menu">
+        <item>"Đổi mật khẩu"</item>
+        <item>"Đổi thông tin cá nhân"</item>
+        <item>"Hộp thư"</item>
+        <item>"Đăng xuất"</item>
+    </string-array>
+    <string-array name="rounds">
+        <item>"Vòng sơ loại"</item>
+        <item>"Vòng bảng"</item>
+        <item>"Vòng knockout"</item>
+    </string-array>
+    <string-array name="score">
+        <item>"0"</item>
+        <item>"1"</item>
+        <item>"2"</item>
+        <item>"3"</item>
+        <item>"4"</item>
+        <item>"5"</item>
+        <item>"6"</item>
+        <item>"7"</item>
+        <item>"8"</item>
+        <item>"9"</item>
+        <item>"10"</item>
+    </string-array>
+    <string-array name="top_player">
+        <item>"Theo thời gian"</item>
+        <item>"Theo giải thưởng"</item>
+    </string-array>
+</resources>

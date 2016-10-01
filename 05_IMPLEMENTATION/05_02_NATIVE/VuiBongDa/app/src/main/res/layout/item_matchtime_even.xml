@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/padding_5">
+    <TextView
+        android:id="@+id/lichthidauPage_finalScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/slashwithnum"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/redcolor" />
+
+    <TextView
+        android:id="@+id/lichthidauPage_host"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:paddingLeft="@dimen/padding_15"
+        android:layout_toLeftOf="@+id/lichthidauPage_finalScore"
+        android:layout_toRightOf="@+id/lichthidauPage_time"
+        android:gravity="right"
+        android:text="@string/longName"
+
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/lichthidauPage_guest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/lichthidauPage_finalScore"
+        android:layout_toLeftOf="@+id/lichthidauPage_arrow"
+        android:text="@string/longName"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/lichthidauPage_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="@string/matchTime"
+        android:layout_alignParentLeft="true"
+        android:paddingRight="@dimen/padding_5"
+        android:textColor="@color/base_app_color"
+        android:textSize="12sp" />
+
+    <ImageView
+        android:id="@+id/lichthidauPage_arrow"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/null_string"
+        android:src="@drawable/ic_action_collapse_dark" />
+</RelativeLayout>

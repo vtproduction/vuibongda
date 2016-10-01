@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/border_bottom2"
+    android:weightSum="9">
+
+    <TextView
+        android:id="@+id/thongkePage_item_stt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="2"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:gravity="right"
+        android:paddingLeft="5dp"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <ImageView
+        android:id="@+id/thongkePage_item_logo"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="2"
+        android:src="@drawable/logochelsea"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"/>
+
+    <TextView
+        android:id="@+id/thongkePage_item_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/longName"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="4"
+        android:gravity="left"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/thongkePage_item_bt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="20"
+        android:gravity="center"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="2"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+</LinearLayout>

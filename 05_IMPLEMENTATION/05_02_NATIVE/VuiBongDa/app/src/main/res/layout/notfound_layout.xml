@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:visibility="gone"
+    android:id="@+id/notfound_layout"
+    android:background="@color/white_color">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/notfound_text"
+        android:text="@string/khong_tim_thay_noi_dung"
+        android:textSize="@dimen/text_largest"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:padding="@dimen/padding_15"/>
+</LinearLayout>

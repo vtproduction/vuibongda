@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ats.abongda.customClass.view.NonInterceptedViewPagerSwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/swiper">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/header"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_5"
+                android:background="@drawable/border_bottom2">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_5"
+                    android:id="@+id/choose_year_btn"
+                    android:layout_marginBottom="@dimen/padding_5"
+                    android:background="@color/spinner_color">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_action_expand"
+                        android:scaleType="centerInside"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerHorizontal="true"/>
+                    <TextView
+                        android:id="@+id/choose_year_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:text="Tháng 8"
+                        android:layout_centerInParent="true"
+                        android:textColor="@color/white_color"
+                        android:textStyle="bold"/>
+                </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/base_app_color"
+                android:orientation="horizontal"
+                android:weightSum="9" >
+
+                <TextView
+                    android:id="@+id/thongkePage_item_stt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="3"
+                    android:gravity="center"
+                    android:text="Đội"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/white_color" />
+
+                <TextView
+                    android:id="@+id/thongkePage_item_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="4"
+                    android:gravity="center"
+                    android:text="Cầu thủ"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/white_color" />
+
+                <TextView
+                    android:id="@+id/thongkePage_item_bt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:text="Bàn thắng"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/white_color" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <include
+                    layout="@layout/notfound_layout"/>
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@id/recycer"
+                    android:scrollbars="vertical" >
+
+                </android.support.v7.widget.RecyclerView>
+            </RelativeLayout>
+        </LinearLayout>
+    </ats.abongda.customClass.view.NonInterceptedViewPagerSwipeRefreshLayout>
+</LinearLayout>

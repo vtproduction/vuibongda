@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="5dp"
+    android:weightSum="22"
+    android:background="@drawable/border_bottom4">
+
+    <LinearLayout
+        android:id="@+id/tddb_host"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="10"
+        android:gravity="center|left"
+        android:orientation="horizontal"
+        android:weightSum="10" >
+
+        <ImageView
+            android:id="@+id/tddb_host_img"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_weight="2"
+            android:src="@drawable/football_icon" />
+
+        <TextView
+            android:id="@+id/tddb_host_text"
+            android:layout_width="0dp"
+            android:layout_weight="6"
+            android:paddingLeft="5dp"
+            android:layout_height="wrap_content"
+            android:text="Lorem lipsum donor sit amet hehe hihi"
+            android:maxLines="2"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+        <ImageView
+            android:id="@+id/clip_host_img"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_weight="2"
+            android:src="@drawable/film"
+            android:padding="3dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tddb_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="120&apos;"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/base_app_color" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tddb_guest"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="10"
+        android:gravity="center|right"
+        android:orientation="horizontal"
+        android:weightSum="10" >
+        <ImageView
+            android:id="@+id/clip_guest_img"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_weight="2"
+            android:src="@drawable/film"
+            android:padding="3dp"/>
+        <TextView
+            android:id="@+id/tddb_guest_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:maxLines="2"
+            android:paddingLeft="5dp"
+            android:text="Lorem lipsum donor sit amet hehe hihi"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <ImageView
+            android:id="@+id/tddb_guest_img"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_weight="2"
+            android:src="@drawable/football_icon" />
+
+    </LinearLayout>
+
+</LinearLayout>

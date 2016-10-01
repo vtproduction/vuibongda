@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/border_bottom5"
+    android:orientation="horizontal"
+    android:weightSum="19" >
+
+    <TextView
+        android:id="@+id/tklichsu_stt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:text="100"
+        android:textColor="@color/mydarktheme"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tklichsu_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:text="31/12 23:23"
+        android:textColor="@color/mydarktheme"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tklichsu_thaydoi"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="4"
+        android:gravity="right"
+        android:text="Thay đổi"
+        android:textColor="@color/mydarktheme"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tklichsu_sauthaydoi"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="4"
+        android:gravity="right"
+        android:text="Sau thay đổi"
+        android:textColor="@color/mydarktheme"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tklichsu_noidung"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="7"
+        android:gravity="left"
+        android:paddingLeft="10dp"
+        android:paddingRight="5dp"
+        android:text="Được tặng 200 xu xác thực email"
+        android:textColor="@color/mydarktheme"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+</LinearLayout>

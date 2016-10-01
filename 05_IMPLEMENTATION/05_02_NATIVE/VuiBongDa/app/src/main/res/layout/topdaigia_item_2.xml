@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:gravity="center_vertical|fill_horizontal"
+    android:orientation="horizontal" 
+    android:background="@drawable/border_bottom4"
+    android:padding="15dp">
+
+    
+
+    <TextView
+        android:id="@+id/topdaigiaPage_name"
+        android:layout_width="0dp"
+        android:layout_weight="4"
+        android:layout_height="wrap_content"
+        android:text="..."
+        android:gravity="center"
+        android:textColor="@color/black_color"
+        android:textStyle="bold"
+        android:textAppearance="?android:attr/textAppearanceSmall" 
+        android:maxLines="1"/>
+
+
+</LinearLayout>

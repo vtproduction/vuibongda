@@ -162,7 +162,7 @@ function GetImei()
 
 function InitialStorage()
 {
-    var ServiceUrl = "http://api.bongda.bz:4404/AjaxService.svc/"
+    var ServiceUrl = "http://api.tructiep.xyz/ajaxservice.svc/"
 	//var ServiceUrl = "http://183.91.7.242:2824/AjaxService.svc/";
     //var ServiceUrl = "http://localhost:27375/AjaxService.svc/";
 	
